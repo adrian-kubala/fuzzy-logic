@@ -4,13 +4,12 @@ import pl.fuzzy.Model.Bath;
 import pl.fuzzy.Model.Boiler;
 import pl.fuzzy.Model.Shower;
 import pl.fuzzy.Model.Sink;
-import pl.fuzzy.Model.UsingWaterObject;
 
 
 public class FuzzyHeat {
-    public int ambientTemperature;
+    private int ambientTemperature;
     
-    public Boiler boiler;
+    private Boiler boiler;
     
     private Bath bath;
     private Sink sink;
@@ -44,7 +43,7 @@ public class FuzzyHeat {
     }
     
     public void init(){
-        boiler.waterCapacity = 120.0;
+        boiler = new Boiler(120.0);
         
         shower = new Shower(40);
         bath = new Bath(70);
@@ -52,31 +51,31 @@ public class FuzzyHeat {
     }
     
     public int calcHeat(){
-        if(ambientTemperature == 1 && boiler.temperature == 1)boiler.temperature=1;
-        if(ambientTemperature == 1 && boiler.temperature == 2)boiler.temperature=1;
-        if(ambientTemperature == 1 && boiler.temperature == 3)boiler.temperature=1;
-        if(ambientTemperature == 1 && boiler.temperature == 4)boiler.temperature=1;
-        if(ambientTemperature == 1 && boiler.temperature == 5)boiler.temperature=1;
-        if(ambientTemperature == 2 && boiler.temperature == 1)boiler.temperature=1;
-        if(ambientTemperature == 2 && boiler.temperature == 2)boiler.temperature=2;
-        if(ambientTemperature == 2 && boiler.temperature == 3)boiler.temperature=2;
-        if(ambientTemperature == 2 && boiler.temperature == 4)boiler.temperature=3;
-        if(ambientTemperature == 2 && boiler.temperature == 5)boiler.temperature=3;
-        if(ambientTemperature == 3 && boiler.temperature == 1)boiler.temperature=2;
-        if(ambientTemperature == 3 && boiler.temperature == 2)boiler.temperature=2;
-        if(ambientTemperature == 3 && boiler.temperature == 3)boiler.temperature=3;
-        if(ambientTemperature == 3 && boiler.temperature == 4)boiler.temperature=4;
-        if(ambientTemperature == 3 && boiler.temperature == 5)boiler.temperature=4;
-        if(ambientTemperature == 4 && boiler.temperature == 1)boiler.temperature=3;
-        if(ambientTemperature == 4 && boiler.temperature == 2)boiler.temperature=3;
-        if(ambientTemperature == 4 && boiler.temperature == 3)boiler.temperature=4;
-        if(ambientTemperature == 4 && boiler.temperature == 4)boiler.temperature=4;
-        if(ambientTemperature == 4 && boiler.temperature == 5)boiler.temperature=4;
-        if(ambientTemperature == 5 && boiler.temperature == 1)boiler.temperature=4;
-        if(ambientTemperature == 5 && boiler.temperature == 2)boiler.temperature=4;
-        if(ambientTemperature == 5 && boiler.temperature == 3)boiler.temperature=4;
-        if(ambientTemperature == 5 && boiler.temperature == 4)boiler.temperature=4;
-        if(ambientTemperature == 5 && boiler.temperature == 5)boiler.temperature=4;
+        if(ambientTemperature == 1 && boiler.temperature == 1) boiler.setHeatingLevel(1);
+        if(ambientTemperature == 1 && boiler.temperature == 2) boiler.setHeatingLevel(1);
+        if(ambientTemperature == 1 && boiler.temperature == 3) boiler.setHeatingLevel(1);
+        if(ambientTemperature == 1 && boiler.temperature == 4) boiler.setHeatingLevel(1);
+        if(ambientTemperature == 1 && boiler.temperature == 5) boiler.setHeatingLevel(1);
+        if(ambientTemperature == 2 && boiler.temperature == 1) boiler.setHeatingLevel(1);
+        if(ambientTemperature == 2 && boiler.temperature == 2) boiler.setHeatingLevel(2);
+        if(ambientTemperature == 2 && boiler.temperature == 3) boiler.setHeatingLevel(2);
+        if(ambientTemperature == 2 && boiler.temperature == 4) boiler.setHeatingLevel(3);
+        if(ambientTemperature == 2 && boiler.temperature == 5) boiler.setHeatingLevel(3);
+        if(ambientTemperature == 3 && boiler.temperature == 1) boiler.setHeatingLevel(2);
+        if(ambientTemperature == 3 && boiler.temperature == 2) boiler.setHeatingLevel(2);
+        if(ambientTemperature == 3 && boiler.temperature == 3) boiler.setHeatingLevel(3);
+        if(ambientTemperature == 3 && boiler.temperature == 4) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 3 && boiler.temperature == 5) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 4 && boiler.temperature == 1) boiler.setHeatingLevel(3);
+        if(ambientTemperature == 4 && boiler.temperature == 2) boiler.setHeatingLevel(3);
+        if(ambientTemperature == 4 && boiler.temperature == 3) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 4 && boiler.temperature == 4) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 4 && boiler.temperature == 5) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 5 && boiler.temperature == 1) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 5 && boiler.temperature == 2) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 5 && boiler.temperature == 3) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 5 && boiler.temperature == 4) boiler.setHeatingLevel(4);
+        if(ambientTemperature == 5 && boiler.temperature == 5) boiler.setHeatingLevel(4);
         return boiler.temperature;
     }
 }
