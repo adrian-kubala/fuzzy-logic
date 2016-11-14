@@ -11,4 +11,8 @@ package pl.fuzzy.Model;
  */
 public class Sink extends UsingWaterObject {
     
+    public Sink(int usage) {
+        super(usage);
+    }
+    
 }

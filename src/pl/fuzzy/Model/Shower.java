@@ -11,4 +11,8 @@ package pl.fuzzy.Model;
  */
 public class Shower extends UsingWaterObject {
     
+    public Shower(int usage) {
+        super(usage);
+    }
+    
 }
