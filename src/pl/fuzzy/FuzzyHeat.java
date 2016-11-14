@@ -1,7 +1,10 @@
 package pl.fuzzy;
 
+
 public class FuzzyHeat {
     public int to, tb, heat;
+    public double max_capacity;
+    public String[][] use; 
     
     /*
     heat
@@ -26,7 +29,17 @@ public class FuzzyHeat {
     
     */
     public FuzzyHeat(){
+        init();
         calcHeat();
+    }
+    public void init(){
+        max_capacity = 120;
+        use[0][0] = "shower";
+        use[0][1] = "40";
+        use[1][0] = "bath";        
+        use[1][1] = "70";
+        use[2][0] = "sink";
+        use[2][1] = "8";
     }
     public int calcHeat(){
         if(to == 1 && tb == 1)heat=1;
