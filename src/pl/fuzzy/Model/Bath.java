@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.fuzzy;
+package pl.fuzzy.Model;
 
 /**
  *
  * @author adrian
  */
-public class Boiler {
-    public int temperature;
-    public double waterCapacity;
-    public int power;
+public class Bath extends UsingWaterObject {
+    
+    public Bath(int usage) {
+        super(usage);
+    }
+    
 }

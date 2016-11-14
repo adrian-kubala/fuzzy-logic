@@ -1,10 +1,20 @@
 package pl.fuzzy;
 
+import pl.fuzzy.Model.Bath;
+import pl.fuzzy.Model.Boiler;
+import pl.fuzzy.Model.Shower;
+import pl.fuzzy.Model.Sink;
+import pl.fuzzy.Model.UsingWaterObject;
+
 
 public class FuzzyHeat {
-    public Boiler boiler;
     public int ambientTemperature;
-    public String[][] use;
+    
+    public Boiler boiler;
+    
+    private Bath bath;
+    private Sink sink;
+    private Shower shower;
     
     /*
     boiler.temperature
@@ -35,12 +45,10 @@ public class FuzzyHeat {
     
     public void init(){
         boiler.waterCapacity = 120.0;
-        use[0][0] = "shower";
-        use[0][1] = "40";
-        use[1][0] = "bath";        
-        use[1][1] = "70";
-        use[2][0] = "sink";
-        use[2][1] = "8";
+        
+        shower = new Shower(40);
+        bath = new Bath(70);
+        sink = new Sink(8);
     }
     
     public int calcHeat(){
