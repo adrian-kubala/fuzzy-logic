@@ -2,25 +2,25 @@ package pl.fuzzy;
 
 
 public class FuzzyHeat {
-    public int to, tb, heat;
-    public double max_capacity;
-    public String[][] use; 
+    public Boiler boiler;
+    public int ambientTemperature;
+    public String[][] use;
     
     /*
-    heat
+    boiler.temperature
     1-brak ogrzewania
     2-nieco ogniewaj
     3-ogrzewaj
     4-bardzo ogrzewaj
     
-    to
+    ambientTemperature
     1-bardzo wysoka
     2-wysoka
     3-średnia
     4-niska
     5-bardzo niska
     
-    tb
+    boiler.temperature
     1-bardzo wysoka
     2-wysoka
     3-średnia
@@ -32,8 +32,9 @@ public class FuzzyHeat {
         init();
         calcHeat();
     }
+    
     public void init(){
-        max_capacity = 120;
+        boiler.waterCapacity = 120.0;
         use[0][0] = "shower";
         use[0][1] = "40";
         use[1][0] = "bath";        
@@ -41,32 +42,33 @@ public class FuzzyHeat {
         use[2][0] = "sink";
         use[2][1] = "8";
     }
+    
     public int calcHeat(){
-        if(to == 1 && tb == 1)heat=1;
-        if(to == 1 && tb == 2)heat=1;
-        if(to == 1 && tb == 3)heat=1;
-        if(to == 1 && tb == 4)heat=1;
-        if(to == 1 && tb == 5)heat=1;
-        if(to == 2 && tb == 1)heat=1;
-        if(to == 2 && tb == 2)heat=2;
-        if(to == 2 && tb == 3)heat=2;
-        if(to == 2 && tb == 4)heat=3;
-        if(to == 2 && tb == 5)heat=3;
-        if(to == 3 && tb == 1)heat=2;
-        if(to == 3 && tb == 2)heat=2;
-        if(to == 3 && tb == 3)heat=3;
-        if(to == 3 && tb == 4)heat=4;
-        if(to == 3 && tb == 5)heat=4;
-        if(to == 4 && tb == 1)heat=3;
-        if(to == 4 && tb == 2)heat=3;
-        if(to == 4 && tb == 3)heat=4;
-        if(to == 4 && tb == 4)heat=4;
-        if(to == 4 && tb == 5)heat=4;
-        if(to == 5 && tb == 1)heat=4;
-        if(to == 5 && tb == 2)heat=4;
-        if(to == 5 && tb == 3)heat=4;
-        if(to == 5 && tb == 4)heat=4;
-        if(to == 5 && tb == 5)heat=4;
-        return heat;
+        if(ambientTemperature == 1 && boiler.temperature == 1)boiler.temperature=1;
+        if(ambientTemperature == 1 && boiler.temperature == 2)boiler.temperature=1;
+        if(ambientTemperature == 1 && boiler.temperature == 3)boiler.temperature=1;
+        if(ambientTemperature == 1 && boiler.temperature == 4)boiler.temperature=1;
+        if(ambientTemperature == 1 && boiler.temperature == 5)boiler.temperature=1;
+        if(ambientTemperature == 2 && boiler.temperature == 1)boiler.temperature=1;
+        if(ambientTemperature == 2 && boiler.temperature == 2)boiler.temperature=2;
+        if(ambientTemperature == 2 && boiler.temperature == 3)boiler.temperature=2;
+        if(ambientTemperature == 2 && boiler.temperature == 4)boiler.temperature=3;
+        if(ambientTemperature == 2 && boiler.temperature == 5)boiler.temperature=3;
+        if(ambientTemperature == 3 && boiler.temperature == 1)boiler.temperature=2;
+        if(ambientTemperature == 3 && boiler.temperature == 2)boiler.temperature=2;
+        if(ambientTemperature == 3 && boiler.temperature == 3)boiler.temperature=3;
+        if(ambientTemperature == 3 && boiler.temperature == 4)boiler.temperature=4;
+        if(ambientTemperature == 3 && boiler.temperature == 5)boiler.temperature=4;
+        if(ambientTemperature == 4 && boiler.temperature == 1)boiler.temperature=3;
+        if(ambientTemperature == 4 && boiler.temperature == 2)boiler.temperature=3;
+        if(ambientTemperature == 4 && boiler.temperature == 3)boiler.temperature=4;
+        if(ambientTemperature == 4 && boiler.temperature == 4)boiler.temperature=4;
+        if(ambientTemperature == 4 && boiler.temperature == 5)boiler.temperature=4;
+        if(ambientTemperature == 5 && boiler.temperature == 1)boiler.temperature=4;
+        if(ambientTemperature == 5 && boiler.temperature == 2)boiler.temperature=4;
+        if(ambientTemperature == 5 && boiler.temperature == 3)boiler.temperature=4;
+        if(ambientTemperature == 5 && boiler.temperature == 4)boiler.temperature=4;
+        if(ambientTemperature == 5 && boiler.temperature == 5)boiler.temperature=4;
+        return boiler.temperature;
     }
 }
