@@ -1,5 +1,7 @@
 package pl.fuzzy;
 
+import pl.fuzzy.Model.Boiler;
+
 
 public class FuzzyHeat {
     public Boiler boiler;
