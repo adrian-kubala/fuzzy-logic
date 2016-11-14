@@ -11,6 +11,14 @@ package pl.fuzzy.Model;
  */
 public class Boiler {
     public int temperature;
-    public double waterCapacity;
-    public int power;
+    private final double waterCapacity;
+    private int power;
+    
+    public Boiler(double capacity) {
+        waterCapacity = capacity;
+    }
+    
+    public void setHeatingLevel(int power) {
+        this.power = power;
+    }
 }
