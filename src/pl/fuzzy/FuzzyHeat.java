@@ -43,7 +43,8 @@ public class FuzzyHeat {
     }
     
     public static void main(String[] a){
-        new FuzzyHeat();
+        FuzzyHeat fuzzyHeat = new FuzzyHeat();
+        fuzzyHeat.ambientTemperature = 12;
     }
     
     public void init(){
