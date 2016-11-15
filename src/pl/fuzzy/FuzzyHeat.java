@@ -11,7 +11,7 @@ public class FuzzyHeat {
     
     private Boiler boiler;
     
-    private Bath bath;
+    private Bath bath; 
     private Sink sink;
     private Shower shower;
     
@@ -40,6 +40,10 @@ public class FuzzyHeat {
     public FuzzyHeat(){
         init();
         calcHeat();
+    }
+    
+    public static void main(String[] a){
+        new FuzzyHeat();
     }
     
     public void init(){
