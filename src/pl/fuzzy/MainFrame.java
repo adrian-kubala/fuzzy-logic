@@ -7,6 +7,8 @@ package pl.fuzzy;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.Random;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -30,11 +32,11 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-        JFreeChart xylineChart = ChartFactory.createXYLineChart("6. a)", "wzrost","u(wzrost)",
+        JFreeChart xylineChart = ChartFactory.createXYLineChart("Temperatura otoczenia", "temperatura otoczenia", "u(temperatura otoczenia)",
                 createDataset(), PlotOrientation.VERTICAL, true, true, false);
         
         ChartPanel chartPanel = new ChartPanel(xylineChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(80, 40));
+//        chartPanel.setPreferredSize(new Dimension(80, 40));
         
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setShapesVisible(false);
@@ -43,8 +45,10 @@ public class MainFrame extends javax.swing.JFrame {
         renderer.setSeriesPaint(1, Color.GREEN);
         renderer.setSeriesPaint(2, Color.YELLOW);
         renderer.setSeriesPaint(3, Color.CYAN);
+        renderer.setSeriesPaint(4, Color.BLUE);
 
-        for (int i = 0; i < 4; i++) {
+                
+        for (int i = 0; i < 5; i++) {
             renderer.setSeriesStroke(i, new BasicStroke(3.0f));
         }
 
@@ -57,40 +61,37 @@ public class MainFrame extends javax.swing.JFrame {
         xAxis.setTickUnit(new NumberTickUnit(10));
         yAxis.setTickUnit(new NumberTickUnit(0.2));
 
-        xAxis.setRange(0, 180);
+        xAxis.setRange(-30, 35);
         yAxis.setRange(0, 1.2);
         
-        setContentPane(chartPanel);
+        toPanel.setLayout(new FlowLayout());
+        toPanel.setPreferredSize(new Dimension(400, 200));
+        chartPanel.setPreferredSize(new Dimension(toPanel.getSize().width - 20, toPanel.getSize().height - 20));
+        toPanel.add(chartPanel);
     }
     
     private XYDataset createDataset( ) {
-        Random random = new Random();
-
-        int randomValue = random.nextInt(41) + 30;
-        int randomValue2 = random.nextInt(31) + 150;
-        int randomValue3 = random.nextInt(21) + 40;
-        int randomValue4 = random.nextInt(21) + 70;
-        int randomValue5 = random.nextInt(21) + 110;
-
-        System.out.println(randomValue + " " + randomValue2);
-
-        TriangularTerm aTerm = new TriangularTerm("A", 0, 0, randomValue3);
+        TrapezeTerm aTerm = new TrapezeTerm("bardzo niska", -30, -30, -10, 0);
         aTerm.createShape();
 
-        TrapezeTerm bTerm = new TrapezeTerm("B", 20, 40, 60, randomValue4);
+        TrapezeTerm bTerm = new TrapezeTerm("niska", -10, -2.5, 2.5, 10);
         bTerm.createShape();
 
-        TriangularTerm cTerm = new TriangularTerm("C", randomValue, 100, 130);
+        TrapezeTerm cTerm = new TrapezeTerm("średnia", 8, 11, 17, 20);
         cTerm.createShape();
 
-        TrapezeTerm dTerm = new TrapezeTerm("D", randomValue5, 140, randomValue2, 180);
+        TriangularTerm dTerm = new TriangularTerm("wysoka", 15, 25, 30);
         dTerm.createShape();
+        
+        TrapezeTerm eTerm = new TrapezeTerm("bardzo wysoka", 25, 30, 35, 35);
+        eTerm.createShape();
 
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(aTerm);
         dataset.addSeries(bTerm);
         dataset.addSeries(cTerm);
         dataset.addSeries(dTerm);
+        dataset.addSeries(eTerm);
         return dataset;
     }
 
@@ -103,17 +104,36 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        toPanel = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout toPanelLayout = new javax.swing.GroupLayout(toPanel);
+        toPanel.setLayout(toPanelLayout);
+        toPanelLayout.setHorizontalGroup(
+            toPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 306, Short.MAX_VALUE)
+        );
+        toPanelLayout.setVerticalGroup(
+            toPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 198, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 642, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(toPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 481, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(toPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(256, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,5 +175,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel toPanel;
     // End of variables declaration//GEN-END:variables
 }
