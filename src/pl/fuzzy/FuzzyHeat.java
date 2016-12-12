@@ -6,7 +6,7 @@ import pl.fuzzy.Model.Shower;
 import pl.fuzzy.Model.Sink;
 
 
-public class FuzzyHeat {
+class FuzzyHeat {
     private int ambientTemperature;
     
     private Boiler boiler;
@@ -42,10 +42,10 @@ public class FuzzyHeat {
         calcHeat();
     }
     
-    public static void main(String[] a){
-        FuzzyHeat fuzzyHeat = new FuzzyHeat();
-        fuzzyHeat.ambientTemperature = 12;
-    }
+//    public static void main(String[] a){
+//        FuzzyHeat fuzzyHeat = new FuzzyHeat();
+//        fuzzyHeat.ambientTemperature = 12;
+//    }
     
     public void init(){
         boiler = new Boiler(120.0);
