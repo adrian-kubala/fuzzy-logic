@@ -9,7 +9,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Panel;
 import java.util.Random;
+import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -26,14 +28,19 @@ import org.jfree.chart.axis.NumberAxis;
  * @author adrian
  */
 public class MainFrame extends javax.swing.JFrame {
-
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        JFreeChart xylineChart = ChartFactory.createXYLineChart("Temperatura otoczenia", "temperatura otoczenia", "u(temperatura otoczenia)",
-                createDataset(), PlotOrientation.VERTICAL, true, true, false);
+        
+        createChart("temperatura otoczenia", createAmbientTempDataset(), -30, 35, toPanel);
+        createChart("temperatura bojlera", createBoilerTempDataset(), 7, 75, tbPanel);
+    }
+    
+    private void createChart(String title, XYDataset dataset, int from, int to, JPanel panel) {
+        JFreeChart xylineChart = ChartFactory.createXYLineChart(title, title, "u(" + title + ")",
+                dataset, PlotOrientation.VERTICAL, true, true, false);
         
         ChartPanel chartPanel = new ChartPanel(xylineChart);
 //        chartPanel.setPreferredSize(new Dimension(80, 40));
@@ -61,16 +68,16 @@ public class MainFrame extends javax.swing.JFrame {
         xAxis.setTickUnit(new NumberTickUnit(10));
         yAxis.setTickUnit(new NumberTickUnit(0.2));
 
-        xAxis.setRange(-30, 35);
+        xAxis.setRange(from, to);
         yAxis.setRange(0, 1.2);
         
-        toPanel.setLayout(new FlowLayout());
-        toPanel.setPreferredSize(new Dimension(400, 200));
-        chartPanel.setPreferredSize(new Dimension(toPanel.getSize().width - 20, toPanel.getSize().height - 20));
-        toPanel.add(chartPanel);
+        panel.setLayout(new FlowLayout());
+        panel.setPreferredSize(new Dimension(400, 200));
+        chartPanel.setPreferredSize(new Dimension(panel.getSize().width - 20, panel.getSize().height - 20));
+        panel.add(chartPanel);
     }
-    
-    private XYDataset createDataset( ) {
+        
+    private XYDataset createAmbientTempDataset() {
         TrapezeTerm aTerm = new TrapezeTerm("bardzo niska", -30, -30, -10, 0);
         aTerm.createShape();
 
@@ -94,6 +101,31 @@ public class MainFrame extends javax.swing.JFrame {
         dataset.addSeries(eTerm);
         return dataset;
     }
+    
+    private XYDataset createBoilerTempDataset() {
+        TrapezeTerm aTerm = new TrapezeTerm("bardzo niska", 7, 7, 11, 15);
+        aTerm.createShape();
+
+        TriangularTerm bTerm = new TriangularTerm("niska", 10, 15, 20);
+        bTerm.createShape();
+
+        TriangularTerm cTerm = new TriangularTerm("średnia", 18, 26, 33);
+        cTerm.createShape();
+
+        TriangularTerm dTerm = new TriangularTerm("wysoka", 30, 45, 60);
+        dTerm.createShape();
+        
+        TrapezeTerm eTerm = new TrapezeTerm("bardzo wysoka", 50, 62.5, 75, 75);
+        eTerm.createShape();
+
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(aTerm);
+        dataset.addSeries(bTerm);
+        dataset.addSeries(cTerm);
+        dataset.addSeries(dTerm);
+        dataset.addSeries(eTerm);
+        return dataset;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,6 +137,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         toPanel = new javax.swing.JPanel();
+        tbPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -119,13 +152,26 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 198, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout tbPanelLayout = new javax.swing.GroupLayout(tbPanel);
+        tbPanel.setLayout(tbPanelLayout);
+        tbPanelLayout.setHorizontalGroup(
+            tbPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        tbPanelLayout.setVerticalGroup(
+            tbPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 197, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(toPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(toPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tbPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(303, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,7 +179,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(toPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(tbPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -175,6 +223,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel tbPanel;
     private javax.swing.JPanel toPanel;
     // End of variables declaration//GEN-END:variables
 }
