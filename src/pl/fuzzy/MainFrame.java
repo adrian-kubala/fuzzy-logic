@@ -34,11 +34,12 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
-        createChart("temperatura otoczenia", createAmbientTempDataset(), -30, 35, toPanel);
-        createChart("temperatura bojlera", createBoilerTempDataset(), 7, 75, tbPanel);
+        createChart("temperatura otoczenia", createAmbientTempDataset(), -30, 35, toPanel, 5);
+        createChart("temperatura bojlera", createBoilerTempDataset(), 7, 75, tbPanel, 5);
+        createChart("siła ogrzewania", createOutputDataset(), 0, 4, soPanel, 4);
     }
     
-    private void createChart(String title, XYDataset dataset, int from, int to, JPanel panel) {
+    private void createChart(String title, XYDataset dataset, int from, int to, JPanel panel, int termCount) {
         JFreeChart xylineChart = ChartFactory.createXYLineChart(title, title, "u(" + title + ")",
                 dataset, PlotOrientation.VERTICAL, true, true, false);
         
@@ -52,10 +53,13 @@ public class MainFrame extends javax.swing.JFrame {
         renderer.setSeriesPaint(1, Color.GREEN);
         renderer.setSeriesPaint(2, Color.YELLOW);
         renderer.setSeriesPaint(3, Color.CYAN);
-        renderer.setSeriesPaint(4, Color.BLUE);
+        if (termCount == 5) {
+            renderer.setSeriesPaint(4, Color.BLUE);
+        }
+        
 
                 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < termCount; i++) {
             renderer.setSeriesStroke(i, new BasicStroke(3.0f));
         }
 
@@ -126,6 +130,27 @@ public class MainFrame extends javax.swing.JFrame {
         dataset.addSeries(eTerm);
         return dataset;
     }
+    
+    private XYDataset createOutputDataset() {
+        TriangularTerm aTerm = new TriangularTerm("brak ogrzewania", 0, 0, 1);
+        aTerm.createShape();
+
+        TriangularTerm bTerm = new TriangularTerm("nieco ogrzewaj", 0, 1, 2);
+        bTerm.createShape();
+
+        TriangularTerm cTerm = new TriangularTerm("ogrzewaj", 1, 2, 3);
+        cTerm.createShape();
+
+        TriangularTerm dTerm = new TriangularTerm("bardzo ogrzewaj", 2, 3, 4);
+        dTerm.createShape();
+        
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(aTerm);
+        dataset.addSeries(bTerm);
+        dataset.addSeries(cTerm);
+        dataset.addSeries(dTerm);
+        return dataset;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,6 +163,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         toPanel = new javax.swing.JPanel();
         tbPanel = new javax.swing.JPanel();
+        soPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,6 +189,17 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 197, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout soPanelLayout = new javax.swing.GroupLayout(soPanel);
+        soPanel.setLayout(soPanelLayout);
+        soPanelLayout.setHorizontalGroup(
+            soPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        soPanelLayout.setVerticalGroup(
+            soPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 189, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,8 +208,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(toPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tbPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(303, Short.MAX_VALUE))
+                    .addComponent(tbPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(soPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(395, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,7 +219,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(toPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(tbPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(soPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -223,6 +263,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel soPanel;
     private javax.swing.JPanel tbPanel;
     private javax.swing.JPanel toPanel;
     // End of variables declaration//GEN-END:variables
