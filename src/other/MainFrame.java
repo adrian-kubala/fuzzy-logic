@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import modell.FuzzySet;
+import modell.HeatingPower;
 import modell.Temperature;
 import modell.Term;
 import org.jfree.chart.ChartFactory;
@@ -41,31 +42,10 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
-        FuzzySet ambientTemperature = new FuzzySet("temperatura otoczenia");
-        ambientTemperature.range = new Range(-30, 35);
+        createAmbientTempDataset();
+        createBoilerTempDataset();
+        createOutputDataset();
         
-        Term<Temperature> veryLow = new Term<>("bardzo niska", Temperature.VERY_LOW);
-        veryLow.setShape(-30, -30, -10, 0);
-        ambientTemperature.addSeries(veryLow);
-
-        Term<Temperature> low = new Term<>("niska", Temperature.LOW);
-        low.setShape(-10, -2.5, 2.5, 10);
-        ambientTemperature.addSeries(low);
-
-        Term<Temperature> medium = new Term<>("średnia", Temperature.MEDIUM);
-        medium.setShape(8, 11, 17, 20);
-        ambientTemperature.addSeries(medium);
-
-        Term<Temperature> high = new Term<>("wysoka", Temperature.HIGH);
-        high.setShape(15, 25, 25, 30);
-        ambientTemperature.addSeries(high);
-
-        Term<Temperature> veryHigh = new Term<>("bardzo wysoka", Temperature.VERY_HIGH);
-        veryHigh.setShape(25, 30, 35, 35);
-        ambientTemperature.addSeries(veryHigh);
-        
-        FuzzySetView ambientTemperatureView = new FuzzySetView(ambientTemperature.name, ambientTemperature, ambientTemperature.range);
-        fuzzySetsPanel.add(ambientTemperatureView);
 
         
         
@@ -74,6 +54,7 @@ public class MainFrame extends javax.swing.JFrame {
 //        createChart("temperatura bojlera", createBoilerTempDataset(), 7, 75, tbPanel, 5);
 //        createChart("siła ogrzewania", createOutputDataset(), 0, 4, soPanel, 4);
     }
+    
     
     private void createChart(String title, XYDataset dataset, int from, int to, JPanel panel, int termCount) {
         JFreeChart xylineChart = ChartFactory.createXYLineChart(title, title, "u(" + title + ")",
@@ -117,75 +98,84 @@ public class MainFrame extends javax.swing.JFrame {
         panel.add(chartPanel);
     }
         
-    private XYDataset createAmbientTempDataset() {
-        TrapezeTerm aTerm = new TrapezeTerm("bardzo niska", -30, -30, -10, 0);
-        aTerm.createShape();
-
-        TrapezeTerm bTerm = new TrapezeTerm("niska", -10, -2.5, 2.5, 10);
-        bTerm.createShape();
-
-        TrapezeTerm cTerm = new TrapezeTerm("średnia", 8, 11, 17, 20);
-        cTerm.createShape();
-
-        TriangularTerm dTerm = new TriangularTerm("wysoka", 15, 25, 30);
-        dTerm.createShape();
+    private void createAmbientTempDataset() {
+        FuzzySet ambientTemperature = new FuzzySet("temperatura otoczenia");
+        ambientTemperature.range = new Range(-30, 35);
         
-        TrapezeTerm eTerm = new TrapezeTerm("bardzo wysoka", 25, 30, 35, 35);
-        eTerm.createShape();
+        Term<Temperature> veryLow = new Term<>("bardzo niska", Temperature.VERY_LOW);
+        veryLow.setShape(-30, -30, -10, 0);
+        ambientTemperature.addSeries(veryLow);
 
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(aTerm);
-        dataset.addSeries(bTerm);
-        dataset.addSeries(cTerm);
-        dataset.addSeries(dTerm);
-        dataset.addSeries(eTerm);
-        return dataset;
+        Term<Temperature> low = new Term<>("niska", Temperature.LOW);
+        low.setShape(-10, -2.5, 2.5, 10);
+        ambientTemperature.addSeries(low);
+
+        Term<Temperature> medium = new Term<>("średnia", Temperature.MEDIUM);
+        medium.setShape(8, 11, 17, 20);
+        ambientTemperature.addSeries(medium);
+
+        Term<Temperature> high = new Term<>("wysoka", Temperature.HIGH);
+        high.setShape(15, 25, 25, 30);
+        ambientTemperature.addSeries(high);
+
+        Term<Temperature> veryHigh = new Term<>("bardzo wysoka", Temperature.VERY_HIGH);
+        veryHigh.setShape(25, 30, 35, 35);
+        ambientTemperature.addSeries(veryHigh);
+        
+        FuzzySetView ambientTemperatureView = new FuzzySetView(ambientTemperature.name, ambientTemperature, ambientTemperature.range);
+        fuzzySetsPanel.add(ambientTemperatureView);
     }
     
-    private XYDataset createBoilerTempDataset() {
-        TrapezeTerm aTerm = new TrapezeTerm("bardzo niska", 7, 7, 11, 15);
-        aTerm.createShape();
-
-        TriangularTerm bTerm = new TriangularTerm("niska", 10, 15, 20);
-        bTerm.createShape();
-
-        TriangularTerm cTerm = new TriangularTerm("średnia", 18, 26, 33);
-        cTerm.createShape();
-
-        TriangularTerm dTerm = new TriangularTerm("wysoka", 30, 45, 60);
-        dTerm.createShape();
+    private void createBoilerTempDataset() {
+        FuzzySet boilerTemperature = new FuzzySet("temperatura bojlera");
+        boilerTemperature.range = new Range(7, 75);
         
-        TrapezeTerm eTerm = new TrapezeTerm("bardzo wysoka", 50, 62.5, 75, 75);
-        eTerm.createShape();
+        Term<Temperature> veryLow = new Term<>("bardzo niska", Temperature.VERY_LOW);
+        veryLow.setShape(7, 7, 11, 15);
+        boilerTemperature.addSeries(veryLow);
 
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(aTerm);
-        dataset.addSeries(bTerm);
-        dataset.addSeries(cTerm);
-        dataset.addSeries(dTerm);
-        dataset.addSeries(eTerm);
-        return dataset;
+        Term<Temperature> low = new Term<>("niska", Temperature.LOW);
+        low.setShape(10, 15, 15, 20);
+        boilerTemperature.addSeries(low);
+
+        Term<Temperature> medium = new Term<>("średnia", Temperature.MEDIUM);
+        medium.setShape(18, 26, 26, 33);
+        boilerTemperature.addSeries(medium);
+
+        Term<Temperature> high = new Term<>("wysoka", Temperature.HIGH);
+        high.setShape(30, 45, 45, 60);
+        boilerTemperature.addSeries(high);
+
+        Term<Temperature> veryHigh = new Term<>("bardzo wysoka", Temperature.VERY_HIGH);
+        veryHigh.setShape(50, 62.5, 75, 75);
+        boilerTemperature.addSeries(veryHigh);
+        
+        FuzzySetView ambientTemperatureView = new FuzzySetView(boilerTemperature.name, boilerTemperature, boilerTemperature.range);
+        fuzzySetsPanel.add(ambientTemperatureView);
     }
     
-    private XYDataset createOutputDataset() {
-        TriangularTerm aTerm = new TriangularTerm("brak ogrzewania", 0, 0, 1);
-        aTerm.createShape();
-
-        TriangularTerm bTerm = new TriangularTerm("nieco ogrzewaj", 0, 1, 2);
-        bTerm.createShape();
-
-        TriangularTerm cTerm = new TriangularTerm("ogrzewaj", 1, 2, 3);
-        cTerm.createShape();
-
-        TriangularTerm dTerm = new TriangularTerm("bardzo ogrzewaj", 2, 3, 4);
-        dTerm.createShape();
+    private void createOutputDataset() {
+        FuzzySet heatingPower = new FuzzySet("moc ogrzewania");
+        heatingPower.range = new Range(0, 4);
         
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(aTerm);
-        dataset.addSeries(bTerm);
-        dataset.addSeries(cTerm);
-        dataset.addSeries(dTerm);
-        return dataset;
+        Term<HeatingPower> none = new Term<>("brak ogrzewania", HeatingPower.NONE);
+        none.setShape(0, 0, 0, 1);
+        heatingPower.addSeries(none);
+
+        Term<HeatingPower> low = new Term<>("nieco ogrzewaj", HeatingPower.LOW);
+        low.setShape(0, 1, 1, 2);
+        heatingPower.addSeries(low);
+
+        Term<HeatingPower> medium = new Term<>("ogrzewaj", HeatingPower.MEDIUM);
+        medium.setShape(1, 2, 2, 3);
+        heatingPower.addSeries(medium);
+
+        Term<HeatingPower> high = new Term<>("bardzo ogrzewaj", HeatingPower.HIGH);
+        high.setShape(2, 3, 3, 4);
+        heatingPower.addSeries(high);
+        
+        FuzzySetView ambientTemperatureView = new FuzzySetView(heatingPower.name, heatingPower, heatingPower.range);
+        fuzzySetsPanel.add(ambientTemperatureView);
     }
 
     /**
@@ -201,7 +191,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        fuzzySetsPanel.setBackground(new java.awt.Color(102, 255, 102));
+        fuzzySetsPanel.setBackground(new java.awt.Color(255, 0, 0));
         fuzzySetsPanel.setPreferredSize(new java.awt.Dimension(450, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,15 +199,15 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(368, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(488, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 

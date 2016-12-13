@@ -4,11 +4,12 @@ import org.jfree.data.xy.XYSeries;
 
 /**
  * Created by adrian on 04.12.2016.
+ * @param <E>
  */
 public class Term <E extends Enum<E>> extends XYSeries {
 
 
-    private Enum<E> type;
+    private final Enum<E> type;
 
     public Term(String name, Enum<E> type) {
         super(name);
