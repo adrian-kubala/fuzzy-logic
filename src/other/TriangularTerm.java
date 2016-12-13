@@ -1,4 +1,4 @@
-package pl.fuzzy;
+package other;
 
 import org.jfree.data.xy.XYSeries;
 import java.lang.reflect.Field;

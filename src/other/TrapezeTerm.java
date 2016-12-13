@@ -1,4 +1,4 @@
-package pl.fuzzy;
+package other;
 
 /**
  * Created by adrian on 04.12.2016.
