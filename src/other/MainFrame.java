@@ -45,57 +45,6 @@ public class MainFrame extends javax.swing.JFrame {
         createAmbientTempDataset();
         createBoilerTempDataset();
         createOutputDataset();
-        
-
-        
-        
-        
-//        createChart("temperatura otoczenia", createAmbientTempDataset(), -30, 35, toPanel, 5);
-//        createChart("temperatura bojlera", createBoilerTempDataset(), 7, 75, tbPanel, 5);
-//        createChart("siła ogrzewania", createOutputDataset(), 0, 4, soPanel, 4);
-    }
-    
-    
-    private void createChart(String title, XYDataset dataset, int from, int to, JPanel panel, int termCount) {
-        JFreeChart xylineChart = ChartFactory.createXYLineChart(title, title, "u(" + title + ")",
-                dataset, PlotOrientation.VERTICAL, true, true, false);
-        
-        ChartPanel chartPanel = new ChartPanel(xylineChart);
-//        chartPanel.setPreferredSize(new Dimension(80, 40));
-        
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setShapesVisible(false);
-
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesPaint(1, Color.GREEN);
-        renderer.setSeriesPaint(2, Color.YELLOW);
-        renderer.setSeriesPaint(3, Color.CYAN);
-        if (termCount == 5) {
-            renderer.setSeriesPaint(4, Color.BLUE);
-        }
-        
-
-                
-        for (int i = 0; i < termCount; i++) {
-            renderer.setSeriesStroke(i, new BasicStroke(3.0f));
-        }
-
-        XYPlot plot = xylineChart.getXYPlot();
-        plot.setRenderer( renderer );
-
-        NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
-        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
-
-        xAxis.setTickUnit(new NumberTickUnit(10));
-        yAxis.setTickUnit(new NumberTickUnit(0.2));
-
-        xAxis.setRange(from, to);
-        yAxis.setRange(0, 1.2);
-        
-        panel.setLayout(new FlowLayout());
-        panel.setPreferredSize(new Dimension(400, 200));
-        chartPanel.setPreferredSize(new Dimension(panel.getSize().width - 20, panel.getSize().height - 20));
-        panel.add(chartPanel);
     }
         
     private void createAmbientTempDataset() {
