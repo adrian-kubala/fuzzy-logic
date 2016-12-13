@@ -7,6 +7,9 @@ package view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import static java.awt.PageAttributes.MediaType.C;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -37,9 +40,11 @@ public class FuzzySetView extends JPanel {
         this.name = name;
         
         initColors();
+        
         JFreeChart chart = ChartFactory.createXYLineChart(name, name, "u(" + name + ")",
                 fuzzySet, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(450, 200));
         
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setShapesVisible(false);
@@ -65,6 +70,8 @@ public class FuzzySetView extends JPanel {
 
         xAxis.setRange(range);
         yAxis.setRange(0, 1.2);
+        
+        add(chartPanel);
     }
     
     private void initColors() {

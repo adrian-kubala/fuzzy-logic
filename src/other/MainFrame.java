@@ -6,10 +6,17 @@
 package other;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import modell.FuzzySet;
+import modell.Temperature;
+import modell.Term;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -20,6 +27,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.data.Range;
+import view.FuzzySetView;
 
 /**
  *
@@ -32,9 +41,38 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
-        createChart("temperatura otoczenia", createAmbientTempDataset(), -30, 35, toPanel, 5);
-        createChart("temperatura bojlera", createBoilerTempDataset(), 7, 75, tbPanel, 5);
-        createChart("siła ogrzewania", createOutputDataset(), 0, 4, soPanel, 4);
+        FuzzySet ambientTemperature = new FuzzySet("temperatura otoczenia");
+        ambientTemperature.range = new Range(-30, 35);
+        
+        Term<Temperature> veryLow = new Term<>("bardzo niska", Temperature.VERY_LOW);
+        veryLow.setShape(-30, -30, -10, 0);
+        ambientTemperature.addSeries(veryLow);
+
+        Term<Temperature> low = new Term<>("niska", Temperature.LOW);
+        low.setShape(-10, -2.5, 2.5, 10);
+        ambientTemperature.addSeries(low);
+
+        Term<Temperature> medium = new Term<>("średnia", Temperature.MEDIUM);
+        medium.setShape(8, 11, 17, 20);
+        ambientTemperature.addSeries(medium);
+
+        Term<Temperature> high = new Term<>("wysoka", Temperature.HIGH);
+        high.setShape(15, 25, 25, 30);
+        ambientTemperature.addSeries(high);
+
+        Term<Temperature> veryHigh = new Term<>("bardzo wysoka", Temperature.VERY_HIGH);
+        veryHigh.setShape(25, 30, 35, 35);
+        ambientTemperature.addSeries(veryHigh);
+        
+        FuzzySetView ambientTemperatureView = new FuzzySetView(ambientTemperature.name, ambientTemperature, ambientTemperature.range);
+        fuzzySetsPanel.add(ambientTemperatureView);
+
+        
+        
+        
+//        createChart("temperatura otoczenia", createAmbientTempDataset(), -30, 35, toPanel, 5);
+//        createChart("temperatura bojlera", createBoilerTempDataset(), 7, 75, tbPanel, 5);
+//        createChart("siła ogrzewania", createOutputDataset(), 0, 4, soPanel, 4);
     }
     
     private void createChart(String title, XYDataset dataset, int from, int to, JPanel panel, int termCount) {
@@ -159,67 +197,28 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        toPanel = new javax.swing.JPanel();
-        tbPanel = new javax.swing.JPanel();
-        soPanel = new javax.swing.JPanel();
+        fuzzySetsPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout toPanelLayout = new javax.swing.GroupLayout(toPanel);
-        toPanel.setLayout(toPanelLayout);
-        toPanelLayout.setHorizontalGroup(
-            toPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 306, Short.MAX_VALUE)
-        );
-        toPanelLayout.setVerticalGroup(
-            toPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout tbPanelLayout = new javax.swing.GroupLayout(tbPanel);
-        tbPanel.setLayout(tbPanelLayout);
-        tbPanelLayout.setHorizontalGroup(
-            tbPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        tbPanelLayout.setVerticalGroup(
-            tbPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 197, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout soPanelLayout = new javax.swing.GroupLayout(soPanel);
-        soPanel.setLayout(soPanelLayout);
-        soPanelLayout.setHorizontalGroup(
-            soPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        soPanelLayout.setVerticalGroup(
-            soPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 189, Short.MAX_VALUE)
-        );
+        fuzzySetsPanel.setBackground(new java.awt.Color(102, 255, 102));
+        fuzzySetsPanel.setPreferredSize(new java.awt.Dimension(450, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(toPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tbPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(soPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(395, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(368, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(toPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(tbPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(soPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,8 +260,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel soPanel;
-    private javax.swing.JPanel tbPanel;
-    private javax.swing.JPanel toPanel;
+    private javax.swing.JPanel fuzzySetsPanel;
     // End of variables declaration//GEN-END:variables
 }
