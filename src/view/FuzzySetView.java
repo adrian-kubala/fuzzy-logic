@@ -52,8 +52,9 @@ public class FuzzySetView extends JPanel {
             renderer.setSeriesPaint(i, colors[i]);
         }
                
+        BasicStroke stroke = new BasicStroke(3f);
         for (int i = 0; i < termCount; i++) {
-            renderer.setSeriesStroke(i, new BasicStroke(3.0f));
+            renderer.setSeriesStroke(i, stroke);
         }
 
         plot.setRenderer(renderer);

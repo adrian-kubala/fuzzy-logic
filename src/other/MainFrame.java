@@ -7,11 +7,6 @@ package other;
 
 import controller.FuzzySetController;
 import modell.FuzzySet;
-import modell.Power;
-import modell.Temperature;
-import modell.Term;
-import org.jfree.data.Range;
-import view.FuzzySetView;
 
 /**
  *
