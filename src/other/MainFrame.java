@@ -5,29 +5,10 @@
  */
 package other;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.SpringLayout;
 import modell.FuzzySet;
 import modell.HeatingPower;
 import modell.Temperature;
 import modell.Term;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.data.Range;
 import view.FuzzySetView;
 
@@ -36,6 +17,7 @@ import view.FuzzySetView;
  * @author adrian
  */
 public class MainFrame extends javax.swing.JFrame {
+    FuzzySet ambientTemperature;
     /**
      * Creates new form MainFrame
      */
@@ -48,7 +30,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
         
     private void createAmbientTempDataset() {
-        FuzzySet ambientTemperature = new FuzzySet("temperatura otoczenia");
+        ambientTemperature = new FuzzySet("temperatura otoczenia");
         ambientTemperature.range = new Range(-30, 35);
         
         Term<Temperature> veryLow = new Term<>("bardzo niska", Temperature.VERY_LOW);
@@ -137,11 +119,39 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         fuzzySetsPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        crispValueTextArea = new javax.swing.JTextArea();
+        fuzzifyButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        fuzzyOutputTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         fuzzySetsPanel.setBackground(new java.awt.Color(255, 0, 0));
         fuzzySetsPanel.setPreferredSize(new java.awt.Dimension(450, 200));
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        crispValueTextArea.setColumns(20);
+        crispValueTextArea.setRows(5);
+        crispValueTextArea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                crispValueTextAreaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(crispValueTextArea);
+
+        fuzzifyButton.setText("Rozmyj");
+        fuzzifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fuzzifyButtonActionPerformed(evt);
+            }
+        });
+
+        fuzzyOutputTextArea.setColumns(20);
+        fuzzyOutputTextArea.setRows(5);
+        jScrollPane2.setViewportView(fuzzyOutputTextArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,18 +160,49 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(488, Short.MAX_VALUE))
+                .addGap(96, 96, 96)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fuzzifyButton))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fuzzifyButton))
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void crispValueTextAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crispValueTextAreaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crispValueTextAreaMouseClicked
+
+    private void fuzzifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fuzzifyButtonActionPerformed
+        ambientTemperature.fuzzify(Double.parseDouble(crispValueTextArea.getText()));
+        double first = ambientTemperature.membershipValues[0];
+        double second = ambientTemperature.membershipValues[1];
+        double third = ambientTemperature.membershipValues[2];
+        double fourth = ambientTemperature.membershipValues[3];
+        double fifth = ambientTemperature.membershipValues[4];
+        
+        fuzzyOutputTextArea.setText("" + first + "\n" + second + "\n" + third + "\n" + fourth + "\n" + fifth);
+    }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,6 +240,11 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea crispValueTextArea;
+    private javax.swing.JButton fuzzifyButton;
+    private javax.swing.JTextArea fuzzyOutputTextArea;
     private javax.swing.JPanel fuzzySetsPanel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
