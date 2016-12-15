@@ -5,8 +5,9 @@
  */
 package other;
 
+import controller.FuzzySetController;
 import modell.FuzzySet;
-import modell.HeatingPower;
+import modell.Power;
 import modell.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
@@ -17,98 +18,19 @@ import view.FuzzySetView;
  * @author adrian
  */
 public class MainFrame extends javax.swing.JFrame {
-    FuzzySet ambientTemperature;
+    FuzzySetController controller;
+    
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
         
-        createAmbientTempDataset();
-        createBoilerTempDataset();
-        createOutputDataset();
-    }
-        
-    private void createAmbientTempDataset() {
-        ambientTemperature = new FuzzySet("temperatura otoczenia");
-        ambientTemperature.range = new Range(-30, 35);
-        
-        Term<Temperature> veryLow = new Term<>("bardzo niska", Temperature.VERY_LOW);
-        veryLow.setShape(-30, -30, -10, 0);
-        ambientTemperature.addSeries(veryLow);
-
-        Term<Temperature> low = new Term<>("niska", Temperature.LOW);
-        low.setShape(-10, -2.5, 2.5, 10);
-        ambientTemperature.addSeries(low);
-
-        Term<Temperature> medium = new Term<>("średnia", Temperature.MEDIUM);
-        medium.setShape(8, 11, 17, 20);
-        ambientTemperature.addSeries(medium);
-
-        Term<Temperature> high = new Term<>("wysoka", Temperature.HIGH);
-        high.setShape(15, 25, 25, 30);
-        ambientTemperature.addSeries(high);
-
-        Term<Temperature> veryHigh = new Term<>("bardzo wysoka", Temperature.VERY_HIGH);
-        veryHigh.setShape(25, 30, 35, 35);
-        ambientTemperature.addSeries(veryHigh);
-        
-        FuzzySetView ambientTemperatureView = new FuzzySetView(ambientTemperature.name, ambientTemperature, ambientTemperature.range);
-        fuzzySetsPanel.add(ambientTemperatureView);
+        controller = new FuzzySetController();
+        fuzzySetsPanel.add(controller.boilerTemperatureView);
+        fuzzySetsPanel.add(controller.heatingPowerView);
     }
     
-    private void createBoilerTempDataset() {
-        FuzzySet boilerTemperature = new FuzzySet("temperatura bojlera");
-        boilerTemperature.range = new Range(7, 75);
-        
-        Term<Temperature> veryLow = new Term<>("bardzo niska", Temperature.VERY_LOW);
-        veryLow.setShape(7, 7, 11, 15);
-        boilerTemperature.addSeries(veryLow);
-
-        Term<Temperature> low = new Term<>("niska", Temperature.LOW);
-        low.setShape(10, 15, 15, 20);
-        boilerTemperature.addSeries(low);
-
-        Term<Temperature> medium = new Term<>("średnia", Temperature.MEDIUM);
-        medium.setShape(18, 26, 26, 33);
-        boilerTemperature.addSeries(medium);
-
-        Term<Temperature> high = new Term<>("wysoka", Temperature.HIGH);
-        high.setShape(30, 45, 45, 60);
-        boilerTemperature.addSeries(high);
-
-        Term<Temperature> veryHigh = new Term<>("bardzo wysoka", Temperature.VERY_HIGH);
-        veryHigh.setShape(50, 62.5, 75, 75);
-        boilerTemperature.addSeries(veryHigh);
-        
-        FuzzySetView ambientTemperatureView = new FuzzySetView(boilerTemperature.name, boilerTemperature, boilerTemperature.range);
-        fuzzySetsPanel.add(ambientTemperatureView);
-    }
-    
-    private void createOutputDataset() {
-        FuzzySet heatingPower = new FuzzySet("moc ogrzewania");
-        heatingPower.range = new Range(0, 4);
-        
-        Term<HeatingPower> none = new Term<>("brak ogrzewania", HeatingPower.NONE);
-        none.setShape(0, 0, 0, 1);
-        heatingPower.addSeries(none);
-
-        Term<HeatingPower> low = new Term<>("nieco ogrzewaj", HeatingPower.LOW);
-        low.setShape(0, 1, 1, 2);
-        heatingPower.addSeries(low);
-
-        Term<HeatingPower> medium = new Term<>("ogrzewaj", HeatingPower.MEDIUM);
-        medium.setShape(1, 2, 2, 3);
-        heatingPower.addSeries(medium);
-
-        Term<HeatingPower> high = new Term<>("bardzo ogrzewaj", HeatingPower.HIGH);
-        high.setShape(2, 3, 3, 4);
-        heatingPower.addSeries(high);
-        
-        FuzzySetView ambientTemperatureView = new FuzzySetView(heatingPower.name, heatingPower, heatingPower.range);
-        fuzzySetsPanel.add(ambientTemperatureView);
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,30 +82,28 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(fuzzifyButton))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(148, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fuzzifyButton))
                         .addGap(19, 19, 19)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -194,14 +114,14 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_crispValueTextAreaMouseClicked
 
     private void fuzzifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fuzzifyButtonActionPerformed
-        ambientTemperature.fuzzify(Double.parseDouble(crispValueTextArea.getText()));
-        double first = ambientTemperature.membershipValues[0];
-        double second = ambientTemperature.membershipValues[1];
-        double third = ambientTemperature.membershipValues[2];
-        double fourth = ambientTemperature.membershipValues[3];
-        double fifth = ambientTemperature.membershipValues[4];
+        FuzzySet boilerTemperature = controller.boilerTemperature;
+        boilerTemperature.fuzzify(Double.parseDouble(crispValueTextArea.getText()));
         
-        fuzzyOutputTextArea.setText("" + first + "\n" + second + "\n" + third + "\n" + fourth + "\n" + fifth);
+        int termsCount = boilerTemperature.getSeriesCount();
+        fuzzyOutputTextArea.setText("");
+        for (int i = 0; i < termsCount; i++) {
+            fuzzyOutputTextArea.append("u(" + boilerTemperature.name + ") = " + boilerTemperature.membershipValues[i] + "\n");
+        }
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     /**
