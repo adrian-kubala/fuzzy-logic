@@ -71,6 +71,6 @@ public class FuzzySetView extends JPanel {
     }
     
     private void initColors() {
-        colors = new Color[] {Color.BLUE, Color.BLACK, Color.GREEN, Color.ORANGE, Color.MAGENTA};
+        colors = new Color[] {Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.MAGENTA};
     }
 }
