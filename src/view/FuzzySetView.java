@@ -8,9 +8,6 @@ package view;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import static java.awt.PageAttributes.MediaType.C;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -22,7 +19,6 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
@@ -53,7 +49,7 @@ public class FuzzySetView extends JPanel {
         int termCount = plot.getSeriesCount();
            
         for(int i = 0; i < termCount; i++) {
-            renderer.setSeriesPaint(0, colors[i]);
+            renderer.setSeriesPaint(i, colors[i]);
         }
                
         for (int i = 0; i < termCount; i++) {
@@ -75,6 +71,6 @@ public class FuzzySetView extends JPanel {
     }
     
     private void initColors() {
-        colors = new Color[] {Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.MAGENTA};
+        colors = new Color[] {Color.BLUE, Color.BLACK, Color.GREEN, Color.ORANGE, Color.MAGENTA};
     }
 }

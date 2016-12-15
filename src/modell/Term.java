@@ -16,7 +16,6 @@ public class Term <E extends Enum<E>> extends XYSeries {
         super(name);
 
         this.type = type;
-
     }
 
     public void setShape(double a, double x0, double x1, double b) {
