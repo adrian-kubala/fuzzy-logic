@@ -11,7 +11,7 @@ public class FuzzySet extends XYSeriesCollection {
 
     public String name;
     public Range range;
-    public double membershipValues[];
+    public MembershipValue[] membershipValues;
 
     public FuzzySet(String name) {
         super();
@@ -24,18 +24,24 @@ public class FuzzySet extends XYSeriesCollection {
     }
     
     public void fuzzify(double x) {
-        membershipValues = new double[getSeriesCount()];
+        membershipValues = new MembershipValue[getSeriesCount()];
         for (int i = 0; i < getSeriesCount(); i++) {
-            Term<?> term = (Term<?>) getSeries(i);
+            Term<Temperature> term = (Term<Temperature>) getSeries(i);
+            membershipValues[i] = new MembershipValue();
+            membershipValues[i].membership = (Temperature) term.type;
+            
+            double value;
             if (x >= term.a && x <= term.x0) {
-                membershipValues[i] = (x - term.a) / (term.x0 - term.a);
+                value = (x - term.a) / (term.x0 - term.a);
             } else if (x >= term.x0 && x <= term.x1) {
-                membershipValues[i] = 1;
+                value = 1;
             } else if (x >= term.x1 && x <= term.b) {
-                membershipValues[i] = (term.b - x) / (term.b - term.x1);
+                value = (term.b - x) / (term.b - term.x1);
             } else {
-                membershipValues[i] = 0;
+                value = 0;
             }
+            value = Math.round(value * 1000.0) / 1000.0;
+            membershipValues[i].value = value;
         }
     }
 }
