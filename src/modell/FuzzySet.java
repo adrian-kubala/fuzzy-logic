@@ -40,6 +40,7 @@ public class FuzzySet extends XYSeriesCollection {
             } else {
                 value = 0;
             }
+            value = Math.round(value * 1000.0) / 1000.0;
             membershipValues[i].value = value;
         }
     }
