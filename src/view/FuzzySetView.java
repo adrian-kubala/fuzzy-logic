@@ -9,6 +9,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
+import modell.FuzzySet;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -26,22 +27,35 @@ import org.jfree.data.xy.XYSeriesCollection;
  * @author adrian
  */
 public class FuzzySetView extends JPanel {
-    
-    String name;
-    XYSeriesCollection fuzzySet;
+     
+    FuzzySet fuzzySet;
     Color[] colors;
+    JFreeChart chart;
+    ChartPanel chartPanel;
     
-    public FuzzySetView(String name, XYDataset fuzzySet, Range range) {
-        this.fuzzySet = (XYSeriesCollection) fuzzySet; 
-        this.name = name;
+    public FuzzySetView(FuzzySet fuzzySet) {
+        this.fuzzySet = fuzzySet;
         
+        createChart();
         initColors();
+        setupRenderer(); 
         
-        JFreeChart chart = ChartFactory.createXYLineChart(name, name, "u(" + name + ")",
+        add(chartPanel);
+    }
+    
+    private void createChart() {
+        String name = fuzzySet.name;
+        chart = ChartFactory.createXYLineChart(name, name, "u(" + name + ")",
                 fuzzySet, PlotOrientation.VERTICAL, true, true, false);
-        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(450, 200));
-        
+    }
+
+    private void initColors() {
+        colors = new Color[] {Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.MAGENTA};
+    }
+    
+    private void setupRenderer() {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setShapesVisible(false);
         
@@ -58,20 +72,19 @@ public class FuzzySetView extends JPanel {
         }
 
         plot.setRenderer(renderer);
+        
+        setupPlotAxises(plot);
+    }
 
+    private void setupPlotAxises(XYPlot plot) {
         NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
 
         xAxis.setTickUnit(new NumberTickUnit(10));
         yAxis.setTickUnit(new NumberTickUnit(0.2));
 
-        xAxis.setRange(range);
+        xAxis.setRange(fuzzySet.range);
         yAxis.setRange(0, 1.2);
-        
-        add(chartPanel);
     }
-    
-    private void initColors() {
-        colors = new Color[] {Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.MAGENTA};
-    }
+
 }
