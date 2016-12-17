@@ -30,7 +30,7 @@ public class FuzzySetController {
     }
     
     private void setupBoilerTemperature() {
-        boilerTemperature = new FuzzySet("temperatura bojlera");
+        boilerTemperature = new FuzzySet("temperatura bojlera", 5);
         boilerTemperature.range = new Range(7, 75);
         
         Term veryLow = new Term(Temperature.VERY_LOW);
@@ -57,7 +57,7 @@ public class FuzzySetController {
     }
     
     private void setupHeatingPower() {
-        heatingPower = new FuzzySet("moc ogrzewania");
+        heatingPower = new FuzzySet("moc ogrzewania", 5);
         heatingPower.range = new Range(0, 4);
         
         Term none = new Term(Power.NONE);

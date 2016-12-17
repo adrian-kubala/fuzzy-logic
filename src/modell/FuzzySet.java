@@ -12,10 +12,11 @@ public class FuzzySet extends XYSeriesCollection {
     public Range range;
     public MembershipValue[] membershipValues;
 
-    public FuzzySet(String name) {
+    public FuzzySet(String name, int termsCount) {
         super();
 
         this.name = name;
+        membershipValues = new MembershipValue[termsCount];
     }
     
     public void fuzzify(double x) {
