@@ -126,6 +126,11 @@ public class MainFrame extends javax.swing.JFrame {
             }
             fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + value + "\n");
         }
+        inferenceBlockPanel.removeAll();
+        controller.infer();
+        inferenceBlockPanel.add(controller.inferenceBlockView);
+        inferenceBlockPanel.revalidate();
+        inferenceBlockPanel.repaint();
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     /**
