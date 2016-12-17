@@ -79,8 +79,8 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(fuzzifyButton))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +108,6 @@ public class MainFrame extends javax.swing.JFrame {
         int termsCount = boilerTemperature.getSeriesCount();
         fuzzyOutputTextArea.setText("");
         for (int i = 0; i < termsCount; i++) {
-            XYSeries term = boilerTemperature.getSeries(i);
             String name = (String) boilerTemperature.getSeriesKey(i);
             fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + boilerTemperature.membershipValues[i].value + "\n");
         }

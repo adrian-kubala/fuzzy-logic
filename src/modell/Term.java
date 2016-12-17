@@ -28,4 +28,12 @@ public class Term extends XYSeries {
         addOrUpdate(x1, 1);
         add(b, 0);
     }
+    
+    public String getTypeName() {
+        return type.name();
+    }
+    
+    public String getTitle() {
+        return type.toString();
+    }
 }
