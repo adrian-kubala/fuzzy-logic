@@ -12,4 +12,5 @@ package modell;
 public class MembershipValue {
     public Double value;
     public Enum membership;
+    public double forCrispValue;
 }

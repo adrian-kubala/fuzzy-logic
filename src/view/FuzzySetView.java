@@ -30,6 +30,7 @@ public class FuzzySetView extends JPanel {
     Color[] colors;
     JFreeChart chart;
     ChartPanel chartPanel;
+    XYPlot plot;
     
     public FuzzySetView(FuzzySet fuzzySet, double tickUnit) {
         this.fuzzySet = fuzzySet;
@@ -58,7 +59,7 @@ public class FuzzySetView extends JPanel {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setShapesVisible(false);
         
-        XYPlot plot = chart.getXYPlot();
+        plot = chart.getXYPlot();
         int termCount = plot.getSeriesCount();
            
         for(int i = 0; i < termCount; i++) {
@@ -72,10 +73,10 @@ public class FuzzySetView extends JPanel {
 
         plot.setRenderer(renderer);
         
-        setupPlotAxes(plot);
+        setupPlotAxes();
     }
 
-    private void setupPlotAxes(XYPlot plot) {
+    private void setupPlotAxes() {
         NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
 
