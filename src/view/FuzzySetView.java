@@ -18,9 +18,6 @@ import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.Range;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -29,12 +26,14 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class FuzzySetView extends JPanel {
      
     FuzzySet fuzzySet;
+    double tickUnit;
     Color[] colors;
     JFreeChart chart;
     ChartPanel chartPanel;
     
-    public FuzzySetView(FuzzySet fuzzySet) {
+    public FuzzySetView(FuzzySet fuzzySet, double tickUnit) {
         this.fuzzySet = fuzzySet;
+        this.tickUnit = tickUnit;
         
         createChart();
         initColors();
@@ -73,14 +72,14 @@ public class FuzzySetView extends JPanel {
 
         plot.setRenderer(renderer);
         
-        setupPlotAxises(plot);
+        setupPlotAxes(plot);
     }
 
-    private void setupPlotAxises(XYPlot plot) {
+    private void setupPlotAxes(XYPlot plot) {
         NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
 
-        xAxis.setTickUnit(new NumberTickUnit(10));
+        xAxis.setTickUnit(new NumberTickUnit(tickUnit));
         yAxis.setTickUnit(new NumberTickUnit(0.2));
 
         xAxis.setRange(fuzzySet.range);

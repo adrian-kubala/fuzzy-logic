@@ -1,7 +1,6 @@
 package modell;
 
 import org.jfree.data.Range;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**

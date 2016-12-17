@@ -7,7 +7,6 @@ package other;
 
 import controller.FuzzySetController;
 import modell.FuzzySet;
-import org.jfree.data.xy.XYSeries;
 
 /**
  *
