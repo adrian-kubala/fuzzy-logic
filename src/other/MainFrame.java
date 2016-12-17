@@ -7,6 +7,7 @@ package other;
 
 import controller.FuzzySetController;
 import modell.FuzzySet;
+import modell.MembershipValue;
 
 /**
  *
@@ -116,7 +117,14 @@ public class MainFrame extends javax.swing.JFrame {
         fuzzyOutputTextArea.setText("");
         for (int i = 0; i < termsCount; i++) {
             String name = (String) boilerTemperature.getSeriesKey(i);
-            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + boilerTemperature.membershipValues[i].value + "\n");
+            double value;
+            MembershipValue membershipValue = boilerTemperature.membershipValues[i];
+            if (membershipValue != null) {
+                value = membershipValue.value;
+            } else {
+                value = 0;
+            }
+            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + value + "\n");
         }
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 

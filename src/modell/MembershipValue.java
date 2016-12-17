@@ -10,7 +10,7 @@ package modell;
  * @author adrian
  */
 public class MembershipValue {
-    public Double value;
-    public Enum membership;
+    public double value;
+    public Term term;
     public double forCrispValue;
 }

@@ -23,10 +23,14 @@ public class FuzzySetController {
             
     public FuzzySet heatingPower;
     public FuzzySetView heatingPowerView;
+    
+    public FuzzySet inferenceBlock;
+    public FuzzySetView inferenceBlockView;
 
     public FuzzySetController() {
         setupBoilerTemperature();
         setupHeatingPower();
+        setupInferenceBlock();
     }
     
     private void setupBoilerTemperature() {
@@ -81,5 +85,9 @@ public class FuzzySetController {
         heatingPower.addSeries(veryHigh);
         
         heatingPowerView = new FuzzySetView(heatingPower, 1);        
+    }
+    
+    private void setupInferenceBlock() {
+        inferenceBlock = new FuzzySet("Blok wnioskowania", 5);
     }
 }
