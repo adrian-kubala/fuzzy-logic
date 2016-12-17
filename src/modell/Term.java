@@ -29,6 +29,21 @@ public class Term extends XYSeries {
         add(b, 0);
     }
     
+    public double getMembershipValue(double x) {
+        double value;
+        if (x >= a && x <= x0) {
+            value = (x - a) / (x0 - a);
+        } else if (x >= x0 && x <= x1) {
+            value = 1;
+        } else if (x >= x1 && x <= b) {
+            value = (b - x) / (b - x1);
+        } else {
+            value = 0;
+        }
+        value = Math.round(value * 1000.0) / 1000.0;
+        return value;
+    }
+    
     public String getTypeName() {
         return type.name();
     }

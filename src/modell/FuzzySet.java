@@ -18,34 +18,19 @@ public class FuzzySet extends XYSeriesCollection {
 
         this.name = name;
     }
-
-//    public XYDataset getDataSet() {
-//        return (XYDataset) this;
-//    }
-    
-    public Term getTerm(int i) {
-        return (Term) getSeries(i);
-    }
     
     public void fuzzify(double x) {
         membershipValues = new MembershipValue[getSeriesCount()];
         for (int i = 0; i < getSeriesCount(); i++) {
-            Term term = getTerm(i);
+            Term term = getTermAt(i);
             membershipValues[i] = new MembershipValue();
-            membershipValues[i].membership = term.type;
             
-            double value;
-            if (x >= term.a && x <= term.x0) {
-                value = (x - term.a) / (term.x0 - term.a);
-            } else if (x >= term.x0 && x <= term.x1) {
-                value = 1;
-            } else if (x >= term.x1 && x <= term.b) {
-                value = (term.b - x) / (term.b - term.x1);
-            } else {
-                value = 0;
-            }
-            value = Math.round(value * 1000.0) / 1000.0;
-            membershipValues[i].value = value;
+            membershipValues[i].membership = term.type;
+            membershipValues[i].value = term.getMembershipValue(x);
         }
+    }
+    
+    public Term getTermAt(int i) {
+        return (Term) getSeries(i);
     }
 }
