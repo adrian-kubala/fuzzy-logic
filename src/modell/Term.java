@@ -12,8 +12,8 @@ public class Term <E extends Enum<E>> extends XYSeries {
     double a, x0, x1, b;
     
 
-    public Term(String name, Enum<E> type) {
-        super(name);
+    public Term(Enum<E> type) {
+        super(type.toString());
 
         this.type = type;
     }
