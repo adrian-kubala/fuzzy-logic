@@ -26,9 +26,9 @@ public class FuzzySet extends XYSeriesCollection {
     public void fuzzify(double x) {
         membershipValues = new MembershipValue[getSeriesCount()];
         for (int i = 0; i < getSeriesCount(); i++) {
-            Term<Temperature> term = (Term<Temperature>) getSeries(i);
+            Term term = (Term) getSeries(i);
             membershipValues[i] = new MembershipValue();
-            membershipValues[i].membership = (Temperature) term.type;
+            membershipValues[i].membership = term.type;
             
             double value;
             if (x >= term.a && x <= term.x0) {

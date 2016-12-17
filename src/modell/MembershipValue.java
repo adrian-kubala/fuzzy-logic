@@ -8,9 +8,8 @@ package modell;
 /**
  *
  * @author adrian
- * @param <E>
  */
-public class MembershipValue <E extends Enum<E>> {
+public class MembershipValue {
     public Double value;
-    public Enum<E> membership;
+    public Enum membership;
 }
