@@ -5,9 +5,10 @@ package modell;
  */
 public enum Power {
     NONE("brak ogrzewania"),
-    LOW("nieco ogrzewaj"),
-    MEDIUM("ogrzewaj"),
-    HIGH("bardzo ogrzewaj");
+    LOW("niska"),
+    MEDIUM("średnia"),
+    HIGH("wysoka"),
+    VERY_HIGH("bardzo wysoka");
     
     private final String value;
     

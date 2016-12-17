@@ -76,6 +76,10 @@ public class FuzzySetController {
         high.setShape(2, 3, 3, 4);
         heatingPower.addSeries(high);
         
+        Term veryHigh = new Term(Power.VERY_HIGH);
+        veryHigh.setShape(3, 4, 4, 4);
+        heatingPower.addSeries(veryHigh);
+        
         heatingPowerView = new FuzzySetView(heatingPower.name, heatingPower, heatingPower.range);        
     }
 }
