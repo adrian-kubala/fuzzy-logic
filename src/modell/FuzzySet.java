@@ -14,7 +14,7 @@ public class FuzzySet extends XYSeriesCollection {
 
     public FuzzySet(String name, int termsCount) {
         super();
-
+        
         this.name = name;
         membershipValues = new MembershipValue[termsCount];
     }
@@ -23,11 +23,16 @@ public class FuzzySet extends XYSeriesCollection {
         membershipValues = new MembershipValue[getSeriesCount()];
         for (int i = 0; i < getSeriesCount(); i++) {
             Term term = getTermAt(i);
-            membershipValues[i] = new MembershipValue();
             
-            membershipValues[i].membership = term.type;
-            membershipValues[i].value = term.getMembershipValue(x);
-            membershipValues[i].forCrispValue = x;
+            double value = term.getMembershipValue(x);
+            if (value > 0) {
+                MembershipValue membershipValue = new MembershipValue();
+                membershipValue.term = term;
+                membershipValue.value = term.getMembershipValue(x);
+                membershipValue.forCrispValue = x;
+
+                membershipValues[i] = membershipValue;
+            }
         }
     }
     

@@ -7,6 +7,7 @@ package other;
 
 import controller.FuzzySetController;
 import modell.FuzzySet;
+import modell.MembershipValue;
 
 /**
  *
@@ -41,6 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
         fuzzifyButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         fuzzyOutputTextArea = new javax.swing.JTextArea();
+        inferenceBlockPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,6 +67,9 @@ public class MainFrame extends javax.swing.JFrame {
         fuzzyOutputTextArea.setRows(5);
         jScrollPane2.setViewportView(fuzzyOutputTextArea);
 
+        inferenceBlockPanel.setBackground(new java.awt.Color(255, 0, 0));
+        inferenceBlockPanel.setPreferredSize(new java.awt.Dimension(450, 200));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,29 +77,33 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(fuzzifyButton))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fuzzifyButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(fuzzifyButton))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(fuzzySetsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,8 +117,20 @@ public class MainFrame extends javax.swing.JFrame {
         fuzzyOutputTextArea.setText("");
         for (int i = 0; i < termsCount; i++) {
             String name = (String) boilerTemperature.getSeriesKey(i);
-            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + boilerTemperature.membershipValues[i].value + "\n");
+            double value;
+            MembershipValue membershipValue = boilerTemperature.membershipValues[i];
+            if (membershipValue != null) {
+                value = membershipValue.value;
+            } else {
+                value = 0;
+            }
+            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + value + "\n");
         }
+        inferenceBlockPanel.removeAll();
+        controller.infer();
+        inferenceBlockPanel.add(controller.inferenceBlockView);
+        inferenceBlockPanel.revalidate();
+        inferenceBlockPanel.repaint();
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     /**
@@ -152,6 +173,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton fuzzifyButton;
     private javax.swing.JTextArea fuzzyOutputTextArea;
     private javax.swing.JPanel fuzzySetsPanel;
+    private javax.swing.JPanel inferenceBlockPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

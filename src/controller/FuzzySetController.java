@@ -6,6 +6,7 @@
 package controller;
 
 import modell.FuzzySet;
+import modell.MembershipValue;
 import modell.Power;
 import modell.Temperature;
 import modell.Term;
@@ -23,10 +24,14 @@ public class FuzzySetController {
             
     public FuzzySet heatingPower;
     public FuzzySetView heatingPowerView;
+    
+    public FuzzySet inferenceBlock;
+    public FuzzySetView inferenceBlockView;
 
     public FuzzySetController() {
         setupBoilerTemperature();
         setupHeatingPower();
+        setupInferenceBlock();
     }
     
     private void setupBoilerTemperature() {
@@ -82,4 +87,39 @@ public class FuzzySetController {
         
         heatingPowerView = new FuzzySetView(heatingPower, 1);        
     }
+    
+    private void setupInferenceBlock() {
+        inferenceBlock = new FuzzySet("Blok wnioskowania", 5);
+        inferenceBlock.range = heatingPower.range;
+    }
+    
+    public void infer() {
+        inferenceBlock.removeAllSeries();
+        for (MembershipValue value : boilerTemperature.membershipValues) {
+            if (value != null) {
+                String typeName = value.term.getTypeName();
+                switch (typeName) {
+                    case "VERY_LOW":
+                        inferenceBlock.addSeries(heatingPower.getTermAt(4));
+                        break;
+                    case "LOW":
+                        inferenceBlock.addSeries(heatingPower.getTermAt(3));
+                        break;
+                    case "MEDIUM":
+                        inferenceBlock.addSeries(heatingPower.getTermAt(2));
+                        break;
+                    case "HIGH":
+                        inferenceBlock.addSeries(heatingPower.getTermAt(1));
+                        break;
+                    case "VERY_HIGH":
+                        inferenceBlock.addSeries(heatingPower.getTermAt(0));
+                        break;
+                }
+            }
+        }
+        
+        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
+    }
+    
+    
 }
