@@ -6,6 +6,8 @@
 package other;
 
 import controller.FuzzySetController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modell.FuzzySet;
 import modell.MembershipValue;
 
@@ -127,7 +129,11 @@ public class MainFrame extends javax.swing.JFrame {
             fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + value + "\n");
         }
         inferenceBlockPanel.removeAll();
-        controller.infer();
+        try {
+            controller.infer();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         inferenceBlockPanel.add(controller.inferenceBlockView);
         inferenceBlockPanel.revalidate();
         inferenceBlockPanel.repaint();
