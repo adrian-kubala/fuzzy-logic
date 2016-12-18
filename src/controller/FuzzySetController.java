@@ -58,7 +58,7 @@ public class FuzzySetController {
         veryHigh.setShape(50, 62.5, 75, 75);
         boilerTemperature.addSeries(veryHigh);
         
-        boilerTemperatureView = new FuzzySetView(boilerTemperature, 10);
+        boilerTemperatureView = new FuzzySetView(boilerTemperature, 3);
     }
     
     private void setupHeatingPower() {
