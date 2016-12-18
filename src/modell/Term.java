@@ -8,7 +8,7 @@ import org.jfree.data.xy.XYSeries;
 public class Term extends XYSeries {
 
     final Enum type;
-    double a, x0, x1, b;
+    public double a, x0, x1, b;
     
 
     public Term(Enum type) {
