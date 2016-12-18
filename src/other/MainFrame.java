@@ -6,12 +6,11 @@
 package other;
 
 import controller.FuzzySetController;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modell.FuzzySet;
 import modell.MembershipValue;
+import org.jfree.ui.RefineryUtilities;
 
 /**
  *
@@ -26,13 +25,12 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
-        placeOnCenter();
+        centerOnScreen();
         initController();
     }
     
-    private void placeOnCenter() {
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
+    private void centerOnScreen() {
+        RefineryUtilities.centerFrameOnScreen(this);
     }
     
     private void initController() {
@@ -140,12 +138,12 @@ public class MainFrame extends javax.swing.JFrame {
             }
             fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + value + "\n");
         }
+        
         inferenceBlockPanel.removeAll();
         try {
             controller.infer();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (CloneNotSupportedException ex) { }
+        
         inferenceBlockPanel.add(controller.inferenceBlockView);
         inferenceBlockPanel.revalidate();
         inferenceBlockPanel.repaint();
