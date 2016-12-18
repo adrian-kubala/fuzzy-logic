@@ -44,6 +44,26 @@ public class Term extends XYSeries {
         return value;
     }
     
+    public void setMinimum(double y) {
+        double newX0 = getNewX0(y);
+        double newX1 = getNewX1(y);
+        
+        getItems().clear();
+        
+        add(a, 0);
+        add(newX0, y);
+        addOrUpdate(newX1, y);
+        add(b, 0);
+    }
+    
+    private double getNewX0(double y) {
+        return y * (x0 - a) + a;
+    }
+    
+    private double getNewX1(double y) {
+        return y * (x0 - b) + b;
+    }
+    
     public String getTypeName() {
         return type.name();
     }
