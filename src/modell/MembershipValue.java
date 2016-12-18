@@ -11,6 +11,6 @@ package modell;
  */
 public class MembershipValue {
     public double value;
-    public Term term;
+    public Enum termType;
     public double forCrispValue;
 }

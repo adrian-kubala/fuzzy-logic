@@ -1,5 +1,7 @@
 package modell;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -27,7 +29,7 @@ public class FuzzySet extends XYSeriesCollection {
             double value = term.getMembershipValue(x);
             if (value > 0) {
                 MembershipValue membershipValue = new MembershipValue();
-                membershipValue.term = term;
+                membershipValue.termType = term.type;
                 membershipValue.value = term.getMembershipValue(x);
                 membershipValue.forCrispValue = x;
 
@@ -38,5 +40,18 @@ public class FuzzySet extends XYSeriesCollection {
     
     public Term getTermAt(int i) {
         return (Term) getSeries(i);
+    }
+    
+    public Term getCopiedTermOfType(Enum type) {
+        Term copy = null;
+        for (int i = 0; i < getSeriesCount(); i++) {
+            Term term = getTermAt(i);
+            if (term.getTypeName().equals(type.name())) {
+                try {
+                    copy = (Term) term.createCopy(0, term.getItemCount() - 1);
+                } catch (CloneNotSupportedException ex) { }
+            }
+        }
+        return copy;
     }
 }
