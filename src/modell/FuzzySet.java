@@ -54,4 +54,18 @@ public class FuzzySet extends XYSeriesCollection {
         }
         return copy;
     }
+    
+    public double getMembershipValueOfType(Enum type) {
+        double value = 0;
+        for (MembershipValue membershipValue : membershipValues) {
+            if (membershipValue == null) {
+                continue;
+            }
+            
+            if (membershipValue.termType.name().equals(type.name())) {
+                value = membershipValue.value;
+            }
+        }
+        return value;
+    } 
 }

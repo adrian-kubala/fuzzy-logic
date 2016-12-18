@@ -100,35 +100,31 @@ public class FuzzySetController {
         for (int i = valuesCount; i >= 0; i--) {
             MembershipValue value = boilerTemperature.membershipValues[i];
             if (value != null) {
-                String typeName = value.termType.name();
-                Enum termType = null;
-                Term term;
-                int index = 0;
-                switch (typeName) {
+                Enum currentType = value.termType;
+                
+                Term inferedTerm;
+                Enum inferedTermType = null;
+                switch (currentType.name()) {
                     case "VERY_LOW":
-                        termType = Power.VERY_HIGH;
-                        index = 0;
+                        inferedTermType = Power.VERY_HIGH;
                         break;
                     case "LOW":
-                        termType = Power.HIGH;
-                        index = 1;
+                        inferedTermType = Power.HIGH;
                         break;
                     case "MEDIUM":
-                        termType = Power.MEDIUM;
-                        index = 2;
+                        inferedTermType = Power.MEDIUM;
                         break;
                     case "HIGH":
-                        termType = Power.LOW;
-                        index = 3;
+                        inferedTermType = Power.LOW;
                         break;
                     case "VERY_HIGH":
-                        termType = Power.NONE;
-                        index = 4;
+                        inferedTermType = Power.NONE;
                         break;
                 }
-                term = heatingPower.getCopiedTermOfType(termType);
-                term.setMinimum(boilerTemperature.membershipValues[index].value);
-                inferenceBlock.addSeries(term);
+                
+                inferedTerm = heatingPower.getCopiedTermOfType(inferedTermType);
+                inferedTerm.setMinimum(boilerTemperature.getMembershipValueOfType(currentType));
+                inferenceBlock.addSeries(inferedTerm);
             }
         }
         
