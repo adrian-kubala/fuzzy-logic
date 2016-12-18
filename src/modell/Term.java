@@ -48,7 +48,7 @@ public class Term extends XYSeries {
         double newX0 = getNewX0(y);
         double newX1 = getNewX1(y);
         
-        getItems().clear();
+        clear();
         
         add(a, 0);
         add(newX0, y);

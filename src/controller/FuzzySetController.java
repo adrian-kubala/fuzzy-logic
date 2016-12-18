@@ -98,21 +98,32 @@ public class FuzzySetController {
         for (MembershipValue value : boilerTemperature.membershipValues) {
             if (value != null) {
                 String typeName = value.term.getTypeName();
+                Term term;
                 switch (typeName) {
                     case "VERY_LOW":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(4));
+                        term = heatingPower.getTermAt(4);
+                        term.setMinimum(boilerTemperature.membershipValues[0].value);
+                        inferenceBlock.addSeries(term);
                         break;
                     case "LOW":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(3));
+                        term = heatingPower.getTermAt(3);
+                        term.setMinimum(boilerTemperature.membershipValues[1].value);
+                        inferenceBlock.addSeries(term);
                         break;
                     case "MEDIUM":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(2));
+                        term = heatingPower.getTermAt(2);
+                        term.setMinimum(boilerTemperature.membershipValues[2].value);
+                        inferenceBlock.addSeries(term);
                         break;
                     case "HIGH":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(1));
+                        term = heatingPower.getTermAt(1);
+                        term.setMinimum(boilerTemperature.membershipValues[3].value);
+                        inferenceBlock.addSeries(term);
                         break;
                     case "VERY_HIGH":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(0));
+                        term = heatingPower.getTermAt(0);
+                        term.setMinimum(boilerTemperature.membershipValues[4].value);
+                        inferenceBlock.addSeries(term);
                         break;
                 }
             }
