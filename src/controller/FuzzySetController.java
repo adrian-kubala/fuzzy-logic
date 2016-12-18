@@ -96,11 +96,13 @@ public class FuzzySetController {
     public void infer() throws CloneNotSupportedException {
         inferenceBlock.removeAllSeries();
         
-        for (MembershipValue value : boilerTemperature.membershipValues) {
+        int valuesCount = boilerTemperature.membershipValues.length - 1;
+        for (int i = valuesCount; i >= 0; i--) {
+            MembershipValue value = boilerTemperature.membershipValues[i];
             if (value != null) {
                 String typeName = value.termType.name();
                 Enum termType = null;
-                Term term = null;
+                Term term;
                 int index = 0;
                 switch (typeName) {
                     case "VERY_LOW":
