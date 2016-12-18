@@ -93,26 +93,48 @@ public class FuzzySetController {
         inferenceBlock.range = heatingPower.range;
     }
     
-    public void infer() {
+    public void infer() throws CloneNotSupportedException {
         inferenceBlock.removeAllSeries();
         for (MembershipValue value : boilerTemperature.membershipValues) {
             if (value != null) {
                 String typeName = value.term.getTypeName();
+                Term term;
+                Term term2;
                 switch (typeName) {
                     case "VERY_LOW":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(4));
+                        term = heatingPower.getTermAt(4);
+                        term2 = (Term) term.createCopy(0, term.getItemCount() - 1);
+                        term2.setMinimum(boilerTemperature.membershipValues[0].value);
+                        inferenceBlock.addSeries(term2);
+                        System.out.println(term + " " + term2 + "\n");
                         break;
                     case "LOW":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(3));
+                        term = heatingPower.getTermAt(3);
+                        term2 = (Term) term.createCopy(0, term.getItemCount() - 1);
+                        term2.setMinimum(boilerTemperature.membershipValues[1].value);
+                        inferenceBlock.addSeries(term2);
+                        System.out.println(term + " " + term2 + "\n");
                         break;
                     case "MEDIUM":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(2));
+                        term = heatingPower.getTermAt(2);
+                        term2 = (Term) term.createCopy(0, term.getItemCount() - 1);
+                        term2.setMinimum(boilerTemperature.membershipValues[2].value);
+                        inferenceBlock.addSeries(term2);
+                        System.out.println(term + " " + term2 + "\n");
                         break;
                     case "HIGH":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(1));
+                        term = heatingPower.getTermAt(1);
+                        term2 = (Term) term.createCopy(0, term.getItemCount() - 1);
+                        term2.setMinimum(boilerTemperature.membershipValues[3].value);
+                        inferenceBlock.addSeries(term2);
+                        System.out.println(term + " " + term2 + "\n");
                         break;
                     case "VERY_HIGH":
-                        inferenceBlock.addSeries(heatingPower.getTermAt(0));
+                        term = heatingPower.getTermAt(0);
+                        term2 = (Term) term.createCopy(0, term.getItemCount() - 1);
+                        term2.setMinimum(boilerTemperature.membershipValues[4].value);
+                        inferenceBlock.addSeries(term2);
+                        System.out.println(term + " " + term2 + "\n");
                         break;
                 }
             }

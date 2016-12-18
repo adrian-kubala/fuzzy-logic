@@ -8,7 +8,7 @@ import org.jfree.data.xy.XYSeries;
 public class Term extends XYSeries {
 
     final Enum type;
-    double a, x0, x1, b;
+    public double a, x0, x1, b;
     
 
     public Term(Enum type) {
@@ -42,6 +42,26 @@ public class Term extends XYSeries {
         }
         value = Math.round(value * 1000.0) / 1000.0;
         return value;
+    }
+    
+    public void setMinimum(double y) {
+        double newX0 = getNewX0(y);
+        double newX1 = getNewX1(y);
+        
+        clear();
+        
+        add(a, 0);
+        add(newX0, y);
+        addOrUpdate(newX1, y);
+        add(b, 0);
+    }
+    
+    private double getNewX0(double y) {
+        return y * (x0 - a) + a;
+    }
+    
+    private double getNewX1(double y) {
+        return y * (x0 - b) + b;
     }
     
     public String getTypeName() {
