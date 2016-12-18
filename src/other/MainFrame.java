@@ -6,6 +6,8 @@
 package other;
 
 import controller.FuzzySetController;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modell.FuzzySet;
@@ -24,6 +26,16 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
+        placeOnCenter();
+        initController();
+    }
+    
+    private void placeOnCenter() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
+    }
+    
+    private void initController() {
         controller = new FuzzySetController();
         fuzzySetsPanel.add(controller.boilerTemperatureView);
         fuzzySetsPanel.add(controller.heatingPowerView);

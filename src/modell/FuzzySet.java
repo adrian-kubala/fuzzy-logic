@@ -1,7 +1,5 @@
 package modell;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYSeriesCollection;
 
