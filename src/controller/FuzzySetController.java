@@ -5,12 +5,14 @@
  */
 package controller;
 
+import java.util.ArrayList;
 import modell.FuzzySet;
 import modell.MembershipValue;
 import modell.Power;
 import modell.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
+import org.jfree.data.xy.XYSeries;
 import view.FuzzySetView;
 
 /**
@@ -129,5 +131,39 @@ public class FuzzySetController {
         }
         
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
-    }    
+        if (inferenceBlock.getSeriesCount() == 2) {
+            joinTerms();
+        }
+        
+    }   
+    
+    public void joinTerms() {
+        double length = inferenceBlock.range.getLength();
+        ArrayList<Double> xPoints = new ArrayList<>();
+        ArrayList<Double> yPoints = new ArrayList<>();
+        
+        Term firstTerm = (Term) inferenceBlock.getSeries(0);
+        Term secondterm = (Term) inferenceBlock.getSeries(1);
+        for (double i = 0; i <= length; i = i + 0.25) {
+            double firstY = firstTerm.getMembershipValue(i);
+            double secondY = secondterm.getMembershipValue(i);
+            
+            double yPoint = firstY + secondY - firstY * secondY;
+            
+            xPoints.add(i);
+            yPoints.add(yPoint);
+        }
+        
+        
+        Term term = new Term(Power.VERY_HIGH);
+        for (int i = 0; i < yPoints.size(); i++) {
+            term.addOrUpdate(xPoints.get(i), yPoints.get(i));
+        }
+        
+        inferenceBlock.removeAllSeries();
+        inferenceBlock.addSeries(term);
+        
+        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
+        
+    }
 }
