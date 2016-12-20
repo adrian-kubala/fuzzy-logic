@@ -161,14 +161,15 @@ public class MainFrame extends javax.swing.JFrame {
         
         inferenceBlockPanel.add(controller.inferenceBlockView);
         inferenceBlockPanel.revalidate();
-        inferenceBlockPanel.repaint();
+        inferenceBlockPanel.repaint();        
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     private void aggregateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggregateButtonActionPerformed
-
         if (controller.inferenceBlock.getSeriesCount() == 2) {
             controller.joinTerms();
         }
+        
+        fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
     }//GEN-LAST:event_aggregateButtonActionPerformed
 
     private void joinTermsEvent(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_joinTermsEvent
