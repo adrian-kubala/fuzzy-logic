@@ -5,12 +5,14 @@
  */
 package controller;
 
+import java.util.ArrayList;
 import modell.FuzzySet;
 import modell.MembershipValue;
 import modell.Power;
 import modell.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
+import org.jfree.data.xy.XYSeries;
 import view.FuzzySetView;
 
 /**
@@ -129,5 +131,55 @@ public class FuzzySetController {
         }
         
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
-    }    
+
+        
+    }   
+    
+    public void joinTerms() {
+        ArrayList<Double> xPoints = new ArrayList<>();
+        ArrayList<Double> yPoints = new ArrayList<>();
+        
+        Term firstTerm = (Term) inferenceBlock.getSeries(0);
+        Term secondterm = (Term) inferenceBlock.getSeries(1);
+        double lower = firstTerm.a;
+        double upper = secondterm.b;
+        double offset = 0.10;
+        for (double i = lower; i <= upper; i = i + offset) {
+            double firstY = firstTerm.getMembershipValueAfterMin(i);
+            double secondY = secondterm.getMembershipValueAfterMin(i);
+            System.out.println("pierwszy a = " + firstTerm.a + " x0 = " + firstTerm.x0 + " x1 = " + firstTerm.x1 + " b = " + firstTerm.b);
+            System.out.println("drugi a = " + secondterm.a + " x0 = " + secondterm.x0 + " x1 = " + secondterm.x1 + " b = " + secondterm.b);
+            System.out.println(firstY + " " + secondY + " dla x = " + i);
+            
+            double yPoint;
+            if (firstY > secondY) {
+                yPoint = firstY;
+            } else {
+                yPoint = secondY;
+            }
+            
+            System.out.println("najwiekszy y = " + yPoint + "\n");
+            
+            xPoints.add(i);
+            yPoints.add(yPoint);
+                
+            
+            i = Math.round(i * 100.0) / 100.0;
+            
+        }
+        
+        
+        Term term = new Term(Power.VERY_HIGH);
+        for (int i = 0; i < yPoints.size(); i++) {
+            term.add(xPoints.get(i), yPoints.get(i));
+        }
+        
+//        System.out.println(term.getItemCount());
+        
+        inferenceBlock.removeAllSeries();
+        inferenceBlock.addSeries(term);
+        
+        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
+        
+    }
 }
