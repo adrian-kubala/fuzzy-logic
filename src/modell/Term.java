@@ -9,6 +9,8 @@ public class Term extends XYSeries {
 
     final Enum type;
     public double a, x0, x1, b;
+    public double height = 1;
+    public double newX0, newX1;
     
 
     public Term(Enum type) {
@@ -34,7 +36,7 @@ public class Term extends XYSeries {
         if (x >= a && x <= x0) {
             value = (x - a) / (x0 - a);
         } else if (x >= x0 && x <= x1) {
-            value = 1;
+            value = height;
         } else if (x >= x1 && x <= b) {
             value = (b - x) / (b - x1);
         } else {
@@ -44,9 +46,24 @@ public class Term extends XYSeries {
         return value;
     }
     
+    public double getMembershipValueAfterMin(double x) {
+        double value;
+        if (x >= a && x <= newX0) {
+            value = (x - a) / (x0 - a);
+        } else if (x >= newX0 && x <= newX1) {
+            value = height;
+        } else if (x >= newX1 && x <= b) {
+            value = (b - x) / (b - x1);
+        } else {
+            value = 0;
+        }
+        value = Math.round(value * 1000.0) / 1000.0;
+        return value;
+    }
+    
     public void setMinimum(double y) {
-        double newX0 = getNewX0(y);
-        double newX1 = getNewX1(y);
+        newX0 = getNewX0(y);
+        newX1 = getNewX1(y);
         
         clear();
         
@@ -54,6 +71,8 @@ public class Term extends XYSeries {
         add(newX0, y);
         addOrUpdate(newX1, y);
         add(b, 0);
+        
+        height = y;
     }
     
     private double getNewX0(double y) {

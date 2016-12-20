@@ -55,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         fuzzyOutputTextArea = new javax.swing.JTextArea();
         inferenceBlockPanel = new javax.swing.JPanel();
+        aggregateButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +83,18 @@ public class MainFrame extends javax.swing.JFrame {
         inferenceBlockPanel.setBackground(new java.awt.Color(255, 0, 0));
         inferenceBlockPanel.setPreferredSize(new java.awt.Dimension(450, 200));
 
+        aggregateButton.setText("Agreguj");
+        aggregateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                joinTermsEvent(evt);
+            }
+        });
+        aggregateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aggregateButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,7 +107,9 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(fuzzifyButton))
+                        .addComponent(fuzzifyButton)
+                        .addGap(47, 47, 47)
+                        .addComponent(aggregateButton))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -106,11 +121,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(fuzzifyButton))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(fuzzifyButton)
+                                .addComponent(aggregateButton)))
+                        .addGap(19, 19, 19)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -149,6 +164,17 @@ public class MainFrame extends javax.swing.JFrame {
         inferenceBlockPanel.repaint();
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
+    private void aggregateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggregateButtonActionPerformed
+
+        if (controller.inferenceBlock.getSeriesCount() == 2) {
+            controller.joinTerms();
+        }
+    }//GEN-LAST:event_aggregateButtonActionPerformed
+
+    private void joinTermsEvent(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_joinTermsEvent
+        // TODO add your handling code here:
+    }//GEN-LAST:event_joinTermsEvent
+
     /**
      * @param args the command line arguments
      */
@@ -185,6 +211,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aggregateButton;
     private javax.swing.JTextArea crispValueTextArea;
     private javax.swing.JButton fuzzifyButton;
     private javax.swing.JTextArea fuzzyOutputTextArea;
