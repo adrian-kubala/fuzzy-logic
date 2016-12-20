@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import modell.FuzzySet;
 import modell.MembershipValue;
 import modell.Power;
@@ -171,7 +172,7 @@ public class FuzzySetController {
         
         Term term = new Term(Power.VERY_HIGH);
         for (int i = 0; i < yPoints.size(); i++) {
-            term.add(xPoints.get(i), yPoints.get(i));
+            term.addOrUpdate(xPoints.get(i), yPoints.get(i));
         }
         
 //        System.out.println(term.getItemCount());
@@ -181,5 +182,32 @@ public class FuzzySetController {
         
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
         
+    }
+    
+    public double defuzzify() {
+        ArrayList<Double> xPoints = new ArrayList<>();
+        ArrayList<Double> yPoints = new ArrayList<>();
+        
+        double nominator = 0;
+        double denominator = 0;
+        
+        for (Object series : inferenceBlock.getSeries()) {
+            Term term = (Term) series;
+            int count = term.getItemCount();
+            for (int i = 0; i < count; i++) {
+                double x = term.getX(i).doubleValue();
+                double y = term.getY(i).doubleValue();
+                
+                nominator += x * y;
+                yPoints.add(y);
+            }
+        }
+        
+        for (Double yPoint : yPoints) {
+            denominator += yPoint;
+        }
+        
+        double outputCrispValue = nominator / denominator;
+        return outputCrispValue;
     }
 }
