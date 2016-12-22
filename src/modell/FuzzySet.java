@@ -40,7 +40,7 @@ public class FuzzySet extends XYSeriesCollection {
         return (Term) getSeries(i);
     }
     
-    public Term getCopiedTermOfType(Enum type) {
+    public Term copyTermOfType(Enum type) {
         Term copy = null;
         for (int i = 0; i < getSeriesCount(); i++) {
             Term term = getTermAt(i);

@@ -98,7 +98,7 @@ public class FuzzySetController {
         inferenceBlock.range = heatingPower.range;
     }
     
-    public void infer() throws CloneNotSupportedException {
+    public void infer() {
         inferenceBlock.removeAllSeries();
         
         int valuesCount = boilerTemperature.membershipValues.length - 1;
@@ -127,7 +127,7 @@ public class FuzzySetController {
                         break;
                 }
                 
-                inferedTerm = heatingPower.getCopiedTermOfType(inferedTermType);
+                inferedTerm = heatingPower.copyTermOfType(inferedTermType);
                 inferedTerm.setMinimum(boilerTemperature.getMembershipValueOfType(currentType));
                 inferenceBlock.addSeries(inferedTerm);
             }
@@ -181,7 +181,6 @@ public class FuzzySetController {
     }
     
     public double defuzzify() {
-        ArrayList<Double> xPoints = new ArrayList<>();
         ArrayList<Double> yPoints = new ArrayList<>();
         
         double nominator = 0;

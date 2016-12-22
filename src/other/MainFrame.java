@@ -153,9 +153,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         
         inferenceBlockPanel.removeAll();
-        try {
-            controller.infer();
-        } catch (CloneNotSupportedException ex) { }
+        controller.infer();
         
         inferenceBlockPanel.add(controller.inferenceBlockView);
         inferenceBlockPanel.revalidate();
