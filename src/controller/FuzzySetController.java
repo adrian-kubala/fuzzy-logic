@@ -138,6 +138,10 @@ public class FuzzySetController {
     }   
     
     public void joinTerms() {
+        if (inferenceBlock.getSeriesCount() == 2) {
+            return;
+        }
+        
         ArrayList<XYDataItem> points = new ArrayList<>();
         
         Term firstTerm = inferenceBlock.getTermAt(0);

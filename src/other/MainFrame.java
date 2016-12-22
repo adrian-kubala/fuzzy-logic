@@ -82,11 +82,6 @@ public class MainFrame extends javax.swing.JFrame {
         inferenceBlockPanel.setPreferredSize(new java.awt.Dimension(450, 200));
 
         aggregateButton.setText("Agreguj");
-        aggregateButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                joinTermsEvent(evt);
-            }
-        });
         aggregateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aggregateButtonActionPerformed(evt);
@@ -161,16 +156,9 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     private void aggregateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggregateButtonActionPerformed
-        if (controller.inferenceBlock.getSeriesCount() == 2) {
-            controller.joinTerms();
-        }
-        
+        controller.joinTerms();
         fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
     }//GEN-LAST:event_aggregateButtonActionPerformed
-
-    private void joinTermsEvent(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_joinTermsEvent
-        // TODO add your handling code here:
-    }//GEN-LAST:event_joinTermsEvent
 
     /**
      * @param args the command line arguments
