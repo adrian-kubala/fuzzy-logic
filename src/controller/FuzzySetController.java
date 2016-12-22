@@ -12,7 +12,6 @@ import modell.Power;
 import modell.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
-import org.jfree.data.xy.XYDataItem;
 import other.NumbersFormatter;
 import view.FuzzySetView;
 
@@ -150,7 +149,7 @@ public class FuzzySetController {
         
         double lower = firstTerm.a;
         double upper = secondterm.b;
-        double offset = 0.05;
+        double offset = 0.03;
         
         for (double x = lower; x <= upper; x = x + offset) {
             double firstY = firstTerm.getMembershipValueAfterMin(x);
