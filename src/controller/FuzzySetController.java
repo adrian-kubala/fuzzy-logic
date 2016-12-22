@@ -6,14 +6,12 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.List;
 import modell.FuzzySet;
 import modell.MembershipValue;
 import modell.Power;
 import modell.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
-import org.jfree.data.xy.XYSeries;
 import view.FuzzySetView;
 
 /**
@@ -21,6 +19,9 @@ import view.FuzzySetView;
  * @author adrian
  */
 public class FuzzySetController {
+    
+    private static final String INPUT_SET_NAME = "temperatura bojlera";
+    private static final String OUTPUT_SET_NAME = "moc ogrzewania";
     
     public FuzzySet boilerTemperature;
     public FuzzySetView boilerTemperatureView;
@@ -38,7 +39,7 @@ public class FuzzySetController {
     }
     
     private void setupBoilerTemperature() {
-        boilerTemperature = new FuzzySet("temperatura bojlera", 5);
+        boilerTemperature = new FuzzySet(INPUT_SET_NAME, 5);
         boilerTemperature.range = new Range(7, 75);
         
         Term veryLow = new Term(Temperature.VERY_LOW);
@@ -65,7 +66,7 @@ public class FuzzySetController {
     }
     
     private void setupHeatingPower() {
-        heatingPower = new FuzzySet("moc ogrzewania", 5);
+        heatingPower = new FuzzySet(OUTPUT_SET_NAME, 5);
         heatingPower.range = new Range(0, 4);
         
         Term none = new Term(Power.NONE);
@@ -92,7 +93,7 @@ public class FuzzySetController {
     }
     
     private void setupInferenceBlock() {
-        inferenceBlock = new FuzzySet("Blok wnioskowania", 5);
+        inferenceBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
         inferenceBlock.range = heatingPower.range;
         
         
