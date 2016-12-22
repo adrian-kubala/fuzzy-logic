@@ -87,4 +87,7 @@ public class FuzzySetView extends JPanel {
         yAxis.setRange(0, 1.2);
     }
 
+    public void deleteLegend() {
+        chart.removeLegend();
+    }
 }

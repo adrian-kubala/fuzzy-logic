@@ -94,6 +94,8 @@ public class FuzzySetController {
     private void setupInferenceBlock() {
         inferenceBlock = new FuzzySet("Blok wnioskowania", 5);
         inferenceBlock.range = heatingPower.range;
+        
+        
     }
     
     public void infer() throws CloneNotSupportedException {
@@ -132,6 +134,7 @@ public class FuzzySetController {
         }
         
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
+        inferenceBlockView.deleteLegend();
 
         
     }   
