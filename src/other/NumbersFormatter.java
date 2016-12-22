@@ -15,6 +15,10 @@ public class NumbersFormatter {
     private NumbersFormatter() { };
     
     public double roundToDecimalPlaces(double value, int places) {
+        if (places == 0) {
+            return value;
+        }
+        
         double factor = Math.pow(10, places);
         return Math.round(value * factor) / factor;
     }
