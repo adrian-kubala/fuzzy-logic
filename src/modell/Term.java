@@ -1,6 +1,7 @@
 package modell;
 
 import org.jfree.data.xy.XYSeries;
+import other.NumbersFormatter;
 
 /**
  * Created by adrian on 04.12.2016.
@@ -42,7 +43,7 @@ public class Term extends XYSeries {
         } else {
             value = 0;
         }
-        value = Math.round(value * 1000.0) / 1000.0;
+        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         return value;
     }
     
