@@ -143,7 +143,7 @@ public class FuzzySetController {
             return;
         }
         
-        ArrayList<XYDataItem> points = new ArrayList<>();
+        Term term = new Term(Power.VERY_HIGH);
         
         Term firstTerm = inferenceBlock.getTermAt(0);
         Term secondterm = inferenceBlock.getTermAt(1);
@@ -152,32 +152,24 @@ public class FuzzySetController {
         double upper = secondterm.b;
         double offset = 0.05;
         
-        for (double i = lower; i <= upper; i = i + offset) {
-            double firstY = firstTerm.getMembershipValueAfterMin(i);
-            double secondY = secondterm.getMembershipValueAfterMin(i);
+        for (double x = lower; x <= upper; x = x + offset) {
+            double firstY = firstTerm.getMembershipValueAfterMin(x);
+            double secondY = secondterm.getMembershipValueAfterMin(x);
             System.out.println("pierwszy a = " + firstTerm.a + " x0 = " + firstTerm.x0 + " x1 = " + firstTerm.x1 + " b = " + firstTerm.b);
             System.out.println("drugi a = " + secondterm.a + " x0 = " + secondterm.x0 + " x1 = " + secondterm.x1 + " b = " + secondterm.b);
-            System.out.println(firstY + " " + secondY + " dla x = " + i);
+            System.out.println(firstY + " " + secondY + " dla x = " + x);
             
             double yPoint = NumbersFormatter.instance.getMax(firstY, secondY);
-            
+            term.add(x, yPoint);
             System.out.println("najwiekszy y = " + yPoint + "\n");
             
-            points.add(new XYDataItem(i, yPoint));
-                
-            i = NumbersFormatter.instance.roundToDecimalPlaces(i, 2);
-        }
-        
-        Term term = new Term(Power.VERY_HIGH);
-        for (XYDataItem item : points) {
-            term.add(item);
+            x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
         }
         
         inferenceBlock.removeAllSeries();
         inferenceBlock.addSeries(term);
         
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
-        
     }
     
     public double defuzzify() {

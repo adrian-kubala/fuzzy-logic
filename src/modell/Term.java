@@ -58,7 +58,7 @@ public class Term extends XYSeries {
         } else {
             value = 0;
         }
-        value = Math.round(value * 1000.0) / 1000.0;
+        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         return value;
     }
     
