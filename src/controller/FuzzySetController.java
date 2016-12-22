@@ -12,6 +12,7 @@ import modell.Power;
 import modell.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
+import org.jfree.data.xy.XYDataItem;
 import view.FuzzySetView;
 
 /**
@@ -137,14 +138,15 @@ public class FuzzySetController {
     }   
     
     public void joinTerms() {
-        ArrayList<Double> xPoints = new ArrayList<>();
-        ArrayList<Double> yPoints = new ArrayList<>();
+        ArrayList<XYDataItem> points = new ArrayList<>();
         
-        Term firstTerm = (Term) inferenceBlock.getSeries(0);
-        Term secondterm = (Term) inferenceBlock.getSeries(1);
+        Term firstTerm = inferenceBlock.getTermAt(0);
+        Term secondterm = inferenceBlock.getTermAt(1);
+        
         double lower = firstTerm.a;
         double upper = secondterm.b;
         double offset = 0.05;
+        
         for (double i = lower; i <= upper; i = i + offset) {
             double firstY = firstTerm.getMembershipValueAfterMin(i);
             double secondY = secondterm.getMembershipValueAfterMin(i);
@@ -161,15 +163,14 @@ public class FuzzySetController {
             
             System.out.println("najwiekszy y = " + yPoint + "\n");
             
-            xPoints.add(i);
-            yPoints.add(yPoint);
+            points.add(new XYDataItem(i, yPoint));
                 
             i = Math.round(i * 100.0) / 100.0;   
         }
         
         Term term = new Term(Power.VERY_HIGH);
-        for (int i = 0; i < yPoints.size(); i++) {
-            term.addOrUpdate(xPoints.get(i), yPoints.get(i));
+        for (XYDataItem item : points) {
+            term.add(item);
         }
         
         inferenceBlock.removeAllSeries();
