@@ -13,6 +13,7 @@ import modell.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataItem;
+import other.NumbersFormatter;
 import view.FuzzySetView;
 
 /**
@@ -169,7 +170,7 @@ public class FuzzySetController {
             
             points.add(new XYDataItem(i, yPoint));
                 
-            i = Math.round(i * 100.0) / 100.0;   
+            i = NumbersFormatter.instance.roundToDecimalPlaces(i, 2);
         }
         
         Term term = new Term(Power.VERY_HIGH);
@@ -207,7 +208,7 @@ public class FuzzySetController {
         }
         
         double outputCrispValue = nominator / denominator;
-        outputCrispValue = Math.round(outputCrispValue * 100.0) / 100.0;
+        outputCrispValue = NumbersFormatter.instance.roundToDecimalPlaces(outputCrispValue, 2);
         inferenceBlockView.showSingleton(outputCrispValue);
         return outputCrispValue;
     }
