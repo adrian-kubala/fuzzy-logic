@@ -22,4 +22,20 @@ public class NumbersFormatter {
         double factor = Math.pow(10, places);
         return Math.round(value * factor) / factor;
     }
+    
+    public double getMax(double... numbers) {
+        double max = numbers[0];
+        int length = numbers.length;
+        if (length == 1) {
+            return max;
+        }
+        
+        for (int i = 1; i < length; i++) {
+            if (numbers[i] > max) {
+                max = numbers[i];
+            }
+        }
+        
+        return max;
+    }
 }

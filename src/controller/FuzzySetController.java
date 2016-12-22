@@ -139,7 +139,7 @@ public class FuzzySetController {
     }   
     
     public void joinTerms() {
-        if (inferenceBlock.getSeriesCount() == 2) {
+        if (inferenceBlock.getSeriesCount() == 1) {
             return;
         }
         
@@ -159,12 +159,7 @@ public class FuzzySetController {
             System.out.println("drugi a = " + secondterm.a + " x0 = " + secondterm.x0 + " x1 = " + secondterm.x1 + " b = " + secondterm.b);
             System.out.println(firstY + " " + secondY + " dla x = " + i);
             
-            double yPoint;
-            if (firstY > secondY) {
-                yPoint = firstY;
-            } else {
-                yPoint = secondY;
-            }
+            double yPoint = NumbersFormatter.instance.getMax(firstY, secondY);
             
             System.out.println("najwiekszy y = " + yPoint + "\n");
             
