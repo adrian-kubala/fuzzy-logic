@@ -16,6 +16,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
@@ -89,5 +90,11 @@ public class FuzzySetView extends JPanel {
 
     public void deleteLegend() {
         chart.removeLegend();
+    }
+    
+    public void showSingleton(double value) {
+        BasicStroke stroke = new BasicStroke(3f);
+        ValueMarker marker = new ValueMarker(value, Color.BLACK, stroke);  
+        plot.addDomainMarker(marker);
     }
 }

@@ -6,8 +6,6 @@
 package other;
 
 import controller.FuzzySetController;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modell.FuzzySet;
 import modell.MembershipValue;
 import org.jfree.ui.RefineryUtilities;

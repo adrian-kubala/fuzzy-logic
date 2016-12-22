@@ -95,8 +95,6 @@ public class FuzzySetController {
     private void setupInferenceBlock() {
         inferenceBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
         inferenceBlock.range = heatingPower.range;
-        
-        
     }
     
     public void infer() throws CloneNotSupportedException {
@@ -136,8 +134,6 @@ public class FuzzySetController {
         
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
         inferenceBlockView.deleteLegend();
-
-        
     }   
     
     public void joinTerms() {
@@ -168,18 +164,13 @@ public class FuzzySetController {
             xPoints.add(i);
             yPoints.add(yPoint);
                 
-            
-            i = Math.round(i * 100.0) / 100.0;
-            
+            i = Math.round(i * 100.0) / 100.0;   
         }
-        
         
         Term term = new Term(Power.VERY_HIGH);
         for (int i = 0; i < yPoints.size(); i++) {
             term.addOrUpdate(xPoints.get(i), yPoints.get(i));
         }
-        
-//        System.out.println(term.getItemCount());
         
         inferenceBlock.removeAllSeries();
         inferenceBlock.addSeries(term);
@@ -212,6 +203,8 @@ public class FuzzySetController {
         }
         
         double outputCrispValue = nominator / denominator;
-        return Math.round(outputCrispValue*100.0)/100.0;
+        outputCrispValue = Math.round(outputCrispValue * 100.0) / 100.0;
+        inferenceBlockView.showSingleton(outputCrispValue);
+        return outputCrispValue;
     }
 }
