@@ -42,7 +42,7 @@ public class FuzzySetController {
         boilerTemperature.range = new Range(7, 75);
         
         Term veryLow = new Term(Temperature.VERY_LOW);
-        veryLow.setShape(7, 7, 11, 15);
+        veryLow.setShape(3, 7, 11, 15);
         boilerTemperature.addSeries(veryLow);
 
         Term low = new Term(Temperature.LOW);
@@ -58,7 +58,7 @@ public class FuzzySetController {
         boilerTemperature.addSeries(high);
 
         Term veryHigh = new Term(Temperature.VERY_HIGH);
-        veryHigh.setShape(50, 62.5, 75, 75);
+        veryHigh.setShape(50, 62.5, 75, 87.5);
         boilerTemperature.addSeries(veryHigh);
         
         boilerTemperatureView = new FuzzySetView(boilerTemperature, 3);
@@ -69,7 +69,7 @@ public class FuzzySetController {
         heatingPower.range = new Range(0, 4);
         
         Term none = new Term(Power.NONE);
-        none.setShape(0, 0, 0, 1);
+        none.setShape(-1, 0, 0, 1);
         heatingPower.addSeries(none);
 
         Term low = new Term(Power.LOW);
@@ -85,7 +85,7 @@ public class FuzzySetController {
         heatingPower.addSeries(high);
         
         Term veryHigh = new Term(Power.VERY_HIGH);
-        veryHigh.setShape(3, 4, 4, 4);
+        veryHigh.setShape(3, 4, 4, 5);
         heatingPower.addSeries(veryHigh);
         
         heatingPowerView = new FuzzySetView(heatingPower, 1);        
@@ -144,7 +144,7 @@ public class FuzzySetController {
         Term secondterm = (Term) inferenceBlock.getSeries(1);
         double lower = firstTerm.a;
         double upper = secondterm.b;
-        double offset = 0.10;
+        double offset = 0.05;
         for (double i = lower; i <= upper; i = i + offset) {
             double firstY = firstTerm.getMembershipValueAfterMin(i);
             double secondY = secondterm.getMembershipValueAfterMin(i);
@@ -208,6 +208,6 @@ public class FuzzySetController {
         }
         
         double outputCrispValue = nominator / denominator;
-        return outputCrispValue;
+        return Math.round(outputCrispValue*100.0)/100.0;
     }
 }
