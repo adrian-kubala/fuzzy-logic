@@ -5,7 +5,6 @@
  */
 package modell;
 
-import modell.enums.Power;
 import other.NumbersFormatter;
 
 /**
@@ -14,12 +13,9 @@ import other.NumbersFormatter;
  */
 public class InferredTerm extends Term {
     public double newX0, newX1;
-    enum Blank {
-        BLANK
-    }
     
-    public InferredTerm() {
-        super(Blank.BLANK);
+    public InferredTerm(Enum type) {
+        super(type);
     }
     
     @Override

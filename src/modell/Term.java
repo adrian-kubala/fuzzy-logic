@@ -12,7 +12,6 @@ public class Term extends XYSeries {
     public double a, x0, x1, b;
     public double height = 1;
     
-
     public Term(Enum type) {
         super(type.toString());
 
@@ -45,8 +44,6 @@ public class Term extends XYSeries {
         value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         return value;
     }
-    
-
     
     public String getTypeName() {
         return type.name();

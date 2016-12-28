@@ -103,7 +103,6 @@ public class FuzzySetController {
         inferenceBlock.range = heatingPower.range;
         
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
-        inferenceBlockView.deleteLegend();
     }
     
     private void setupAggregationBlock() {
@@ -123,7 +122,7 @@ public class FuzzySetController {
             if (value != null) {
                 Enum currentType = value.termType;
                 
-                InferredTerm inferredTerm = new InferredTerm();
+                
                 Enum inferedTermType = null;
                 switch (currentType.name()) {
                     case "VERY_LOW":
@@ -142,7 +141,7 @@ public class FuzzySetController {
                         inferedTermType = Power.NONE;
                         break;
                 }
-                
+                InferredTerm inferredTerm = new InferredTerm(inferedTermType);
                 inferredTerm.assignDataOfTerm(heatingPower.copyTermOfType(inferedTermType));
                 inferredTerm.setMinimum(boilerTemperature.getMembershipValueOfType(currentType));
                 inferenceBlock.addSeries(inferredTerm);
@@ -160,7 +159,7 @@ public class FuzzySetController {
             return;
         }
         
-        InferredTerm term = new InferredTerm();
+        InferredTerm term = new InferredTerm(Power.NONE);
         
         InferredTerm firstTerm = (InferredTerm) inferenceBlock.getTermAt(0);
         InferredTerm secondterm = (InferredTerm) inferenceBlock.getTermAt(1);
@@ -172,13 +171,9 @@ public class FuzzySetController {
         for (double x = lower; x <= upper; x = x + offset) {
             double firstY = firstTerm.getMembershipValue(x);
             double secondY = secondterm.getMembershipValue(x);
-            System.out.println("pierwszy a = " + firstTerm.a + " x0 = " + firstTerm.x0 + " x1 = " + firstTerm.x1 + " b = " + firstTerm.b);
-            System.out.println("drugi a = " + secondterm.a + " x0 = " + secondterm.x0 + " x1 = " + secondterm.x1 + " b = " + secondterm.b);
-            System.out.println(firstY + " " + secondY + " dla x = " + x);
             
             double yPoint = NumbersFormatter.instance.getMax(firstY, secondY);
             term.add(x, yPoint);
-            System.out.println("najwiekszy y = " + yPoint + "\n");
             
             x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
         }
