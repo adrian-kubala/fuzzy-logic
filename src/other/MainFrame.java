@@ -36,6 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
         inputSetPanel.add(controller.boilerTemperatureView);
         inferenceBlockPanel.add(controller.heatingPowerView);
         inferenceBlockPanel.add(controller.inferenceBlockView);
+        inferenceBlockPanel.add(controller.aggregationBlockView);
     }
     
     /**
@@ -172,11 +173,11 @@ public class MainFrame extends javax.swing.JFrame {
             fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.name + ") = " + value + "\n");
         }
         
-        inferenceBlockPanel.remove(controller.inferenceBlockView);
+        inferenceBlockPanel.remove(1);
         controller.infer();
         inferenceBlockPanel.add(controller.inferenceBlockView, 1);
+        
         inferenceBlockPanel.revalidate();
-        inferenceBlockPanel.repaint();        
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     private void aggregateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggregateButtonActionPerformed

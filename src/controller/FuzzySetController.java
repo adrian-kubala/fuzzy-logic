@@ -32,11 +32,15 @@ public class FuzzySetController {
     
     public FuzzySet inferenceBlock;
     public FuzzySetView inferenceBlockView;
+    
+    public FuzzySet aggregationBlock;
+    public FuzzySetView aggregationBlockView;
 
     public FuzzySetController() {
         setupBoilerTemperature();
         setupHeatingPower();
         setupInferenceBlock();
+        setupAggregationBlock();
     }
     
     private void setupBoilerTemperature() {
@@ -99,6 +103,14 @@ public class FuzzySetController {
         
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
         inferenceBlockView.deleteLegend();
+    }
+    
+    private void setupAggregationBlock() {
+        aggregationBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
+        aggregationBlock.range = heatingPower.range;
+        
+        aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
+        aggregationBlockView.deleteLegend();
     }
     
     public void infer() {
