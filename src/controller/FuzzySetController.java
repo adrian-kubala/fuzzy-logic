@@ -32,11 +32,15 @@ public class FuzzySetController {
     
     public FuzzySet inferenceBlock;
     public FuzzySetView inferenceBlockView;
+    
+    public FuzzySet aggregationBlock;
+    public FuzzySetView aggregationBlockView;
 
     public FuzzySetController() {
         setupBoilerTemperature();
         setupHeatingPower();
         setupInferenceBlock();
+        setupAggregationBlock();
     }
     
     private void setupBoilerTemperature() {
@@ -96,6 +100,17 @@ public class FuzzySetController {
     private void setupInferenceBlock() {
         inferenceBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
         inferenceBlock.range = heatingPower.range;
+        
+        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
+        inferenceBlockView.deleteLegend();
+    }
+    
+    private void setupAggregationBlock() {
+        aggregationBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
+        aggregationBlock.range = heatingPower.range;
+        
+        aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
+        aggregationBlockView.deleteLegend();
     }
     
     public void infer() {
@@ -133,12 +148,13 @@ public class FuzzySetController {
             }
         }
         
-        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
-        inferenceBlockView.deleteLegend();
+        inferenceBlockView.refresh();
     }   
     
-    public void joinTerms() {
+    public void aggregate() {
         if (inferenceBlock.getSeriesCount() == 1) {
+            aggregationBlockView.addTermView(inferenceBlock.getTermAt(0));
+            aggregationBlockView.refresh();
             return;
         }
         
@@ -165,10 +181,9 @@ public class FuzzySetController {
             x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
         }
         
-        inferenceBlock.removeAllSeries();
-        inferenceBlock.addSeries(term);
-        
-        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
+        aggregationBlock.removeAllSeries();
+        aggregationBlockView.addTermView(term);
+        aggregationBlockView.refresh();
     }
     
     public double defuzzify() {
@@ -177,7 +192,7 @@ public class FuzzySetController {
         double nominator = 0;
         double denominator = 0;
         
-        for (Object series : inferenceBlock.getSeries()) {
+        for (Object series : aggregationBlock.getSeries()) {
             Term term = (Term) series;
             int count = term.getItemCount();
             for (int i = 0; i < count; i++) {
@@ -195,7 +210,8 @@ public class FuzzySetController {
         
         double outputCrispValue = nominator / denominator;
         outputCrispValue = NumbersFormatter.instance.roundToDecimalPlaces(outputCrispValue, 2);
-        inferenceBlockView.showSingleton(outputCrispValue);
+        aggregationBlockView.refresh();
+        aggregationBlockView.showSingleton(outputCrispValue);
         return outputCrispValue;
     }
 }
