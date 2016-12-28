@@ -65,5 +65,5 @@ public class FuzzySet extends XYSeriesCollection {
             }
         }
         return value;
-    } 
+    }
 }

@@ -7,6 +7,7 @@ package controller;
 
 import java.util.ArrayList;
 import modell.FuzzySet;
+import modell.InferredTerm;
 import modell.MembershipValue;
 import modell.enums.Power;
 import modell.enums.Temperature;
@@ -122,7 +123,7 @@ public class FuzzySetController {
             if (value != null) {
                 Enum currentType = value.termType;
                 
-                Term inferedTerm;
+                InferredTerm inferredTerm = new InferredTerm();
                 Enum inferedTermType = null;
                 switch (currentType.name()) {
                     case "VERY_LOW":
@@ -142,9 +143,9 @@ public class FuzzySetController {
                         break;
                 }
                 
-                inferedTerm = heatingPower.copyTermOfType(inferedTermType);
-                inferedTerm.setMinimum(boilerTemperature.getMembershipValueOfType(currentType));
-                inferenceBlock.addSeries(inferedTerm);
+                inferredTerm.assignDataOfTerm(heatingPower.copyTermOfType(inferedTermType));
+                inferredTerm.setMinimum(boilerTemperature.getMembershipValueOfType(currentType));
+                inferenceBlock.addSeries(inferredTerm);
             }
         }
         
@@ -153,23 +154,24 @@ public class FuzzySetController {
     
     public void aggregate() {
         if (inferenceBlock.getSeriesCount() == 1) {
+            aggregationBlock.removeAllSeries();
             aggregationBlockView.addTermView(inferenceBlock.getTermAt(0));
             aggregationBlockView.refresh();
             return;
         }
         
-        Term term = new Term(Power.VERY_HIGH);
+        InferredTerm term = new InferredTerm();
         
-        Term firstTerm = inferenceBlock.getTermAt(0);
-        Term secondterm = inferenceBlock.getTermAt(1);
+        InferredTerm firstTerm = (InferredTerm) inferenceBlock.getTermAt(0);
+        InferredTerm secondterm = (InferredTerm) inferenceBlock.getTermAt(1);
         
         double lower = firstTerm.a;
         double upper = secondterm.b;
         double offset = 0.03;
         
         for (double x = lower; x <= upper; x = x + offset) {
-            double firstY = firstTerm.getMembershipValueAfterMin(x);
-            double secondY = secondterm.getMembershipValueAfterMin(x);
+            double firstY = firstTerm.getMembershipValue(x);
+            double secondY = secondterm.getMembershipValue(x);
             System.out.println("pierwszy a = " + firstTerm.a + " x0 = " + firstTerm.x0 + " x1 = " + firstTerm.x1 + " b = " + firstTerm.b);
             System.out.println("drugi a = " + secondterm.a + " x0 = " + secondterm.x0 + " x1 = " + secondterm.x1 + " b = " + secondterm.b);
             System.out.println(firstY + " " + secondY + " dla x = " + x);

@@ -8,10 +8,9 @@ import other.NumbersFormatter;
  */
 public class Term extends XYSeries {
 
-    final Enum type;
+    Enum type;
     public double a, x0, x1, b;
     public double height = 1;
-    public double newX0, newX1;
     
 
     public Term(Enum type) {
@@ -47,42 +46,7 @@ public class Term extends XYSeries {
         return value;
     }
     
-    public double getMembershipValueAfterMin(double x) {
-        double value;
-        if (x >= a && x <= newX0) {
-            value = (x - a) / (x0 - a);
-        } else if (x >= newX0 && x <= newX1) {
-            value = height;
-        } else if (x >= newX1 && x <= b) {
-            value = (b - x) / (b - x1);
-        } else {
-            value = 0;
-        }
-        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
-        return value;
-    }
-    
-    public void setMinimum(double y) {
-        newX0 = getNewX0(y);
-        newX1 = getNewX1(y);
-        
-        clear();
-        
-        add(a, 0);
-        add(newX0, y);
-        addOrUpdate(newX1, y);
-        add(b, 0);
-        
-        height = y;
-    }
-    
-    private double getNewX0(double y) {
-        return y * (x0 - a) + a;
-    }
-    
-    private double getNewX1(double y) {
-        return y * (x0 - b) + b;
-    }
+
     
     public String getTypeName() {
         return type.name();
