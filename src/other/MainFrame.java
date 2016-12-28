@@ -181,7 +181,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     private void aggregateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggregateButtonActionPerformed
-        controller.joinTerms();
+        controller.aggregate();
         fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
     }//GEN-LAST:event_aggregateButtonActionPerformed
 

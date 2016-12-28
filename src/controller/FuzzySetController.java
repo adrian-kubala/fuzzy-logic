@@ -152,7 +152,7 @@ public class FuzzySetController {
         inferenceBlockView.deleteLegend();
     }   
     
-    public void joinTerms() {
+    public void aggregate() {
         if (inferenceBlock.getSeriesCount() == 1) {
             return;
         }
