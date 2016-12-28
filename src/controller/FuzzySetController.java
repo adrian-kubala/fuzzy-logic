@@ -181,6 +181,7 @@ public class FuzzySetController {
             x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
         }
         
+        aggregationBlock.removeAllSeries();
         aggregationBlockView.addTermView(term);
         aggregationBlockView.refresh();
     }
@@ -191,7 +192,7 @@ public class FuzzySetController {
         double nominator = 0;
         double denominator = 0;
         
-        for (Object series : inferenceBlock.getSeries()) {
+        for (Object series : aggregationBlock.getSeries()) {
             Term term = (Term) series;
             int count = term.getItemCount();
             for (int i = 0; i < count; i++) {
@@ -209,7 +210,8 @@ public class FuzzySetController {
         
         double outputCrispValue = nominator / denominator;
         outputCrispValue = NumbersFormatter.instance.roundToDecimalPlaces(outputCrispValue, 2);
-        inferenceBlockView.showSingleton(outputCrispValue);
+        aggregationBlockView.refresh();
+        aggregationBlockView.showSingleton(outputCrispValue);
         return outputCrispValue;
     }
 }
