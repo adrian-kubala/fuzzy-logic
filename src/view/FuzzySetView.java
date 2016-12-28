@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 import modell.FuzzySet;
+import modell.Term;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -20,6 +21,7 @@ import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYDataset;
 
 /**
  *
@@ -116,5 +118,9 @@ public class FuzzySetView extends JPanel {
         for (int i = 0; i < termCount; i++) {
             renderer.setSeriesStroke(i, stroke);
         }
+    }
+    
+    public void addTermView(Term term) {
+        fuzzySet.addSeries(term);
     }
 }

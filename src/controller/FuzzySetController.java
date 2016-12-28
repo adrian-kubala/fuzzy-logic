@@ -153,6 +153,8 @@ public class FuzzySetController {
     
     public void aggregate() {
         if (inferenceBlock.getSeriesCount() == 1) {
+            aggregationBlockView.addTermView(inferenceBlock.getTermAt(0));
+            aggregationBlockView.refresh();
             return;
         }
         
@@ -179,8 +181,8 @@ public class FuzzySetController {
             x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
         }
         
-        inferenceBlock.removeAllSeries();
-        inferenceBlock.addSeries(term);
+        aggregationBlockView.addTermView(term);
+        aggregationBlockView.refresh();
     }
     
     public double defuzzify() {
