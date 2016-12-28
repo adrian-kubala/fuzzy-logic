@@ -18,6 +18,7 @@ import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
 /**
@@ -96,5 +97,24 @@ public class FuzzySetView extends JPanel {
         BasicStroke stroke = new BasicStroke(3f);
         ValueMarker marker = new ValueMarker(value, Color.BLACK, stroke);  
         plot.addDomainMarker(marker);
+    }
+    
+    public void refresh() {
+        refreshRenderer();
+        plot.clearDomainMarkers();
+    }
+    
+    private void refreshRenderer() {
+        XYItemRenderer renderer = plot.getRenderer();
+        int termCount = plot.getSeriesCount();
+        
+        for(int i = 0; i < termCount; i++) {
+            renderer.setSeriesPaint(i, colors[i]);
+        }
+        
+        BasicStroke stroke = new BasicStroke(3f);
+        for (int i = 0; i < termCount; i++) {
+            renderer.setSeriesStroke(i, stroke);
+        }
     }
 }

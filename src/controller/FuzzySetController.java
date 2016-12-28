@@ -148,8 +148,7 @@ public class FuzzySetController {
             }
         }
         
-        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
-        inferenceBlockView.deleteLegend();
+        inferenceBlockView.refresh();
     }   
     
     public void aggregate() {
