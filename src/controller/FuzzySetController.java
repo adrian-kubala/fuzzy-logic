@@ -96,6 +96,9 @@ public class FuzzySetController {
     private void setupInferenceBlock() {
         inferenceBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
         inferenceBlock.range = heatingPower.range;
+        
+        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
+        inferenceBlockView.deleteLegend();
     }
     
     public void infer() {
