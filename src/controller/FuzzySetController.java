@@ -182,8 +182,6 @@ public class FuzzySetController {
         
         inferenceBlock.removeAllSeries();
         inferenceBlock.addSeries(term);
-        
-        inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
     }
     
     public double defuzzify() {
