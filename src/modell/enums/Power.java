@@ -8,7 +8,8 @@ public enum Power {
     LOW("niska"),
     MEDIUM("średnia"),
     HIGH("wysoka"),
-    VERY_HIGH("bardzo wysoka");
+    VERY_HIGH("bardzo wysoka"),
+    OUTPUT("zbiór wyjściowy");
     
     private final String value;
     

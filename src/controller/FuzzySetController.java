@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import modell.FuzzySet;
 import modell.InferenceBlock;
 import modell.InferredTerm;
-import modell.MembershipValue;
 import modell.enums.Power;
 import modell.enums.Temperature;
 import modell.Term;
@@ -109,7 +108,7 @@ public class FuzzySetController {
         aggregationBlock.range = heatingPower.range;
         
         aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
-        aggregationBlockView.deleteLegend();
+//        aggregationBlockView.deleteLegend();
     }
     
     public void infer() {
@@ -125,7 +124,7 @@ public class FuzzySetController {
             return;
         }
         
-        InferredTerm term = new InferredTerm(Power.NONE);
+        Term aggregatedTerm = new Term(Power.OUTPUT);
         
         InferredTerm firstTerm = inferenceBlock.getTermAt(0);
         InferredTerm secondterm = inferenceBlock.getTermAt(1);
@@ -139,13 +138,13 @@ public class FuzzySetController {
             double secondY = secondterm.getMembershipValue(x);
             
             double yPoint = NumbersFormatter.instance.getMax(firstY, secondY);
-            term.add(x, yPoint);
+            aggregatedTerm.add(x, yPoint);
             
             x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
         }
         
         aggregationBlock.removeAllTerms();
-        aggregationBlockView.addTermView(term);
+        aggregationBlockView.addTermView(aggregatedTerm);
         aggregationBlockView.refresh();
     }
     
