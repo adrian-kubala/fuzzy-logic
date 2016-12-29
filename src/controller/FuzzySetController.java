@@ -118,7 +118,7 @@ public class FuzzySetController {
     
     public double defuzzify() {
        aggregationBlock.defuzzify();
-        double outputCrispValue = aggregationBlock.crispValue;
+        double outputCrispValue = aggregationBlock.getCrispValue();
         
         aggregationBlockView.refresh();
         aggregationBlockView.showSingleton(outputCrispValue);

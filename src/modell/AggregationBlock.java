@@ -15,8 +15,8 @@ import other.NumbersFormatter;
  */
 public class AggregationBlock extends FuzzySet {
     
-    InferenceBlock inferenceBlock;
-    public double crispValue;
+    private final InferenceBlock inferenceBlock;
+    private double crispValue;
     
     public AggregationBlock(InferenceBlock block) {
         super(block.name, block.getSeriesCount());
@@ -84,5 +84,9 @@ public class AggregationBlock extends FuzzySet {
         
         crispValue = nominator / denominator;
         crispValue = NumbersFormatter.instance.roundToDecimalPlaces(crispValue, 2);
+    }
+    
+    public double getCrispValue() {
+        return crispValue;
     }
 }
