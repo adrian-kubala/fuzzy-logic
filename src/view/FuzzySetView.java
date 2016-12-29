@@ -95,7 +95,7 @@ public class FuzzySetView extends JPanel {
     }
 
     public void showSingleton(double value) {
-        BasicStroke stroke = new BasicStroke(3f);
+        BasicStroke stroke = new BasicStroke(2.5f);
         ValueMarker marker = new ValueMarker(value, Color.BLACK, stroke);
         plot.addDomainMarker(marker);
     }
@@ -122,7 +122,7 @@ public class FuzzySetView extends JPanel {
     public void showFuzzyValues() {
         clearMarkers();
 
-        BasicStroke dashedStroke = new BasicStroke(3f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0, new float[]{9}, 0);
+        BasicStroke dashedStroke = new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 6f, new float[]{6f}, 0);
         double crispValue = 0;
         for (int i = 0; i < fuzzySet.getMembershipValuesLength(); i++) {
             MembershipValue value = fuzzySet.getMembershipValueAt(i);
@@ -131,10 +131,8 @@ public class FuzzySetView extends JPanel {
                 plot.addRangeMarker(marker);
 
                 crispValue = value.getCrispValue();
-                System.out.println(crispValue);
             }
         }
-        System.out.println(crispValue);
         plot.addDomainMarker(new ValueMarker(crispValue, Color.BLACK, dashedStroke));
     }
 
