@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.ArrayList;
+import modell.AggregationBlock;
 import modell.FuzzySet;
 import modell.InferenceBlock;
 import modell.InferredTerm;
@@ -34,7 +35,7 @@ public class FuzzySetController {
     public InferenceBlock inferenceBlock;
     public FuzzySetView inferenceBlockView;
     
-    public FuzzySet aggregationBlock;
+    public AggregationBlock aggregationBlock;
     public FuzzySetView aggregationBlockView;
 
     public FuzzySetController() {
@@ -104,11 +105,8 @@ public class FuzzySetController {
     }
     
     private void setupAggregationBlock() {
-        aggregationBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
-        aggregationBlock.range = heatingPower.range;
-        
+        aggregationBlock = new AggregationBlock(inferenceBlock);
         aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
-//        aggregationBlockView.deleteLegend();
     }
     
     public void infer() {
