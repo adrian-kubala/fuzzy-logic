@@ -14,6 +14,17 @@ import other.NumbersFormatter;
 public class InferredTerm extends Term {
     public double newX0, newX1;
     
+    public InferredTerm(Term outputTerm) {
+        super(outputTerm.type);
+        
+        assignDataOf(outputTerm);
+    }
+        
+    private void assignDataOf(Term term) {
+        setShape(term.a, term.x0, term.x1, term.b);
+        height = term.height;
+    }
+    
     public InferredTerm(Enum type) {
         super(type);
     }
@@ -54,11 +65,5 @@ public class InferredTerm extends Term {
     
     private double getNewX1(double y) {
         return y * (x0 - b) + b;
-    }
-    
-    public void assignDataOfTerm(Term term) {
-        setShape(term.a, term.x0, term.x1, term.b);
-        type = term.type;
-        height = term.height;
     }
 }

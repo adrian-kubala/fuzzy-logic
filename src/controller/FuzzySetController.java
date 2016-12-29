@@ -122,7 +122,6 @@ public class FuzzySetController {
             if (value != null) {
                 Enum currentType = value.termType;
                 
-                
                 Enum inferedTermType = null;
                 switch (currentType.name()) {
                     case "VERY_LOW":
@@ -141,9 +140,13 @@ public class FuzzySetController {
                         inferedTermType = Power.NONE;
                         break;
                 }
-                InferredTerm inferredTerm = new InferredTerm(inferedTermType);
-                inferredTerm.assignDataOfTerm(heatingPower.copyTermOfType(inferedTermType));
-                inferredTerm.setMinimum(boilerTemperature.getMembershipValueOfType(currentType));
+                
+                Term outputTerm = heatingPower.copyTermOfType(inferedTermType);
+                InferredTerm inferredTerm = new InferredTerm(outputTerm);
+                
+                double membershipValue = boilerTemperature.getMembershipValueOfType(currentType);
+                inferredTerm.setMinimum(membershipValue);
+                
                 inferenceBlock.addSeries(inferredTerm);
             }
         }
