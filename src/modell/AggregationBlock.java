@@ -5,6 +5,7 @@
  */
 package modell;
 
+import java.util.ArrayList;
 import modell.enums.Power;
 import other.NumbersFormatter;
 
@@ -15,6 +16,7 @@ import other.NumbersFormatter;
 public class AggregationBlock extends FuzzySet {
     
     InferenceBlock inferenceBlock;
+    public double crispValue;
     
     public AggregationBlock(InferenceBlock block) {
         super(block.name, block.getSeriesCount());
@@ -57,4 +59,30 @@ public class AggregationBlock extends FuzzySet {
         
         addTerm(aggregatedTerm);
     } 
+    
+    public void defuzzify() {
+        ArrayList<Double> yPoints = new ArrayList<>();
+        
+        double nominator = 0;
+        double denominator = 0;
+        
+        for (Object series : getSeries()) {
+            Term term = (Term) series;
+            int count = term.getItemCount();
+            for (int i = 0; i < count; i++) {
+                double x = term.getX(i).doubleValue();
+                double y = term.getY(i).doubleValue();
+                
+                nominator += x * y;
+                yPoints.add(y);
+            }
+        }
+        
+        for (Double yPoint : yPoints) {
+            denominator += yPoint;
+        }
+        
+        crispValue = nominator / denominator;
+        crispValue = NumbersFormatter.instance.roundToDecimalPlaces(crispValue, 2);
+    }
 }

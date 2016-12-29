@@ -5,16 +5,13 @@
  */
 package controller;
 
-import java.util.ArrayList;
 import modell.AggregationBlock;
 import modell.FuzzySet;
 import modell.InferenceBlock;
-import modell.InferredTerm;
 import modell.enums.Power;
 import modell.enums.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
-import other.NumbersFormatter;
 import view.FuzzySetView;
 
 /**
@@ -120,31 +117,12 @@ public class FuzzySetController {
     }
     
     public double defuzzify() {
-        ArrayList<Double> yPoints = new ArrayList<>();
+       aggregationBlock.defuzzify();
+        double outputCrispValue = aggregationBlock.crispValue;
         
-        double nominator = 0;
-        double denominator = 0;
-        
-        for (Object series : aggregationBlock.getSeries()) {
-            Term term = (Term) series;
-            int count = term.getItemCount();
-            for (int i = 0; i < count; i++) {
-                double x = term.getX(i).doubleValue();
-                double y = term.getY(i).doubleValue();
-                
-                nominator += x * y;
-                yPoints.add(y);
-            }
-        }
-        
-        for (Double yPoint : yPoints) {
-            denominator += yPoint;
-        }
-        
-        double outputCrispValue = nominator / denominator;
-        outputCrispValue = NumbersFormatter.instance.roundToDecimalPlaces(outputCrispValue, 2);
         aggregationBlockView.refresh();
         aggregationBlockView.showSingleton(outputCrispValue);
+        
         return outputCrispValue;
     }
 }
