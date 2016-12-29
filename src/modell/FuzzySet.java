@@ -10,7 +10,7 @@ public class FuzzySet extends XYSeriesCollection {
 
     private final String name;
     public Range range;
-    public MembershipValue[] membershipValues;
+    private MembershipValue[] membershipValues;
 
     public FuzzySet(String name, int termsCount) {
         super();
@@ -77,5 +77,13 @@ public class FuzzySet extends XYSeriesCollection {
     
     public String getName() {
         return name;
+    }
+    
+    public int getMembershipValuesLastIndex() {
+        return membershipValues.length - 1;
+    }
+    
+    public MembershipValue getMembershipValueAt(int i) {
+        return membershipValues[i];
     }
 }

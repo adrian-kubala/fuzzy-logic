@@ -164,7 +164,7 @@ public class MainFrame extends javax.swing.JFrame {
         for (int i = 0; i < termsCount; i++) {
             String name = (String) boilerTemperature.getSeriesKey(i);
             double value;
-            MembershipValue membershipValue = boilerTemperature.membershipValues[i];
+            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
             if (membershipValue != null) {
                 value = membershipValue.value;
             } else {

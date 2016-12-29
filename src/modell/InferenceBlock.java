@@ -25,9 +25,9 @@ public class InferenceBlock extends FuzzySet {
     public void infer(FuzzySet inputSet) {
         removeAllTerms();
         
-        int valuesCount = inputSet.membershipValues.length - 1;
+        int valuesCount = inputSet.getMembershipValuesLastIndex();
         for (int i = valuesCount; i >= 0; i--) {
-            MembershipValue value = inputSet.membershipValues[i];
+            MembershipValue value = inputSet.getMembershipValueAt(i);
             if (value != null) {
                 Enum currentType = value.termType;
                 
