@@ -9,8 +9,8 @@ import other.NumbersFormatter;
 public class Term extends XYSeries {
 
     private final Enum type;
-    public double a, x0, x1, b;
-    public double height = 1;
+    protected double a, x0, x1, b;
+    protected double height = 1;
     
     public Term(Enum type) {
         super(type.toString());
