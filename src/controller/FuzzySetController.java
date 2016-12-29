@@ -5,15 +5,13 @@
  */
 package controller;
 
-import java.util.ArrayList;
+import modell.AggregationBlock;
 import modell.FuzzySet;
 import modell.InferenceBlock;
-import modell.InferredTerm;
 import modell.enums.Power;
 import modell.enums.Temperature;
 import modell.Term;
 import org.jfree.data.Range;
-import other.NumbersFormatter;
 import view.FuzzySetView;
 
 /**
@@ -34,7 +32,7 @@ public class FuzzySetController {
     public InferenceBlock inferenceBlock;
     public FuzzySetView inferenceBlockView;
     
-    public FuzzySet aggregationBlock;
+    public AggregationBlock aggregationBlock;
     public FuzzySetView aggregationBlockView;
 
     public FuzzySetController() {
@@ -104,11 +102,8 @@ public class FuzzySetController {
     }
     
     private void setupAggregationBlock() {
-        aggregationBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
-        aggregationBlock.range = heatingPower.range;
-        
+        aggregationBlock = new AggregationBlock(inferenceBlock);
         aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
-//        aggregationBlockView.deleteLegend();
     }
     
     public void infer() {
@@ -117,63 +112,17 @@ public class FuzzySetController {
     }   
     
     public void aggregate() {
-        if (inferenceBlock.getSeriesCount() == 1) {
-            aggregationBlock.removeAllTerms();
-            aggregationBlockView.addTermView(inferenceBlock.getTermAt(0));
-            aggregationBlockView.refresh();
-            return;
-        }
-        
-        Term aggregatedTerm = new Term(Power.OUTPUT);
-        
-        InferredTerm firstTerm = inferenceBlock.getTermAt(0);
-        InferredTerm secondterm = inferenceBlock.getTermAt(1);
-        
-        double lower = firstTerm.a;
-        double upper = secondterm.b;
-        double offset = 0.03;
-        
-        for (double x = lower; x <= upper; x = x + offset) {
-            double firstY = firstTerm.getMembershipValue(x);
-            double secondY = secondterm.getMembershipValue(x);
-            
-            double yPoint = NumbersFormatter.instance.getMax(firstY, secondY);
-            aggregatedTerm.add(x, yPoint);
-            
-            x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
-        }
-        
-        aggregationBlock.removeAllTerms();
-        aggregationBlockView.addTermView(aggregatedTerm);
+        aggregationBlock.aggregate();
         aggregationBlockView.refresh();
     }
     
     public double defuzzify() {
-        ArrayList<Double> yPoints = new ArrayList<>();
+       aggregationBlock.defuzzify();
+        double outputCrispValue = aggregationBlock.getCrispValue();
         
-        double nominator = 0;
-        double denominator = 0;
-        
-        for (Object series : aggregationBlock.getSeries()) {
-            Term term = (Term) series;
-            int count = term.getItemCount();
-            for (int i = 0; i < count; i++) {
-                double x = term.getX(i).doubleValue();
-                double y = term.getY(i).doubleValue();
-                
-                nominator += x * y;
-                yPoints.add(y);
-            }
-        }
-        
-        for (Double yPoint : yPoints) {
-            denominator += yPoint;
-        }
-        
-        double outputCrispValue = nominator / denominator;
-        outputCrispValue = NumbersFormatter.instance.roundToDecimalPlaces(outputCrispValue, 2);
         aggregationBlockView.refresh();
         aggregationBlockView.showSingleton(outputCrispValue);
+        
         return outputCrispValue;
     }
 }
