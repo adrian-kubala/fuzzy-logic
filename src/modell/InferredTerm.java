@@ -12,7 +12,7 @@ import other.NumbersFormatter;
  * @author adrian
  */
 public class InferredTerm extends Term {
-    public double newX0, newX1;
+    private double newX0, newX1;
     
     public InferredTerm(Term outputTerm) {
         super(outputTerm.type);
