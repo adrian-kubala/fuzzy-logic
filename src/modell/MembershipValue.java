@@ -10,7 +10,25 @@ package modell;
  * @author adrian
  */
 public class MembershipValue {
-    public double value;
-    public Enum termType;
-    public double forCrispValue;
+    private final double value;
+    private final Enum termType;
+    private final double forCrispValue;
+    
+    public MembershipValue(double value, Enum termType, double crispValue) {
+        this.value = value;
+        this.termType = termType;
+        forCrispValue = crispValue;
+    }
+    
+    public double getValue() {
+        return value;
+    }
+    
+    public String getTermName() {
+        return termType.name();
+    }
+    
+    public Enum getTermType() {
+        return termType;
+    }
 }

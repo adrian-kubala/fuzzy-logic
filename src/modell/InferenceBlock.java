@@ -29,7 +29,7 @@ public class InferenceBlock extends FuzzySet {
         for (int i = valuesCount; i >= 0; i--) {
             MembershipValue value = inputSet.getMembershipValueAt(i);
             if (value != null) {
-                Enum currentType = value.termType;
+                Enum currentType = value.getTermType();
                 
                 Enum inferedTermType = null;
                 switch (currentType.name()) {

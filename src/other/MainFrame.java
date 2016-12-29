@@ -166,7 +166,7 @@ public class MainFrame extends javax.swing.JFrame {
             double value;
             MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
             if (membershipValue != null) {
-                value = membershipValue.value;
+                value = membershipValue.getValue();
             } else {
                 value = 0;
             }

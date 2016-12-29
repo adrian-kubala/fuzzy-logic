@@ -26,10 +26,7 @@ public class FuzzySet extends XYSeriesCollection {
             
             double value = term.getMembershipValue(x);
             if (value > 0) {
-                MembershipValue membershipValue = new MembershipValue();
-                membershipValue.termType = term.type;
-                membershipValue.value = value;
-                membershipValue.forCrispValue = x;
+                MembershipValue membershipValue = new MembershipValue(value, term.type, x);
 
                 membershipValues[i] = membershipValue;
             }
@@ -60,8 +57,8 @@ public class FuzzySet extends XYSeriesCollection {
                 continue;
             }
             
-            if (membershipValue.termType.name().equals(type.name())) {
-                value = membershipValue.value;
+            if (membershipValue.getTermName().equals(type.name())) {
+                value = membershipValue.getValue();
             }
         }
         return value;
