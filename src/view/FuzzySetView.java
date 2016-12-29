@@ -118,8 +118,4 @@ public class FuzzySetView extends JPanel {
             renderer.setSeriesStroke(i, stroke);
         }
     }
-    
-    public void addTermView(Term term) {
-        fuzzySet.addTerm(term);
-    }
 }

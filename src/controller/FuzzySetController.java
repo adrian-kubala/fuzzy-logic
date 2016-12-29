@@ -115,38 +115,7 @@ public class FuzzySetController {
     }   
     
     public void aggregate() {
-        Term aggregatedTerm;
-        if (inferenceBlock.getSeriesCount() == 1) {
-            aggregationBlock.removeAllTerms();
-            aggregatedTerm = inferenceBlock.getTermAt(0);
-            aggregatedTerm.setKey(Power.OUTPUT);
-            
-            aggregationBlockView.addTermView(aggregatedTerm);
-            aggregationBlockView.refresh();
-            return;
-        }
-        
-        aggregatedTerm = new Term(Power.OUTPUT);
-        
-        InferredTerm firstTerm = inferenceBlock.getTermAt(0);
-        InferredTerm secondterm = inferenceBlock.getTermAt(1);
-        
-        double lower = firstTerm.a;
-        double upper = secondterm.b;
-        double offset = 0.03;
-        
-        for (double x = lower; x <= upper; x = x + offset) {
-            double firstY = firstTerm.getMembershipValue(x);
-            double secondY = secondterm.getMembershipValue(x);
-            
-            double yPoint = NumbersFormatter.instance.getMax(firstY, secondY);
-            aggregatedTerm.add(x, yPoint);
-            
-            x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
-        }
-        
-        aggregationBlock.removeAllTerms();
-        aggregationBlockView.addTermView(aggregatedTerm);
+        aggregationBlock.aggregate();
         aggregationBlockView.refresh();
     }
     
