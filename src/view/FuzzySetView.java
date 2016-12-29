@@ -120,6 +120,6 @@ public class FuzzySetView extends JPanel {
     }
     
     public void addTermView(Term term) {
-        fuzzySet.addSeries(term);
+        fuzzySet.addTerm(term);
     }
 }

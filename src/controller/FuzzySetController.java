@@ -51,23 +51,23 @@ public class FuzzySetController {
         
         Term veryLow = new Term(Temperature.VERY_LOW);
         veryLow.setShape(3, 7, 11, 15);
-        boilerTemperature.addSeries(veryLow);
+        boilerTemperature.addTerm(veryLow);
 
         Term low = new Term(Temperature.LOW);
         low.setShape(10, 15, 15, 20);
-        boilerTemperature.addSeries(low);
+        boilerTemperature.addTerm(low);
 
         Term medium = new Term(Temperature.MEDIUM);
         medium.setShape(18, 26, 26, 33);
-        boilerTemperature.addSeries(medium);
+        boilerTemperature.addTerm(medium);
 
         Term high = new Term(Temperature.HIGH);
         high.setShape(30, 45, 45, 60);
-        boilerTemperature.addSeries(high);
+        boilerTemperature.addTerm(high);
 
         Term veryHigh = new Term(Temperature.VERY_HIGH);
         veryHigh.setShape(50, 62.5, 75, 87.5);
-        boilerTemperature.addSeries(veryHigh);
+        boilerTemperature.addTerm(veryHigh);
         
         boilerTemperatureView = new FuzzySetView(boilerTemperature, 3);
     }
@@ -78,23 +78,23 @@ public class FuzzySetController {
         
         Term none = new Term(Power.NONE);
         none.setShape(-1, 0, 0, 1);
-        heatingPower.addSeries(none);
+        heatingPower.addTerm(none);
 
         Term low = new Term(Power.LOW);
         low.setShape(0, 1, 1, 2);
-        heatingPower.addSeries(low);
+        heatingPower.addTerm(low);
 
         Term medium = new Term(Power.MEDIUM);
         medium.setShape(1, 2, 2, 3);
-        heatingPower.addSeries(medium);
+        heatingPower.addTerm(medium);
 
         Term high = new Term(Power.HIGH);
         high.setShape(2, 3, 3, 4);
-        heatingPower.addSeries(high);
+        heatingPower.addTerm(high);
         
         Term veryHigh = new Term(Power.VERY_HIGH);
         veryHigh.setShape(3, 4, 4, 5);
-        heatingPower.addSeries(veryHigh);
+        heatingPower.addTerm(veryHigh);
         
         heatingPowerView = new FuzzySetView(heatingPower, 1);        
     }
@@ -119,7 +119,7 @@ public class FuzzySetController {
     
     public void aggregate() {
         if (inferenceBlock.getSeriesCount() == 1) {
-            aggregationBlock.removeAllSeries();
+            aggregationBlock.removeAllTerms();
             aggregationBlockView.addTermView(inferenceBlock.getTermAt(0));
             aggregationBlockView.refresh();
             return;
@@ -144,7 +144,7 @@ public class FuzzySetController {
             x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
         }
         
-        aggregationBlock.removeAllSeries();
+        aggregationBlock.removeAllTerms();
         aggregationBlockView.addTermView(term);
         aggregationBlockView.refresh();
     }

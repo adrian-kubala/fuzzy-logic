@@ -66,4 +66,12 @@ public class FuzzySet extends XYSeriesCollection {
         }
         return value;
     }
+    
+    public void addTerm(Term term) {
+        addSeries(term);
+    }
+    
+    public void removeAllTerms() {
+        removeAllSeries();
+    }
 }

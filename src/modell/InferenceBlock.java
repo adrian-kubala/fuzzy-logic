@@ -23,7 +23,7 @@ public class InferenceBlock extends FuzzySet {
     }
     
     public void infer(FuzzySet inputSet) {
-        removeAllSeries();
+        removeAllTerms();
         
         int valuesCount = inputSet.membershipValues.length - 1;
         for (int i = valuesCount; i >= 0; i--) {
@@ -56,7 +56,7 @@ public class InferenceBlock extends FuzzySet {
                 double membershipValue = inputSet.getMembershipValueOfType(currentType);
                 inferredTerm.setMinimum(membershipValue);
                 
-                addSeries(inferredTerm);
+                addTerm(inferredTerm);
             }
         }
     }
