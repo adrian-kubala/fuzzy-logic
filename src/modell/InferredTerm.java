@@ -25,10 +25,6 @@ public class InferredTerm extends Term {
         height = term.height;
     }
     
-    public InferredTerm(Enum type) {
-        super(type);
-    }
-    
     @Override
     public double getMembershipValue(double x) {
         double value;

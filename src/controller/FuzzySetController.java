@@ -115,14 +115,18 @@ public class FuzzySetController {
     }   
     
     public void aggregate() {
+        Term aggregatedTerm;
         if (inferenceBlock.getSeriesCount() == 1) {
             aggregationBlock.removeAllTerms();
-            aggregationBlockView.addTermView(inferenceBlock.getTermAt(0));
+            aggregatedTerm = inferenceBlock.getTermAt(0);
+            aggregatedTerm.setKey(Power.OUTPUT);
+            
+            aggregationBlockView.addTermView(aggregatedTerm);
             aggregationBlockView.refresh();
             return;
         }
         
-        Term aggregatedTerm = new Term(Power.OUTPUT);
+        aggregatedTerm = new Term(Power.OUTPUT);
         
         InferredTerm firstTerm = inferenceBlock.getTermAt(0);
         InferredTerm secondterm = inferenceBlock.getTermAt(1);
