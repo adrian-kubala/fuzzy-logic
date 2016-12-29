@@ -7,6 +7,7 @@ package controller;
 
 import java.util.ArrayList;
 import modell.FuzzySet;
+import modell.InferenceBlock;
 import modell.InferredTerm;
 import modell.MembershipValue;
 import modell.enums.Power;
@@ -31,7 +32,7 @@ public class FuzzySetController {
     public FuzzySet heatingPower;
     public FuzzySetView heatingPowerView;
     
-    public FuzzySet inferenceBlock;
+    public InferenceBlock inferenceBlock;
     public FuzzySetView inferenceBlockView;
     
     public FuzzySet aggregationBlock;
@@ -99,9 +100,7 @@ public class FuzzySetController {
     }
     
     private void setupInferenceBlock() {
-        inferenceBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
-        inferenceBlock.range = heatingPower.range;
-        
+        inferenceBlock = new InferenceBlock(heatingPower);
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
     }
     
@@ -114,43 +113,7 @@ public class FuzzySetController {
     }
     
     public void infer() {
-        inferenceBlock.removeAllSeries();
-        
-        int valuesCount = boilerTemperature.membershipValues.length - 1;
-        for (int i = valuesCount; i >= 0; i--) {
-            MembershipValue value = boilerTemperature.membershipValues[i];
-            if (value != null) {
-                Enum currentType = value.termType;
-                
-                Enum inferedTermType = null;
-                switch (currentType.name()) {
-                    case "VERY_LOW":
-                        inferedTermType = Power.VERY_HIGH;
-                        break;
-                    case "LOW":
-                        inferedTermType = Power.HIGH;
-                        break;
-                    case "MEDIUM":
-                        inferedTermType = Power.MEDIUM;
-                        break;
-                    case "HIGH":
-                        inferedTermType = Power.LOW;
-                        break;
-                    case "VERY_HIGH":
-                        inferedTermType = Power.NONE;
-                        break;
-                }
-                
-                Term outputTerm = heatingPower.copyTermOfType(inferedTermType);
-                InferredTerm inferredTerm = new InferredTerm(outputTerm);
-                
-                double membershipValue = boilerTemperature.getMembershipValueOfType(currentType);
-                inferredTerm.setMinimum(membershipValue);
-                
-                inferenceBlock.addSeries(inferredTerm);
-            }
-        }
-        
+        inferenceBlock.infer(boilerTemperature);
         inferenceBlockView.refresh();
     }   
     
@@ -164,8 +127,8 @@ public class FuzzySetController {
         
         InferredTerm term = new InferredTerm(Power.NONE);
         
-        InferredTerm firstTerm = (InferredTerm) inferenceBlock.getTermAt(0);
-        InferredTerm secondterm = (InferredTerm) inferenceBlock.getTermAt(1);
+        InferredTerm firstTerm = inferenceBlock.getTermAt(0);
+        InferredTerm secondterm = inferenceBlock.getTermAt(1);
         
         double lower = firstTerm.a;
         double upper = secondterm.b;
