@@ -7,6 +7,7 @@ package controller;
 
 import java.util.ArrayList;
 import modell.FuzzySet;
+import modell.InferenceBlock;
 import modell.InferredTerm;
 import modell.MembershipValue;
 import modell.enums.Power;
@@ -31,7 +32,7 @@ public class FuzzySetController {
     public FuzzySet heatingPower;
     public FuzzySetView heatingPowerView;
     
-    public FuzzySet inferenceBlock;
+    public InferenceBlock inferenceBlock;
     public FuzzySetView inferenceBlockView;
     
     public FuzzySet aggregationBlock;
@@ -99,9 +100,7 @@ public class FuzzySetController {
     }
     
     private void setupInferenceBlock() {
-        inferenceBlock = new FuzzySet(OUTPUT_SET_NAME, 5);
-        inferenceBlock.range = heatingPower.range;
-        
+        inferenceBlock = new InferenceBlock(heatingPower);
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
     }
     
