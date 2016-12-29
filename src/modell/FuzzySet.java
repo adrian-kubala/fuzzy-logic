@@ -83,4 +83,8 @@ public class FuzzySet extends XYSeriesCollection {
     public MembershipValue getMembershipValueAt(int i) {
         return membershipValues[i];
     }
+    
+    public int getMembershipValuesLength() {
+        return membershipValues.length;
+    }
 }

@@ -31,4 +31,8 @@ public class MembershipValue {
     public Enum getTermType() {
         return termType;
     }
+    
+    public double getCrispValue() {
+        return forCrispValue;
+    }
 }
