@@ -19,7 +19,7 @@ public class AggregationBlock extends FuzzySet {
     private double crispValue;
     
     public AggregationBlock(InferenceBlock block) {
-        super(block.name, block.getSeriesCount());
+        super(block.getName(), block.getSeriesCount());
         
         inferenceBlock = block;
         range = inferenceBlock.range;

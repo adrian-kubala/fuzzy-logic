@@ -13,10 +13,10 @@ import modell.enums.Power;
  */
 public class InferenceBlock extends FuzzySet {
     
-    FuzzySet outputSet;
+    private final FuzzySet outputSet;
     
     public InferenceBlock(FuzzySet outputSet) {
-        super(outputSet.name, outputSet.getSeriesCount());
+        super(outputSet.getName(), outputSet.getSeriesCount());
         
         range = outputSet.range;
         this.outputSet = outputSet;

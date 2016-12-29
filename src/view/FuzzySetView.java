@@ -47,7 +47,7 @@ public class FuzzySetView extends JPanel {
     }
     
     private void createChart() {
-        String name = fuzzySet.name;
+        String name = fuzzySet.getName();
         chart = ChartFactory.createXYLineChart(name, name, "u(" + name + ")",
                 fuzzySet, PlotOrientation.VERTICAL, true, true, false);
         chartPanel = new ChartPanel(chart);

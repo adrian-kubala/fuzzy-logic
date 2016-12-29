@@ -8,7 +8,7 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class FuzzySet extends XYSeriesCollection {
 
-    public String name;
+    private final String name;
     public Range range;
     public MembershipValue[] membershipValues;
 
@@ -73,5 +73,9 @@ public class FuzzySet extends XYSeriesCollection {
     
     public void removeAllTerms() {
         removeAllSeries();
+    }
+    
+    public String getName() {
+        return name;
     }
 }
