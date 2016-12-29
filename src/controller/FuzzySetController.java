@@ -127,8 +127,8 @@ public class FuzzySetController {
         
         InferredTerm term = new InferredTerm(Power.NONE);
         
-        InferredTerm firstTerm = (InferredTerm) inferenceBlock.getTermAt(0);
-        InferredTerm secondterm = (InferredTerm) inferenceBlock.getTermAt(1);
+        InferredTerm firstTerm = inferenceBlock.getTermAt(0);
+        InferredTerm secondterm = inferenceBlock.getTermAt(1);
         
         double lower = firstTerm.a;
         double upper = secondterm.b;

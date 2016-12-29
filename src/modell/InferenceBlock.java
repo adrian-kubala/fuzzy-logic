@@ -61,4 +61,8 @@ public class InferenceBlock extends FuzzySet {
         }
     }
     
+    @Override
+    public InferredTerm getTermAt(int index) {
+        return (InferredTerm) super.getTermAt(index);
+    }
 }
