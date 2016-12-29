@@ -8,7 +8,7 @@ import other.NumbersFormatter;
  */
 public class Term extends XYSeries {
 
-    Enum type;
+    private final Enum type;
     public double a, x0, x1, b;
     public double height = 1;
     
@@ -43,6 +43,10 @@ public class Term extends XYSeries {
         }
         value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         return value;
+    }
+    
+    public Enum getType() {
+        return type;
     }
     
     public String getTypeName() {

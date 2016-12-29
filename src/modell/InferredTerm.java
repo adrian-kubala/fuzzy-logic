@@ -15,7 +15,7 @@ public class InferredTerm extends Term {
     private double newX0, newX1;
     
     public InferredTerm(Term outputTerm) {
-        super(outputTerm.type);
+        super(outputTerm.getType());
         
         assignDataOf(outputTerm);
     }

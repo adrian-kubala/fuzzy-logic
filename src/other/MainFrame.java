@@ -15,7 +15,7 @@ import org.jfree.ui.RefineryUtilities;
  * @author adrian
  */
 public class MainFrame extends javax.swing.JFrame {
-    FuzzySetController controller;
+    private FuzzySetController controller;
     
     /**
      * Creates new form MainFrame
