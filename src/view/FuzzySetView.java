@@ -19,6 +19,7 @@ import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
@@ -139,5 +140,11 @@ public class FuzzySetView extends JPanel {
     private void clearMarkers() {
         plot.clearDomainMarkers();
         plot.clearRangeMarkers();
+    }
+    
+    public void fillView() {
+        XYAreaRenderer renderer = new XYAreaRenderer();
+        renderer.setSeriesPaint(0, Color.CYAN);
+        plot.setRenderer(renderer);
     }
 }

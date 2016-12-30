@@ -124,6 +124,7 @@ public class FuzzySetController {
         
         aggregationBlockView.refresh();
         aggregationBlockView.showSingleton(outputCrispValue);
+        aggregationBlockView.fillView();
         
         return outputCrispValue;
     }
