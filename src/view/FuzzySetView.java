@@ -122,12 +122,12 @@ public class FuzzySetView extends JPanel {
     public void showFuzzyValues() {
         clearMarkers();
 
-        BasicStroke dashedStroke = new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 6f, new float[]{6f}, 0);
+        BasicStroke dashedStroke = new BasicStroke(1.7f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 6f, new float[]{6f}, 0);
         double crispValue = 0;
         for (int i = 0; i < fuzzySet.getMembershipValuesLength(); i++) {
             MembershipValue value = fuzzySet.getMembershipValueAt(i);
             if (value != null) {
-                ValueMarker marker = new ValueMarker(value.getValue(), Color.BLACK, dashedStroke);
+                ValueMarker marker = new ValueMarker(value.getValue(), colors[i], dashedStroke);
                 plot.addRangeMarker(marker);
 
                 crispValue = value.getCrispValue();
