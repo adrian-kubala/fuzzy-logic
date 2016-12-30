@@ -107,6 +107,8 @@ public class FuzzySetController {
     }
     
     public void infer() {
+        boilerTemperatureView.showFuzzyValues();
+        
         inferenceBlock.infer(boilerTemperature);
         inferenceBlockView.refresh();
     }   
@@ -122,6 +124,7 @@ public class FuzzySetController {
         
         aggregationBlockView.refresh();
         aggregationBlockView.showSingleton(outputCrispValue);
+        aggregationBlockView.fillView();
         
         return outputCrispValue;
     }
