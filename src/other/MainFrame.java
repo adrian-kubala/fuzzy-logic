@@ -56,7 +56,6 @@ public class MainFrame extends javax.swing.JFrame {
         fuzzyOutputTextArea = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         crispValueTextArea = new javax.swing.JTextArea();
-        aggregateButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,7 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
         inferenceBlockPanel.setBackground(new java.awt.Color(255, 0, 0));
         inferenceBlockPanel.setPreferredSize(new java.awt.Dimension(450, 200));
 
-        fuzzifyButton.setText("Rozmyj");
+        fuzzifyButton.setText("Uruchom");
         fuzzifyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fuzzifyButtonActionPerformed(evt);
@@ -84,13 +83,6 @@ public class MainFrame extends javax.swing.JFrame {
         crispValueTextArea.setRows(5);
         jScrollPane1.setViewportView(crispValueTextArea);
 
-        aggregateButton.setText("Agreguj");
-        aggregateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aggregateButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -98,27 +90,21 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(fuzzifyButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(aggregateButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fuzzifyButton)
-                            .addComponent(aggregateButton)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fuzzifyButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -176,12 +162,10 @@ public class MainFrame extends javax.swing.JFrame {
         controller.infer();
         
         inferenceBlockPanel.revalidate();
-    }//GEN-LAST:event_fuzzifyButtonActionPerformed
-
-    private void aggregateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aggregateButtonActionPerformed
+        
         controller.aggregate();
         fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
-    }//GEN-LAST:event_aggregateButtonActionPerformed
+    }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,7 +203,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton aggregateButton;
     private javax.swing.JTextArea crispValueTextArea;
     private javax.swing.JButton fuzzifyButton;
     private javax.swing.JTextArea fuzzyOutputTextArea;
