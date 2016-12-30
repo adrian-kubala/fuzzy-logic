@@ -96,7 +96,7 @@ public class FuzzySetView extends JPanel {
     }
 
     public void showSingleton(double value) {
-        BasicStroke stroke = new BasicStroke(2.5f);
+        BasicStroke stroke = new BasicStroke(2f);
         ValueMarker marker = new ValueMarker(value, Color.BLACK, stroke);
         plot.addDomainMarker(marker);
     }
@@ -145,6 +145,9 @@ public class FuzzySetView extends JPanel {
     public void fillView() {
         XYAreaRenderer renderer = new XYAreaRenderer();
         renderer.setSeriesPaint(0, Color.CYAN);
+        renderer.setSeriesOutlinePaint(0, Color.BLACK);
+        renderer.setSeriesOutlineStroke(0, new BasicStroke(2f));
+        renderer.setOutline(true);
         plot.setRenderer(renderer);
     }
 }
