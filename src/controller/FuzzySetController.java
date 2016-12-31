@@ -20,8 +20,11 @@ import view.FuzzySetView;
  */
 public class FuzzySetController {
     
-    private static final String INPUT_SET_NAME = "temperatura bojlera";
-    private static final String OUTPUT_SET_NAME = "moc ogrzewania";
+    private static final String INPUT_SET_NAME = "Zbiór wejściowy";
+    private static final String INPUT_VARIABLE_NAME = "temperatura bojlera";
+    
+    private static final String OUTPUT_SET_NAME = "Zbiór wyjściowy";
+    private static final String OUTPUT_VARIABLE_NAME = "moc ogrzewania";
     
     public FuzzySet boilerTemperature;
     public FuzzySetView boilerTemperatureView;
@@ -43,7 +46,7 @@ public class FuzzySetController {
     }
     
     private void setupBoilerTemperature() {
-        boilerTemperature = new FuzzySet(INPUT_SET_NAME, 5);
+        boilerTemperature = new FuzzySet(INPUT_SET_NAME, INPUT_VARIABLE_NAME, 5);
         boilerTemperature.range = new Range(7, 75);
         
         Term veryLow = new Term(Temperature.VERY_LOW);
@@ -70,7 +73,7 @@ public class FuzzySetController {
     }
     
     private void setupHeatingPower() {
-        heatingPower = new FuzzySet(OUTPUT_SET_NAME, 5);
+        heatingPower = new FuzzySet(OUTPUT_SET_NAME, OUTPUT_VARIABLE_NAME, 5);
         heatingPower.range = new Range(0, 4);
         
         Term none = new Term(Power.NONE);

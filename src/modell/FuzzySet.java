@@ -8,14 +8,16 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class FuzzySet extends XYSeriesCollection {
 
-    private final String name;
+    private final String NAME;
+    private final String VARIABLE_NAME;
     public Range range;
     private MembershipValue[] membershipValues;
 
-    public FuzzySet(String name, int termsCount) {
+    public FuzzySet(String name, String variableName, int termsCount) {
         super();
         
-        this.name = name;
+        NAME = name;
+        VARIABLE_NAME = variableName;
         membershipValues = new MembershipValue[termsCount];
     }
     
@@ -73,7 +75,11 @@ public class FuzzySet extends XYSeriesCollection {
     }
     
     public String getName() {
-        return name;
+        return NAME;
+    }
+    
+    public String getVariableName() {
+        return VARIABLE_NAME;
     }
     
     public int getMembershipValuesLastIndex() {

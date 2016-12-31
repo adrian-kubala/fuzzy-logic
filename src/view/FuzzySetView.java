@@ -35,7 +35,7 @@ public class FuzzySetView extends ChartPanel {
     private XYPlot plot;
 
     public FuzzySetView(FuzzySet fuzzySet, double tickUnit) {
-        super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getName(), "u(" + fuzzySet.getName() + ")",
+        super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getVariableName(), "u(" + fuzzySet.getVariableName() + ")",
                 fuzzySet, PlotOrientation.VERTICAL, true, true, false));
         this.fuzzySet = fuzzySet;
         TICK_UNIT = tickUnit;
