@@ -8,12 +8,10 @@ package view;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.JPanel;
 import modell.FuzzySet;
 import modell.MembershipValue;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
@@ -27,32 +25,26 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
  *
  * @author adrian
  */
-public class FuzzySetView extends JPanel {
+public class FuzzySetView extends ChartPanel {
 
-    private final FuzzySet fuzzySet;
-    private final double tickUnit;
-    private Color[] colors;
-    private JFreeChart chart;
-    private ChartPanel chartPanel;
+    private final FuzzySet FUZZY_SET;
+    private final double TICK_UNIT;
+    private Color[] colors;    
     private XYPlot plot;
 
     public FuzzySetView(FuzzySet fuzzySet, double tickUnit) {
-        this.fuzzySet = fuzzySet;
-        this.tickUnit = tickUnit;
+        super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getVariableName(), "u(" + fuzzySet.getVariableName() + ")",
+                fuzzySet, PlotOrientation.VERTICAL, true, true, false));
+        FUZZY_SET = fuzzySet;
+        TICK_UNIT = tickUnit;
 
         createChart();
         initColors();
         setupRenderer();
-
-        add(chartPanel);
     }
 
     private void createChart() {
-        String name = fuzzySet.getName();
-        chart = ChartFactory.createXYLineChart(name, name, "u(" + name + ")",
-                fuzzySet, PlotOrientation.VERTICAL, true, true, false);
-        chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(450, 200));
+        setPreferredSize(new Dimension(450, 200));
     }
 
     private void initColors() {
@@ -63,7 +55,7 @@ public class FuzzySetView extends JPanel {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setShapesVisible(false);
 
-        plot = chart.getXYPlot();
+        plot = getChart().getXYPlot();
         int termCount = plot.getSeriesCount();
 
         for (int i = 0; i < termCount; i++) {
@@ -84,15 +76,11 @@ public class FuzzySetView extends JPanel {
         NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
 
-        xAxis.setTickUnit(new NumberTickUnit(tickUnit));
+        xAxis.setTickUnit(new NumberTickUnit(TICK_UNIT));
         yAxis.setTickUnit(new NumberTickUnit(0.2));
 
-        xAxis.setRange(fuzzySet.range);
+        xAxis.setRange(FUZZY_SET.range);
         yAxis.setRange(0, 1.2);
-    }
-
-    public void deleteLegend() {
-        chart.removeLegend();
     }
 
     public void showSingleton(double value) {
@@ -125,8 +113,8 @@ public class FuzzySetView extends JPanel {
 
         BasicStroke dashedStroke = new BasicStroke(1.7f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 6f, new float[]{6f}, 0);
         double crispValue = 0;
-        for (int i = 0; i < fuzzySet.getMembershipValuesLength(); i++) {
-            MembershipValue value = fuzzySet.getMembershipValueAt(i);
+        for (int i = 0; i < FUZZY_SET.getMembershipValuesLength(); i++) {
+            MembershipValue value = FUZZY_SET.getMembershipValueAt(i);
             if (value != null) {
                 ValueMarker marker = new ValueMarker(value.getValue(), colors[i], dashedStroke);
                 plot.addRangeMarker(marker);

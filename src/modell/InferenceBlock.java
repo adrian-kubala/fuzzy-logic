@@ -16,7 +16,7 @@ public class InferenceBlock extends FuzzySet {
     private final FuzzySet outputSet;
     
     public InferenceBlock(FuzzySet outputSet) {
-        super(outputSet.getName(), outputSet.getSeriesCount());
+        super("Blok wnioskowania", outputSet.getVariableName(), outputSet.getSeriesCount());
         
         range = outputSet.range;
         this.outputSet = outputSet;
