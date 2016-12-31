@@ -1,5 +1,7 @@
 package modell;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -49,6 +51,15 @@ public class FuzzySet extends XYSeriesCollection {
                 } catch (CloneNotSupportedException ex) { }
             }
         }
+        return copy;
+    }
+    
+    public Term copyTermAt(int i) {
+        Term term = getTermAt(i);
+        Term copy = null;
+        try {
+            copy = (Term) term.createCopy(0, term.getItemCount() - 1);
+        } catch (CloneNotSupportedException ex) { }
         return copy;
     }
     

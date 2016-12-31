@@ -32,7 +32,7 @@ public class AggregationBlock extends FuzzySet {
         
         if (inferenceBlock.getSeriesCount() == 1) {
             
-            aggregatedTerm = inferenceBlock.getTermAt(0);
+            aggregatedTerm = inferenceBlock.copyTermAt(0);
             aggregatedTerm.setKey(Power.OUTPUT);
             addTerm(aggregatedTerm);
             return;
