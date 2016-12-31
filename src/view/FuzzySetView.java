@@ -30,7 +30,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 public class FuzzySetView extends ChartPanel {
 
     private final FuzzySet fuzzySet;
-    private final double tickUnit;
+    private final double TICK_UNIT;
     private Color[] colors;    
     private XYPlot plot;
 
@@ -38,7 +38,7 @@ public class FuzzySetView extends ChartPanel {
         super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getName(), "u(" + fuzzySet.getName() + ")",
                 fuzzySet, PlotOrientation.VERTICAL, true, true, false));
         this.fuzzySet = fuzzySet;
-        this.tickUnit = tickUnit;
+        TICK_UNIT = tickUnit;
 
         createChart();
         initColors();
@@ -78,7 +78,7 @@ public class FuzzySetView extends ChartPanel {
         NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
 
-        xAxis.setTickUnit(new NumberTickUnit(tickUnit));
+        xAxis.setTickUnit(new NumberTickUnit(TICK_UNIT));
         yAxis.setTickUnit(new NumberTickUnit(0.2));
 
         xAxis.setRange(fuzzySet.range);
