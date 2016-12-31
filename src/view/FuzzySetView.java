@@ -20,6 +20,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.Range;
 
 /**
  *
@@ -27,7 +28,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
  */
 public class FuzzySetView extends ChartPanel {
 
-    private final FuzzySet FUZZY_SET;
     private final double TICK_UNIT;
     private Color[] colors;    
     private XYPlot plot;
@@ -35,16 +35,13 @@ public class FuzzySetView extends ChartPanel {
     public FuzzySetView(FuzzySet fuzzySet, double tickUnit) {
         super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getVariableName(), "u(" + fuzzySet.getVariableName() + ")",
                 fuzzySet, PlotOrientation.VERTICAL, true, true, false));
-        FUZZY_SET = fuzzySet;
+        
         TICK_UNIT = tickUnit;
-
-        createChart();
+        
+        setPreferredSize(new Dimension(450, 200));
+        
         initColors();
         setupRenderer();
-    }
-
-    private void createChart() {
-        setPreferredSize(new Dimension(450, 200));
     }
 
     private void initColors() {
@@ -79,7 +76,8 @@ public class FuzzySetView extends ChartPanel {
         xAxis.setTickUnit(new NumberTickUnit(TICK_UNIT));
         yAxis.setTickUnit(new NumberTickUnit(0.2));
 
-        xAxis.setRange(FUZZY_SET.range);
+        Range fuzzySetRange = getFuzzySet().range;
+        xAxis.setRange(fuzzySetRange);
         yAxis.setRange(0, 1.2);
     }
 
@@ -113,8 +111,9 @@ public class FuzzySetView extends ChartPanel {
 
         BasicStroke dashedStroke = new BasicStroke(1.7f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 6f, new float[]{6f}, 0);
         double crispValue = 0;
-        for (int i = 0; i < FUZZY_SET.getMembershipValuesLength(); i++) {
-            MembershipValue value = FUZZY_SET.getMembershipValueAt(i);
+        FuzzySet fuzzySet = getFuzzySet();
+        for (int i = 0; i < fuzzySet.getMembershipValuesLength(); i++) {
+            MembershipValue value = fuzzySet.getMembershipValueAt(i);
             if (value != null) {
                 ValueMarker marker = new ValueMarker(value.getValue(), colors[i], dashedStroke);
                 plot.addRangeMarker(marker);
@@ -128,6 +127,10 @@ public class FuzzySetView extends ChartPanel {
     private void clearMarkers() {
         plot.clearDomainMarkers();
         plot.clearRangeMarkers();
+    }
+        
+    private FuzzySet getFuzzySet() {
+        return (FuzzySet) plot.getDataset();
     }
     
     public void fillView() {
