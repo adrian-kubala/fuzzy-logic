@@ -27,32 +27,26 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
  *
  * @author adrian
  */
-public class FuzzySetView extends JPanel {
+public class FuzzySetView extends ChartPanel {
 
     private final FuzzySet fuzzySet;
     private final double tickUnit;
-    private Color[] colors;
-    private JFreeChart chart;
-    private ChartPanel chartPanel;
+    private Color[] colors;    
     private XYPlot plot;
 
     public FuzzySetView(FuzzySet fuzzySet, double tickUnit) {
+        super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getName(), "u(" + fuzzySet.getName() + ")",
+                fuzzySet, PlotOrientation.VERTICAL, true, true, false));
         this.fuzzySet = fuzzySet;
         this.tickUnit = tickUnit;
 
         createChart();
         initColors();
         setupRenderer();
-
-        add(chartPanel);
     }
 
     private void createChart() {
-        String name = fuzzySet.getName();
-        chart = ChartFactory.createXYLineChart(name, name, "u(" + name + ")",
-                fuzzySet, PlotOrientation.VERTICAL, true, true, false);
-        chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(450, 200));
+        setPreferredSize(new Dimension(450, 200));
     }
 
     private void initColors() {
@@ -63,7 +57,7 @@ public class FuzzySetView extends JPanel {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setShapesVisible(false);
 
-        plot = chart.getXYPlot();
+        plot = getChart().getXYPlot();
         int termCount = plot.getSeriesCount();
 
         for (int i = 0; i < termCount; i++) {
@@ -89,10 +83,6 @@ public class FuzzySetView extends JPanel {
 
         xAxis.setRange(fuzzySet.range);
         yAxis.setRange(0, 1.2);
-    }
-
-    public void deleteLegend() {
-        chart.removeLegend();
     }
 
     public void showSingleton(double value) {
