@@ -13,11 +13,9 @@ import org.jfree.data.Range;
  */
 public class OutsideTemperature {
     public Range range;
-    int ambientTempCount;
 
     public OutsideTemperature(Range range) {
         this.range = range;
-        ambientTempCount = (int) (Math.abs(range.getLowerBound()) + 35);
     }
     
     

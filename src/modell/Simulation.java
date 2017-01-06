@@ -52,7 +52,7 @@ public class Simulation extends TimerTask {
         
         temperatureDifference = Math.abs(outsideTemperature.range.getLowerBound()) - Math.abs(ambientTemperature);
         System.out.println(temperatureDifference);
-        desiredBoilerTemperature = maxBoilerTemperature - ((boilerTemperaturesRange / outsideTemperature.ambientTempCount) * temperatureDifference);
+        desiredBoilerTemperature = maxBoilerTemperature - ((boilerTemperaturesRange / outsideTemperature.range.getLength()) * temperatureDifference);
         System.out.println(desiredBoilerTemperature);
     }
     
@@ -63,6 +63,6 @@ public class Simulation extends TimerTask {
         }
         
         double outputValue = delegate.inputValueDidChange(boilerTemperature);
-        boilerTemperature += (Math.abs(outsideTemperature.ambientTempCount) + desiredBoilerTemperature) / 100 * outputValue;
+        boilerTemperature += (Math.abs(outsideTemperature.range.getLength()) + desiredBoilerTemperature) / 100 * outputValue;
     }
 }
