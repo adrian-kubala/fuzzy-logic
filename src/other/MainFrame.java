@@ -51,7 +51,7 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
     }
 
     @Override
-    public double systemDidStart(double input) {
+    public double inputValueDidChange(double input) {
         return runController(input);
     }
     

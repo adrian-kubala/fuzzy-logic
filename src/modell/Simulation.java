@@ -8,6 +8,7 @@ package modell;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
+import org.jfree.data.Range;
 import other.NumbersFormatter;
 import other.SimulationDelegate;
 
@@ -17,9 +18,7 @@ import other.SimulationDelegate;
  */
 public class Simulation extends TimerTask {
     
-    int lowestAmbientTemperature = -30;
-    int highestAmbientTemperature = 5;
-    int ambientTempCount = Math.abs(lowestAmbientTemperature) + 35;
+    OutsideTemperature outsideTemperature;
     
     double ambientTemperature;
     double desiredBoilerTemperature;
@@ -37,18 +36,23 @@ public class Simulation extends TimerTask {
     Timer timer = new Timer();
     
     public Simulation() {
+        initOutsideTemperature();
         initAmbientTemperature();
         timer.schedule(this, 0, 1000);
     }
     
+    private void initOutsideTemperature() {
+        outsideTemperature = new OutsideTemperature(new Range(-30, 5));   
+    }
+    
     private void initAmbientTemperature() {
-        ambientTemperature = ThreadLocalRandom.current().nextDouble(lowestAmbientTemperature, highestAmbientTemperature);
+        ambientTemperature = ThreadLocalRandom.current().nextDouble(outsideTemperature.range.getLowerBound(), outsideTemperature.range.getUpperBound());
         ambientTemperature = NumbersFormatter.instance.roundToDecimalPlaces(ambientTemperature, 2);
         System.out.println(ambientTemperature);
         
-        temperatureDifference = Math.abs(lowestAmbientTemperature) - Math.abs(ambientTemperature);
+        temperatureDifference = Math.abs(outsideTemperature.range.getLowerBound()) - Math.abs(ambientTemperature);
         System.out.println(temperatureDifference);
-        desiredBoilerTemperature = maxBoilerTemperature - ((boilerTemperaturesRange / ambientTempCount) * temperatureDifference);
+        desiredBoilerTemperature = maxBoilerTemperature - ((boilerTemperaturesRange / outsideTemperature.ambientTempCount) * temperatureDifference);
         System.out.println(desiredBoilerTemperature);
     }
     
@@ -59,6 +63,6 @@ public class Simulation extends TimerTask {
         }
         
         double outputValue = delegate.inputValueDidChange(boilerTemperature);
-        boilerTemperature += (Math.abs(ambientTempCount) + desiredBoilerTemperature) / 100 * outputValue;
+        boilerTemperature += (Math.abs(outsideTemperature.ambientTempCount) + desiredBoilerTemperature) / 100 * outputValue;
     }
 }
