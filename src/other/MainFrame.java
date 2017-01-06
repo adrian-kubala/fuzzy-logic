@@ -6,37 +6,82 @@
 package other;
 
 import controller.FuzzySetController;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ThreadLocalRandom;
 import modell.FuzzySet;
 import modell.MembershipValue;
+import modell.Simulation;
 import org.jfree.ui.RefineryUtilities;
 
 /**
  *
  * @author adrian
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements SimulationDelegate {
+
     private FuzzySetController controller;
-    
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        
+
         centerOnScreen();
         initController();
+        initSimulation();
     }
-    
+
     private void centerOnScreen() {
         RefineryUtilities.centerFrameOnScreen(this);
     }
-    
+
     private void initController() {
         controller = new FuzzySetController();
         inputSetPanel.add(controller.boilerTemperatureView);
         inferenceBlockPanel.add(controller.heatingPowerView);
         inferenceBlockPanel.add(controller.inferenceBlockView);
         inferenceBlockPanel.add(controller.aggregationBlockView);
+    }
+    
+    private void initSimulation() {
+        Simulation simulation = new Simulation();
+        simulation.delegate = this;
+    }
+
+    @Override
+    public double systemDidStart(double input) {
+        return runController(input);
+    }
+    
+    private double runController(double boilerTemp) {
+        FuzzySet boilerTemperature = controller.boilerTemperature;
+        boilerTemperature.fuzzify(boilerTemp);
+
+        int termsCount = boilerTemperature.getSeriesCount();
+        fuzzyOutputTextArea.setText("");
+        for (int i = 0; i < termsCount; i++) {
+            String name = (String) boilerTemperature.getSeriesKey(i);
+            double value;
+            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
+            if (membershipValue != null) {
+                value = membershipValue.getValue();
+            } else {
+                value = 0;
+            }
+            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n");
+        }
+
+        controller.infer();
+
+        inferenceBlockPanel.revalidate();
+
+        controller.aggregate();
+        double crispValue = controller.defuzzify();
+        fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + crispValue);
+        
+        return controller.defuzzify();
     }
     
     /**
@@ -142,29 +187,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fuzzifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fuzzifyButtonActionPerformed
-        FuzzySet boilerTemperature = controller.boilerTemperature;
-        boilerTemperature.fuzzify(Double.parseDouble(crispValueTextArea.getText()));
-        
-        int termsCount = boilerTemperature.getSeriesCount();
-        fuzzyOutputTextArea.setText("");
-        for (int i = 0; i < termsCount; i++) {
-            String name = (String) boilerTemperature.getSeriesKey(i);
-            double value;
-            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
-            if (membershipValue != null) {
-                value = membershipValue.getValue();
-            } else {
-                value = 0;
-            }
-            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n");
-        }
-        
-        controller.infer();
-        
-        inferenceBlockPanel.revalidate();
-        
-        controller.aggregate();
-        fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
+//        runController();
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     /**
