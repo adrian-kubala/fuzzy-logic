@@ -6,6 +6,8 @@
 package other;
 
 import controller.FuzzySetController;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 import modell.FuzzySet;
 import modell.MembershipValue;
@@ -16,28 +18,50 @@ import org.jfree.ui.RefineryUtilities;
  * @author adrian
  */
 public class MainFrame extends javax.swing.JFrame {
+
     private FuzzySetController controller;
-    
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        
+
         centerOnScreen();
         initController();
+
         
-        double boilerTemp = 7;
-        
+
         double winterTemp;
-        winterTemp= ThreadLocalRandom.current().nextDouble(-30, 6);
-        winterTemp = NumbersFormatter.instance.roundToDecimalPlaces(winterTemp, 2);
+        winterTemp = ThreadLocalRandom.current().nextDouble(-30, 6);
+        final double winterTempRounded = NumbersFormatter.instance.roundToDecimalPlaces(winterTemp, 2);
+
+        double difference = -30 + 105;
+        
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            double boilerTemp = 7;
+            
+            @Override
+            public void run() {
+                runController(boilerTemp);
+                
+                double tempDifference = Math.abs(-30 + winterTempRounded);
+                double newDifference = difference - tempDifference;
+                double heatingRate = newDifference / 10;
+                
+                boilerTemp += heatingRate;
+                
+                
+            }
+        }, 0, 2 * 1000);
     }
-    
+
     private void centerOnScreen() {
         RefineryUtilities.centerFrameOnScreen(this);
     }
-    
+
     private void initController() {
         controller = new FuzzySetController();
         inputSetPanel.add(controller.boilerTemperatureView);
@@ -45,11 +69,11 @@ public class MainFrame extends javax.swing.JFrame {
         inferenceBlockPanel.add(controller.inferenceBlockView);
         inferenceBlockPanel.add(controller.aggregationBlockView);
     }
-    
-    private void runController() {
+
+    private void runController(double boilerTemp) {
         FuzzySet boilerTemperature = controller.boilerTemperature;
-        boilerTemperature.fuzzify(Double.parseDouble(crispValueTextArea.getText()));
-        
+        boilerTemperature.fuzzify(boilerTemp);
+
         int termsCount = boilerTemperature.getSeriesCount();
         fuzzyOutputTextArea.setText("");
         for (int i = 0; i < termsCount; i++) {
@@ -63,15 +87,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
             fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n");
         }
-        
+
         controller.infer();
-        
+
         inferenceBlockPanel.revalidate();
-        
+
         controller.aggregate();
         fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -175,7 +199,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fuzzifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fuzzifyButtonActionPerformed
-        runController();
+//        runController();
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     /**
