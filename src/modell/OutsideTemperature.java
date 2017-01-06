@@ -5,7 +5,9 @@
  */
 package modell;
 
+import java.util.concurrent.ThreadLocalRandom;
 import org.jfree.data.Range;
+import other.NumbersFormatter;
 
 /**
  *
@@ -13,9 +15,14 @@ import org.jfree.data.Range;
  */
 public class OutsideTemperature {
     public Range range;
+    public double value;
 
     public OutsideTemperature(Range range) {
         this.range = range;
+        
+        value = ThreadLocalRandom.current().nextDouble(range.getLowerBound(), range.getUpperBound());
+        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
+        System.out.println(value);
     }
     
     

@@ -20,12 +20,10 @@ public class Simulation extends TimerTask {
     
     OutsideTemperature outsideTemperature;
     
-    double ambientTemperature;
-    double desiredBoilerTemperature;
-    
     double minBoilerTemperature = 35;
     double maxBoilerTemperature = 75;
     double boilerTemperaturesRange = maxBoilerTemperature - minBoilerTemperature; 
+    double desiredBoilerTemperature;
     
     double temperatureDifference;
     
@@ -46,12 +44,9 @@ public class Simulation extends TimerTask {
     }
     
     private void initAmbientTemperature() {
-        ambientTemperature = ThreadLocalRandom.current().nextDouble(outsideTemperature.range.getLowerBound(), outsideTemperature.range.getUpperBound());
-        ambientTemperature = NumbersFormatter.instance.roundToDecimalPlaces(ambientTemperature, 2);
-        System.out.println(ambientTemperature);
-        
-        temperatureDifference = Math.abs(outsideTemperature.range.getLowerBound()) - Math.abs(ambientTemperature);
+        temperatureDifference = Math.abs(outsideTemperature.range.getLowerBound()) - Math.abs(outsideTemperature.value);
         System.out.println(temperatureDifference);
+        
         desiredBoilerTemperature = maxBoilerTemperature - ((boilerTemperaturesRange / outsideTemperature.range.getLength()) * temperatureDifference);
         System.out.println(desiredBoilerTemperature);
     }
