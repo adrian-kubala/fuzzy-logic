@@ -6,6 +6,7 @@
 package other;
 
 import controller.FuzzySetController;
+import java.util.concurrent.ThreadLocalRandom;
 import modell.FuzzySet;
 import modell.MembershipValue;
 import org.jfree.ui.RefineryUtilities;
@@ -25,6 +26,12 @@ public class MainFrame extends javax.swing.JFrame {
         
         centerOnScreen();
         initController();
+        
+        double boilerTemp = 7;
+        
+        double winterTemp;
+        winterTemp= ThreadLocalRandom.current().nextDouble(-30, 6);
+        winterTemp = NumbersFormatter.instance.roundToDecimalPlaces(winterTemp, 2);
     }
     
     private void centerOnScreen() {
@@ -37,6 +44,32 @@ public class MainFrame extends javax.swing.JFrame {
         inferenceBlockPanel.add(controller.heatingPowerView);
         inferenceBlockPanel.add(controller.inferenceBlockView);
         inferenceBlockPanel.add(controller.aggregationBlockView);
+    }
+    
+    private void runController() {
+        FuzzySet boilerTemperature = controller.boilerTemperature;
+        boilerTemperature.fuzzify(Double.parseDouble(crispValueTextArea.getText()));
+        
+        int termsCount = boilerTemperature.getSeriesCount();
+        fuzzyOutputTextArea.setText("");
+        for (int i = 0; i < termsCount; i++) {
+            String name = (String) boilerTemperature.getSeriesKey(i);
+            double value;
+            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
+            if (membershipValue != null) {
+                value = membershipValue.getValue();
+            } else {
+                value = 0;
+            }
+            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n");
+        }
+        
+        controller.infer();
+        
+        inferenceBlockPanel.revalidate();
+        
+        controller.aggregate();
+        fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
     }
     
     /**
@@ -142,29 +175,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fuzzifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fuzzifyButtonActionPerformed
-        FuzzySet boilerTemperature = controller.boilerTemperature;
-        boilerTemperature.fuzzify(Double.parseDouble(crispValueTextArea.getText()));
-        
-        int termsCount = boilerTemperature.getSeriesCount();
-        fuzzyOutputTextArea.setText("");
-        for (int i = 0; i < termsCount; i++) {
-            String name = (String) boilerTemperature.getSeriesKey(i);
-            double value;
-            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
-            if (membershipValue != null) {
-                value = membershipValue.getValue();
-            } else {
-                value = 0;
-            }
-            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n");
-        }
-        
-        controller.infer();
-        
-        inferenceBlockPanel.revalidate();
-        
-        controller.aggregate();
-        fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
+        runController();
     }//GEN-LAST:event_fuzzifyButtonActionPerformed
 
     /**
