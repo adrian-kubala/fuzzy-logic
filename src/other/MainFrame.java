@@ -30,12 +30,7 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
 
         centerOnScreen();
         initController();
-
-        Simulation simulation = new Simulation();
-        simulation.delegate = this;
-        
-        Timer timer = new Timer();
-        timer.schedule(simulation, 0, 1000);
+        initSimulation();
     }
 
     private void centerOnScreen() {
@@ -49,7 +44,17 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         inferenceBlockPanel.add(controller.inferenceBlockView);
         inferenceBlockPanel.add(controller.aggregationBlockView);
     }
+    
+    private void initSimulation() {
+        Simulation simulation = new Simulation();
+        simulation.delegate = this;
+    }
 
+    @Override
+    public double systemDidStart(double input) {
+        return runController(input);
+    }
+    
     private double runController(double boilerTemp) {
         FuzzySet boilerTemperature = controller.boilerTemperature;
         boilerTemperature.fuzzify(boilerTemp);
@@ -77,11 +82,6 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + crispValue);
         
         return controller.defuzzify();
-    }
-    
-    @Override
-    public double systemDidStart(double input) {
-        return runController(input);
     }
     
     /**

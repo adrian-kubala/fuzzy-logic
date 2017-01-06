@@ -5,6 +5,7 @@
  */
 package modell;
 
+import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 import other.NumbersFormatter;
@@ -33,8 +34,11 @@ public class Simulation extends TimerTask {
     
     public SimulationDelegate delegate;
     
+    Timer timer = new Timer();
+    
     public Simulation() {
         initAmbientTemperature();
+        timer.schedule(this, 0, 1000);
     }
     
     private void initAmbientTemperature() {
