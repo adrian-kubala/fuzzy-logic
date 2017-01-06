@@ -58,7 +58,7 @@ public class Simulation extends TimerTask {
             return;
         }
         
-        double outputValue = delegate.systemDidStart(boilerTemperature);
+        double outputValue = delegate.inputValueDidChange(boilerTemperature);
         boilerTemperature += (Math.abs(ambientTempCount) + desiredBoilerTemperature) / 100 * outputValue;
     }
 }
