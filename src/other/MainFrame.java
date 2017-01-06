@@ -50,7 +50,7 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         inferenceBlockPanel.add(controller.aggregationBlockView);
     }
 
-    private void runController(double boilerTemp) {
+    private double runController(double boilerTemp) {
         FuzzySet boilerTemperature = controller.boilerTemperature;
         boilerTemperature.fuzzify(boilerTemp);
 
@@ -73,12 +73,15 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         inferenceBlockPanel.revalidate();
 
         controller.aggregate();
-        fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
+        double crispValue = controller.defuzzify();
+        fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + crispValue);
+        
+        return controller.defuzzify();
     }
     
     @Override
-    public void systemDidStart(double input) {
-        runController(input);
+    public double systemDidStart(double input) {
+        return runController(input);
     }
     
     /**

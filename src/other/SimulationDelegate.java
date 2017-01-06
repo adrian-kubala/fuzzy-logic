@@ -10,5 +10,5 @@ package other;
  * @author adrian
  */
 public interface SimulationDelegate {
-    void systemDidStart(double input);
+    double systemDidStart(double input);
 }
