@@ -19,15 +19,13 @@ import other.SimulationDelegate;
 public class Simulation extends TimerTask {
     
     OutsideTemperature outsideTemperature;
+    double temperatureDifference;
     
     double minBoilerTemperature = 35;
     double maxBoilerTemperature = 75;
-    double boilerTemperaturesRange = maxBoilerTemperature - minBoilerTemperature; 
-    double desiredBoilerTemperature;
-    
-    double temperatureDifference;
-    
+    double boilerTemperaturesRange = maxBoilerTemperature - minBoilerTemperature;
     double boilerTemperature = 7;
+    double desiredBoilerTemperature;
     
     public SimulationDelegate delegate;
     
@@ -35,18 +33,18 @@ public class Simulation extends TimerTask {
     
     public Simulation() {
         initOutsideTemperature();
-        initAmbientTemperature();
+        initBoiler();
         timer.schedule(this, 0, 1000);
     }
     
     private void initOutsideTemperature() {
-        outsideTemperature = new OutsideTemperature(new Range(-30, 5));   
-    }
-    
-    private void initAmbientTemperature() {
+        outsideTemperature = new OutsideTemperature(new Range(-30, 5));
+        
         temperatureDifference = Math.abs(outsideTemperature.range.getLowerBound()) - Math.abs(outsideTemperature.value);
         System.out.println(temperatureDifference);
-        
+    }
+    
+    private void initBoiler() {
         desiredBoilerTemperature = maxBoilerTemperature - ((boilerTemperaturesRange / outsideTemperature.range.getLength()) * temperatureDifference);
         System.out.println(desiredBoilerTemperature);
     }
