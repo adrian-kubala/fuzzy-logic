@@ -11,13 +11,14 @@ import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 import modell.FuzzySet;
 import modell.MembershipValue;
+import modell.Simulation;
 import org.jfree.ui.RefineryUtilities;
 
 /**
  *
  * @author adrian
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements SimulationDelegate {
 
     private FuzzySetController controller;
 
@@ -30,32 +31,11 @@ public class MainFrame extends javax.swing.JFrame {
         centerOnScreen();
         initController();
 
-        
-
-        double winterTemp;
-        winterTemp = ThreadLocalRandom.current().nextDouble(-30, 6);
-        final double winterTempRounded = NumbersFormatter.instance.roundToDecimalPlaces(winterTemp, 2);
-
-        double difference = -30 + 105;
+        Simulation simulation = new Simulation();
+        simulation.delegate = this;
         
         Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
-            double boilerTemp = 7;
-            
-            @Override
-            public void run() {
-                runController(boilerTemp);
-                
-                double tempDifference = Math.abs(-30 + winterTempRounded);
-                double newDifference = difference - tempDifference;
-                double heatingRate = newDifference / 10;
-                
-                boilerTemp += heatingRate;
-                
-                
-            }
-        }, 0, 2 * 1000);
+        timer.schedule(simulation, 0, 1000);
     }
 
     private void centerOnScreen() {
@@ -95,7 +75,12 @@ public class MainFrame extends javax.swing.JFrame {
         controller.aggregate();
         fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + controller.defuzzify());
     }
-
+    
+    @Override
+    public void systemDidStart(double input) {
+        runController(input);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
