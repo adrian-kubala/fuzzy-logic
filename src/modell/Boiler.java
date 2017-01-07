@@ -12,12 +12,17 @@ import org.jfree.data.Range;
  * @author adrian
  */
 public class Boiler {
+    private final Range RANGE;
     public double temperature = 7;
     public double desiredTemperature;
-    private final Range RANGE;
     
     public Boiler(Range range) {
         RANGE = range;
+    }
+    
+    public Boiler(Range range, double startingTemperature) {
+        RANGE = range;
+        temperature = startingTemperature;
     }
     
     public double getLowerRange() {
