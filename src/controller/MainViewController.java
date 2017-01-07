@@ -8,7 +8,6 @@ package controller;
 import interfaces.SimulationDelegate;
 import modell.FuzzySet;
 import modell.MembershipValue;
-import modell.Simulation;
 import org.jfree.ui.RefineryUtilities;
 
 /**
@@ -17,8 +16,8 @@ import org.jfree.ui.RefineryUtilities;
  */
 public class MainViewController extends javax.swing.JFrame implements SimulationDelegate {
 
-    private FuzzySetController controller;
-    private Simulation simulation;
+    private FuzzySetController fuzzySetcontroller;
+    private SimulationController simulationController;
 
     /**
      * Creates new form MainFrame
@@ -28,8 +27,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         centerOnScreen();
         
         initFuzzySetController();
-        initSimulation();
-        initSimulationView();
+        initSimulationController();
     }
 
     private void centerOnScreen() {
@@ -37,20 +35,15 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
     }
 
     private void initFuzzySetController() {
-        controller = new FuzzySetController();
-        inputSetPanel.add(controller.boilerTemperatureView);
-        inferenceBlockPanel.add(controller.heatingPowerView);
-        inferenceBlockPanel.add(controller.inferenceBlockView);
-        inferenceBlockPanel.add(controller.aggregationBlockView);
+        fuzzySetcontroller = new FuzzySetController();
+        inputSetPanel.add(fuzzySetcontroller.boilerTemperatureView);
+        inferenceBlockPanel.add(fuzzySetcontroller.heatingPowerView);
+        inferenceBlockPanel.add(fuzzySetcontroller.inferenceBlockView);
+        inferenceBlockPanel.add(fuzzySetcontroller.aggregationBlockView);
     }
     
-    private void initSimulation() {
-        simulation = new Simulation();
-        simulation.delegate = this;        
-    }
-    
-    private void initSimulationView() {
-        simulationView.setData(simulation);
+    private void initSimulationController() {
+        simulationController = new SimulationController(simulationView, this);
     }
 
     @Override
@@ -59,7 +52,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
     }
     
     private double runController(double boilerTemp) {
-        FuzzySet boilerTemperature = controller.boilerTemperature;
+        FuzzySet boilerTemperature = fuzzySetcontroller.boilerTemperature;
         boilerTemperature.fuzzify(boilerTemp);
 
         int termsCount = boilerTemperature.getSeriesCount();
@@ -76,18 +69,18 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
             newText += "u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n";
         }
 
-        controller.infer();
+        fuzzySetcontroller.infer();
 
         inferenceBlockPanel.revalidate();
 
-        controller.aggregate();
-        double crispValue = controller.defuzzify();
+        fuzzySetcontroller.aggregate();
+        double crispValue = fuzzySetcontroller.defuzzify();
         newText += "\n" + "Moc ogrzewania ustawić na: " + crispValue;
         fuzzyOutputTextArea.setText(newText);
         
         simulationView.setBoilerTemperatureView(boilerTemp);
         
-        return controller.defuzzify();
+        return fuzzySetcontroller.defuzzify();
     }
     
     /**
