@@ -78,7 +78,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         newText += "\n" + "Moc ogrzewania ustawić na: " + crispValue;
         fuzzyOutputTextArea.setText(newText);
         
-        simulationView.setBoilerTemperatureView(boilerTemp);
+        simulationController.setBoilerTemperatureView(boilerTemp);
         
         return fuzzySetcontroller.defuzzify();
     }

@@ -31,4 +31,8 @@ public class SimulationController {
         simulationView = view;
         simulationView.setData(simulation);
     }
+    
+    public void setBoilerTemperatureView(double value) {
+        simulationView.setBoilerTemperatureView(value);
+    }
 }

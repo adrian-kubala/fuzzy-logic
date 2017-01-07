@@ -70,7 +70,6 @@ public class SimulationView extends javax.swing.JPanel {
         outsideTemperatureView.setOrientation(1);
 
         boilerTemperatureView.setOrientation(1);
-        boilerTemperatureView.setValue(10);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
