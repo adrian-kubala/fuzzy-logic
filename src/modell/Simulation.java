@@ -19,17 +19,10 @@ import other.SimulationDelegate;
 public class Simulation extends TimerTask {
     
     OutsideTemperature outsideTemperature;
-    double temperatureDifference;
-    
-    double minBoilerTemperature = 35;
-    double maxBoilerTemperature = 75;
-    double boilerTemperaturesRange = maxBoilerTemperature - minBoilerTemperature;
-    double boilerTemperature = 7;
-    double desiredBoilerTemperature;
-    
-    public SimulationDelegate delegate;
+    Boiler boiler;
     
     Timer timer = new Timer();
+    public SimulationDelegate delegate;
     
     public Simulation() {
         initOutsideTemperature();
@@ -39,23 +32,20 @@ public class Simulation extends TimerTask {
     
     private void initOutsideTemperature() {
         outsideTemperature = new OutsideTemperature(new Range(-30, 5));
-        
-        temperatureDifference = Math.abs(outsideTemperature.range.getLowerBound()) - Math.abs(outsideTemperature.value);
-        System.out.println(temperatureDifference);
     }
     
     private void initBoiler() {
-        desiredBoilerTemperature = maxBoilerTemperature - ((boilerTemperaturesRange / outsideTemperature.range.getLength()) * temperatureDifference);
-        System.out.println(desiredBoilerTemperature);
+        boiler = new Boiler(new Range(35, 75));
+        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
     }
     
     @Override
     public void run() {
-        if (boilerTemperature >= desiredBoilerTemperature) {
+        if (boiler.didReachDesiredTemperature()) {
             return;
         }
         
-        double outputValue = delegate.inputValueDidChange(boilerTemperature);
-        boilerTemperature += (Math.abs(outsideTemperature.range.getLength()) + desiredBoilerTemperature) / 100 * outputValue;
+        double outputValue = delegate.inputValueDidChange(boiler.temperature);
+        boiler.temperature += (Math.abs(outsideTemperature.range.getLength()) + boiler.desiredTemperature) / 100 * outputValue;
     }
 }
