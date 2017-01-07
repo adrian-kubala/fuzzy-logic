@@ -5,17 +5,47 @@
  */
 package view;
 
+import modell.Simulation;
+
 /**
  *
  * @author adrian
  */
 public class SimulationView extends javax.swing.JPanel {
 
+    private Simulation simulation;
+
     /**
      * Creates new form SimulationView
      */
     public SimulationView() {
         initComponents();
+    }
+    
+    public SimulationView(Simulation simulation) {
+        initComponents();
+        
+        this.simulation = simulation;
+        initOutsideTemperatureView();
+        initBoilerTemperatureView();
+    }
+    
+    private void initOutsideTemperatureView() {
+        outsideTemperatureView.setMinimum((int) simulation.outsideTemperature.getLowerRange());
+        outsideTemperatureView.setMaximum((int) simulation.outsideTemperature.getUpperRange());
+        
+        outsideTemperatureView.setValue((int) simulation.outsideTemperature.value);
+    }
+    
+    private void initBoilerTemperatureView() {
+        boilerTemperatureView.setMinimum((int) simulation.boiler.getLowerRange());
+        boilerTemperatureView.setMaximum((int) simulation.boiler.getUpperRange());
+        
+        boilerTemperatureView.setValue((int) simulation.boiler.temperature);
+    }
+    
+    public void updateBoilerTemperatureView(double value) {
+        boilerTemperatureView.setValue((int) value);
     }
 
     /**
