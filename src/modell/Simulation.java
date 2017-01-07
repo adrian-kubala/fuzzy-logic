@@ -47,7 +47,7 @@ public class Simulation extends TimerTask {
     
     @Override
     public void run() {
-        if (boiler.temperature >= boiler.desiredTemperature) {
+        if (boiler.didReachDesiredTemperature()) {
             return;
         }
         

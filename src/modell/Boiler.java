@@ -36,4 +36,8 @@ public class Boiler {
     public double getUpperRange() {
         return RANGE.getUpperBound();
     }
+    
+    public boolean didReachDesiredTemperature() {
+        return temperature >= desiredTemperature;
+    }
 }
