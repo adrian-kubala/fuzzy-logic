@@ -48,39 +48,8 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
 
     @Override
     public double inputValueDidChange(double input) {
-        return runController(input);
-    }
-    
-    private double runController(double boilerTemp) {
-        FuzzySet boilerTemperature = fuzzySetcontroller.boilerTemperature;
-        boilerTemperature.fuzzify(boilerTemp);
-
-        int termsCount = boilerTemperature.getSeriesCount();
-        String newText = "";
-        for (int i = 0; i < termsCount; i++) {
-            String name = (String) boilerTemperature.getSeriesKey(i);
-            double value;
-            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
-            if (membershipValue != null) {
-                value = membershipValue.getValue();
-            } else {
-                value = 0;
-            }
-            newText += "u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n";
-        }
-
-        fuzzySetcontroller.infer();
-
-        inferenceBlockPanel.revalidate();
-
-        fuzzySetcontroller.aggregate();
-        double crispValue = fuzzySetcontroller.defuzzify();
-        newText += "\n" + "Moc ogrzewania ustawić na: " + crispValue;
-        fuzzyOutputTextArea.setText(newText);
-        
-        simulationController.setBoilerTemperatureView(boilerTemp);
-        
-        return fuzzySetcontroller.defuzzify();
+        simulationController.setBoilerTemperatureView(input);
+        return fuzzySetcontroller.runSystem(input);
     }
     
     /**

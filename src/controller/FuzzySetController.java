@@ -8,6 +8,7 @@ package controller;
 import modell.AggregationBlock;
 import modell.FuzzySet;
 import modell.InferenceBlock;
+import modell.MembershipValue;
 import modell.enums.Power;
 import modell.enums.Temperature;
 import modell.Term;
@@ -109,19 +110,18 @@ public class FuzzySetController {
         aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
     }
     
-    public void infer() {
-        boilerTemperatureView.showFuzzyValues();
-        
+    private void infer() {
         inferenceBlock.infer(boilerTemperature);
         inferenceBlockView.refresh();
+        inferenceBlockView.revalidate();
     }   
     
-    public void aggregate() {
+    private void aggregate() {
         aggregationBlock.aggregate();
         aggregationBlockView.refresh();
     }
     
-    public double defuzzify() {
+    private double defuzzify() {
        aggregationBlock.defuzzify();
         double outputCrispValue = aggregationBlock.getCrispValue();
         
@@ -130,5 +130,40 @@ public class FuzzySetController {
         aggregationBlockView.fillView();
         
         return outputCrispValue;
+    }
+    
+    public double runSystem(double inputValue){
+        String fuzzificationResult = fuzzify(inputValue);
+        
+        infer();
+        aggregate();
+        double crispValue = defuzzify();
+        fuzzificationResult += crispValue;
+        
+        return crispValue;
+    }
+    
+    private String fuzzify(double inputValue) {
+        boilerTemperature.fuzzify(inputValue);
+        
+        int termsCount = boilerTemperature.getSeriesCount();
+        String result = null;
+        for (int i = 0; i < termsCount; i++) {
+            String termName = (String) boilerTemperature.getSeriesKey(i);
+            
+            double fuzzyValue;
+            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
+            if (membershipValue != null) {
+                fuzzyValue = membershipValue.getValue();
+            } else {
+                fuzzyValue = 0;
+            }
+            
+            result += "u" + termName + " (" + boilerTemperature.getVariableName() + ") = " + fuzzyValue + "\n";
+        }
+        result += "\n" + "Moc ogrzewania ustawić na: ";
+        
+        boilerTemperatureView.showFuzzyValues();
+        return result;
     }
 }
