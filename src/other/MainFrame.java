@@ -13,6 +13,7 @@ import modell.FuzzySet;
 import modell.MembershipValue;
 import modell.Simulation;
 import org.jfree.ui.RefineryUtilities;
+import view.SimulationView;
 
 /**
  *
@@ -21,6 +22,7 @@ import org.jfree.ui.RefineryUtilities;
 public class MainFrame extends javax.swing.JFrame implements SimulationDelegate {
 
     private FuzzySetController controller;
+    private Simulation simulation;
 
     /**
      * Creates new form MainFrame
@@ -46,8 +48,10 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
     }
     
     private void initSimulation() {
-        Simulation simulation = new Simulation();
+        simulation = new Simulation();
         simulation.delegate = this;
+        
+        simulationView.setData(simulation);
     }
 
     @Override
@@ -82,6 +86,8 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         newText += "\n" + "Moc ogrzewania ustawić na: " + crispValue;
         fuzzyOutputTextArea.setText(newText);
         
+        simulationView.setBoilerTemperatureView(boilerTemp);
+        
         return controller.defuzzify();
     }
     
@@ -98,6 +104,7 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         inferenceBlockPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         fuzzyOutputTextArea = new javax.swing.JTextArea();
+        simulationView = new view.SimulationView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,9 +125,11 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(inputSetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(inputSetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2))
+                    .addComponent(simulationView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
@@ -129,13 +138,15 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(inputSetPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(simulationView, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -181,5 +192,6 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
     private javax.swing.JPanel inferenceBlockPanel;
     private javax.swing.JPanel inputSetPanel;
     private javax.swing.JScrollPane jScrollPane2;
+    private view.SimulationView simulationView;
     // End of variables declaration//GEN-END:variables
 }

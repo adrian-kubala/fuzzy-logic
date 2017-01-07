@@ -22,10 +22,9 @@ public class SimulationView extends javax.swing.JPanel {
         initComponents();
     }
     
-    public SimulationView(Simulation simulation) {
-        initComponents();
-        
+    public void setData(Simulation simulation) {
         this.simulation = simulation;
+        
         initOutsideTemperatureView();
         initBoilerTemperatureView();
     }
@@ -44,7 +43,11 @@ public class SimulationView extends javax.swing.JPanel {
         boilerTemperatureView.setValue((int) simulation.boiler.temperature);
     }
     
-    public void updateBoilerTemperatureView(double value) {
+    public void setOutsideTemperatureView(double value) {
+        outsideTemperatureView.setValue((int) value);
+    }
+    
+    public void setBoilerTemperatureView(double value) {
         boilerTemperatureView.setValue((int) value);
     }
 
@@ -67,6 +70,7 @@ public class SimulationView extends javax.swing.JPanel {
         outsideTemperatureView.setOrientation(1);
 
         boilerTemperatureView.setOrientation(1);
+        boilerTemperatureView.setValue(10);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -37,7 +37,7 @@ public class Simulation extends TimerTask {
     }
 
     private void initBoiler() {
-        boiler = new Boiler(new Range(35, 75));
+        boiler = new Boiler(new Range(7, 75));
         boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
     }
 
