@@ -40,4 +40,9 @@ public class Boiler {
     public boolean didReachDesiredTemperature() {
         return temperature >= desiredTemperature;
     }
+    
+    public void specifyDesiredTemperatureBasedOn(OutsideTemperature outsideTemp) {
+        desiredTemperature = getUpperRange() - ((getRangeLength() / outsideTemp.range.getLength()) * outsideTemp.temperatureDifference);
+        System.out.println(desiredTemperature);
+    }
 }

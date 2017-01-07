@@ -19,8 +19,6 @@ import other.SimulationDelegate;
 public class Simulation extends TimerTask {
     
     OutsideTemperature outsideTemperature;
-    double temperatureDifference;
-    
     Boiler boiler;
     
     Timer timer = new Timer();
@@ -34,15 +32,11 @@ public class Simulation extends TimerTask {
     
     private void initOutsideTemperature() {
         outsideTemperature = new OutsideTemperature(new Range(-30, 5));
-        
-        temperatureDifference = Math.abs(outsideTemperature.range.getLowerBound()) - Math.abs(outsideTemperature.value);
-        System.out.println(temperatureDifference);
     }
     
     private void initBoiler() {
         boiler = new Boiler(new Range(35, 75));
-        boiler.desiredTemperature = boiler.getUpperRange() - ((boiler.getRangeLength() / outsideTemperature.range.getLength()) * temperatureDifference);
-        System.out.println(boiler.desiredTemperature);
+        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
     }
     
     @Override

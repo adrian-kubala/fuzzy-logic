@@ -16,6 +16,7 @@ import other.NumbersFormatter;
 public class OutsideTemperature {
     public Range range;
     public double value;
+    public double temperatureDifference;
 
     public OutsideTemperature(Range range) {
         this.range = range;
@@ -23,6 +24,9 @@ public class OutsideTemperature {
         value = ThreadLocalRandom.current().nextDouble(range.getLowerBound(), range.getUpperBound());
         value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         System.out.println(value);
+        
+        temperatureDifference = Math.abs(range.getLowerBound()) - Math.abs(value);
+        System.out.println(temperatureDifference);
     }
     
     
