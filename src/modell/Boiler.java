@@ -6,6 +6,7 @@
 package modell;
 
 import org.jfree.data.Range;
+import other.NumbersFormatter;
 
 /**
  *
@@ -43,6 +44,7 @@ public class Boiler {
     
     public void specifyDesiredTemperatureBasedOn(OutsideTemperature outsideTemp) {
         desiredTemperature = getUpperRange() - ((getRangeLength() / outsideTemp.getRangeLength()) * outsideTemp.temperatureDifference);
+        desiredTemperature = NumbersFormatter.instance.roundToDecimalPlaces(desiredTemperature, 2);
         System.out.println("Pożądana temperatura bojlera: " + desiredTemperature);
     }
 }

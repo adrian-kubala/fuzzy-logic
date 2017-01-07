@@ -34,7 +34,6 @@ public class OutsideTemperature {
 
     private void calculateDifference() {
         temperatureDifference = Math.abs(RANGE.getLowerBound()) - Math.abs(value);
-        System.out.println(temperatureDifference);
     }
 
     public double getLowerRange() {

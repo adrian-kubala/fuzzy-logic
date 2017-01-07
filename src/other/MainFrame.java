@@ -60,7 +60,7 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         boilerTemperature.fuzzify(boilerTemp);
 
         int termsCount = boilerTemperature.getSeriesCount();
-        fuzzyOutputTextArea.setText("");
+        String newText = "";
         for (int i = 0; i < termsCount; i++) {
             String name = (String) boilerTemperature.getSeriesKey(i);
             double value;
@@ -70,7 +70,7 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
             } else {
                 value = 0;
             }
-            fuzzyOutputTextArea.append("u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n");
+            newText += "u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n";
         }
 
         controller.infer();
@@ -79,7 +79,8 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
 
         controller.aggregate();
         double crispValue = controller.defuzzify();
-        fuzzyOutputTextArea.append("\n" + "Moc ogrzewania ustawić na: " + crispValue);
+        newText += "\n" + "Moc ogrzewania ustawić na: " + crispValue;
+        fuzzyOutputTextArea.setText(newText);
         
         return controller.defuzzify();
     }
