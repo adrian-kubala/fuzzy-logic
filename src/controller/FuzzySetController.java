@@ -110,6 +110,43 @@ public class FuzzySetController {
         aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
     }
     
+    public double runSystem(double inputValue){
+        String fuzzificationResult = fuzzify(inputValue);
+        
+        infer();
+        aggregate();
+        double crispValue = defuzzify();
+        fuzzificationResult += crispValue;
+        
+        return crispValue;
+    }
+    
+    private String fuzzify(double inputValue) {
+        boilerTemperature.fuzzify(inputValue);
+        boilerTemperatureView.showFuzzyValues();
+        return getResult();
+    }
+    
+    private String getResult() {
+        int termsCount = boilerTemperature.getSeriesCount();
+        String result = null;
+        for (int i = 0; i < termsCount; i++) {
+            String termName = (String) boilerTemperature.getSeriesKey(i);
+            
+            double fuzzyValue;
+            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
+            if (membershipValue != null) {
+                fuzzyValue = membershipValue.getValue();
+            } else {
+                fuzzyValue = 0;
+            }
+            
+            result += "u" + termName + " (" + boilerTemperature.getVariableName() + ") = " + fuzzyValue + "\n";
+        }
+        result += "\n" + "Moc ogrzewania ustawić na: ";
+        return result;
+    }
+    
     private void infer() {
         inferenceBlock.infer(boilerTemperature);
         inferenceBlockView.refresh();
@@ -130,40 +167,5 @@ public class FuzzySetController {
         aggregationBlockView.fillView();
         
         return outputCrispValue;
-    }
-    
-    public double runSystem(double inputValue){
-        String fuzzificationResult = fuzzify(inputValue);
-        
-        infer();
-        aggregate();
-        double crispValue = defuzzify();
-        fuzzificationResult += crispValue;
-        
-        return crispValue;
-    }
-    
-    private String fuzzify(double inputValue) {
-        boilerTemperature.fuzzify(inputValue);
-        
-        int termsCount = boilerTemperature.getSeriesCount();
-        String result = null;
-        for (int i = 0; i < termsCount; i++) {
-            String termName = (String) boilerTemperature.getSeriesKey(i);
-            
-            double fuzzyValue;
-            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
-            if (membershipValue != null) {
-                fuzzyValue = membershipValue.getValue();
-            } else {
-                fuzzyValue = 0;
-            }
-            
-            result += "u" + termName + " (" + boilerTemperature.getVariableName() + ") = " + fuzzyValue + "\n";
-        }
-        result += "\n" + "Moc ogrzewania ustawić na: ";
-        
-        boilerTemperatureView.showFuzzyValues();
-        return result;
     }
 }
