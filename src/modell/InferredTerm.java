@@ -5,7 +5,7 @@
  */
 package modell;
 
-import other.NumbersFormatter;
+import singleton.NumbersFormatter;
 
 /**
  *

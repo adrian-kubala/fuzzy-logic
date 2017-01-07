@@ -7,7 +7,7 @@ package modell;
 
 import java.util.ArrayList;
 import modell.enums.Power;
-import other.NumbersFormatter;
+import singleton.NumbersFormatter;
 
 /**
  *

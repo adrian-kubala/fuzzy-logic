@@ -1,7 +1,7 @@
 package modell;
 
 import org.jfree.data.xy.XYSeries;
-import other.NumbersFormatter;
+import singleton.NumbersFormatter;
 
 /**
  * Created by adrian on 04.12.2016.

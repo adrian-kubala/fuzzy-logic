@@ -6,7 +6,7 @@
 package modell;
 
 import org.jfree.data.Range;
-import other.NumbersFormatter;
+import singleton.NumbersFormatter;
 
 /**
  *

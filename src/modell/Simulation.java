@@ -8,7 +8,7 @@ package modell;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.jfree.data.Range;
-import other.SimulationDelegate;
+import interfaces.SimulationDelegate;
 
 /**
  *
