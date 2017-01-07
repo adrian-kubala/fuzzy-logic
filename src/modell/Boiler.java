@@ -43,6 +43,6 @@ public class Boiler {
     
     public void specifyDesiredTemperatureBasedOn(OutsideTemperature outsideTemp) {
         desiredTemperature = getUpperRange() - ((getRangeLength() / outsideTemp.getRangeLength()) * outsideTemp.temperatureDifference);
-        System.out.println(desiredTemperature);
+        System.out.println("Pożądana temperatura bojlera: " + desiredTemperature);
     }
 }

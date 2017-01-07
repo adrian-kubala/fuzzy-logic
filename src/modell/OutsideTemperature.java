@@ -22,11 +22,18 @@ public class OutsideTemperature {
     public OutsideTemperature(Range range) {
         RANGE = range;
 
-        value = ThreadLocalRandom.current().nextDouble(range.getLowerBound(), range.getUpperBound());
-        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
-        System.out.println(value);
+        randomizeTemperature();
+        calculateDifference();
+    }
 
-        temperatureDifference = Math.abs(range.getLowerBound()) - Math.abs(value);
+    private void randomizeTemperature() {
+        value = ThreadLocalRandom.current().nextDouble(RANGE.getLowerBound(), RANGE.getUpperBound());
+        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
+        System.out.println("Temperatura zewnętrzna: " + value);
+    }
+
+    private void calculateDifference() {
+        temperatureDifference = Math.abs(RANGE.getLowerBound()) - Math.abs(value);
         System.out.println(temperatureDifference);
     }
 
