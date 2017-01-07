@@ -98,6 +98,7 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         inferenceBlockPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         fuzzyOutputTextArea = new javax.swing.JTextArea();
+        simulationView = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +113,17 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
         fuzzyOutputTextArea.setPreferredSize(new java.awt.Dimension(240, 190));
         jScrollPane2.setViewportView(fuzzyOutputTextArea);
 
+        javax.swing.GroupLayout simulationViewLayout = new javax.swing.GroupLayout(simulationView);
+        simulationView.setLayout(simulationViewLayout);
+        simulationViewLayout.setHorizontalGroup(
+            simulationViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        simulationViewLayout.setVerticalGroup(
+            simulationViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,21 +132,24 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(inputSetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2)
+                    .addComponent(simulationView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(inferenceBlockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(inputSetPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(simulationView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -181,5 +196,6 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
     private javax.swing.JPanel inferenceBlockPanel;
     private javax.swing.JPanel inputSetPanel;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel simulationView;
     // End of variables declaration//GEN-END:variables
 }
