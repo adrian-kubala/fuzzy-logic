@@ -41,7 +41,7 @@ public class Simulation extends TimerTask {
     
     private void initBoiler() {
         boiler = new Boiler(new Range(35, 75));
-        boiler.desiredTemperature = boiler.range.getUpperBound() - ((boiler.range.getLength() / outsideTemperature.range.getLength()) * temperatureDifference);
+        boiler.desiredTemperature = boiler.getUpperRange() - ((boiler.getRangeLength() / outsideTemperature.range.getLength()) * temperatureDifference);
         System.out.println(boiler.desiredTemperature);
     }
     

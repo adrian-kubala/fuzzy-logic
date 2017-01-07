@@ -14,9 +14,21 @@ import org.jfree.data.Range;
 public class Boiler {
     public double temperature = 7;
     public double desiredTemperature;
-    public Range range;
+    private final Range RANGE;
     
     public Boiler(Range range) {
-        this.range = range;
+        RANGE = range;
+    }
+    
+    public double getLowerRange() {
+        return RANGE.getLowerBound();
+    }
+    
+    public double getRangeLength() {
+        return RANGE.getLength();
+    }
+    
+    public double getUpperRange() {
+        return RANGE.getUpperBound();
     }
 }
