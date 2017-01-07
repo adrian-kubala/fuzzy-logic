@@ -42,7 +42,7 @@ public class Boiler {
     }
     
     public void specifyDesiredTemperatureBasedOn(OutsideTemperature outsideTemp) {
-        desiredTemperature = getUpperRange() - ((getRangeLength() / outsideTemp.range.getLength()) * outsideTemp.temperatureDifference);
+        desiredTemperature = getUpperRange() - ((getRangeLength() / outsideTemp.getRangeLength()) * outsideTemp.temperatureDifference);
         System.out.println(desiredTemperature);
     }
 }
