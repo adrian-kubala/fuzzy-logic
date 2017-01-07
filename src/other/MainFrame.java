@@ -6,14 +6,10 @@
 package other;
 
 import controller.FuzzySetController;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ThreadLocalRandom;
 import modell.FuzzySet;
 import modell.MembershipValue;
 import modell.Simulation;
 import org.jfree.ui.RefineryUtilities;
-import view.SimulationView;
 
 /**
  *
@@ -29,17 +25,18 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
      */
     public MainFrame() {
         initComponents();
-
         centerOnScreen();
-        initController();
+        
+        initFuzzySetController();
         initSimulation();
+        initSimulationView();
     }
 
     private void centerOnScreen() {
         RefineryUtilities.centerFrameOnScreen(this);
     }
 
-    private void initController() {
+    private void initFuzzySetController() {
         controller = new FuzzySetController();
         inputSetPanel.add(controller.boilerTemperatureView);
         inferenceBlockPanel.add(controller.heatingPowerView);
@@ -49,8 +46,10 @@ public class MainFrame extends javax.swing.JFrame implements SimulationDelegate 
     
     private void initSimulation() {
         simulation = new Simulation();
-        simulation.delegate = this;
-        
+        simulation.delegate = this;        
+    }
+    
+    private void initSimulationView() {
         simulationView.setData(simulation);
     }
 
