@@ -7,9 +7,7 @@ package modell;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ThreadLocalRandom;
 import org.jfree.data.Range;
-import other.NumbersFormatter;
 import other.SimulationDelegate;
 
 /**
@@ -18,8 +16,8 @@ import other.SimulationDelegate;
  */
 public class Simulation extends TimerTask {
 
-    OutsideTemperature outsideTemperature;
-    Boiler boiler;
+    public OutsideTemperature outsideTemperature;
+    public Boiler boiler;
 
     Timer timer = new Timer();
     public SimulationDelegate delegate;
@@ -39,7 +37,7 @@ public class Simulation extends TimerTask {
     }
 
     private void initBoiler() {
-        boiler = new Boiler(new Range(35, 75));
+        boiler = new Boiler(new Range(7, 75));
         boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
     }
 
