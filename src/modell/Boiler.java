@@ -35,7 +35,7 @@ public class Boiler {
     }
     
     public double getUpperRange() {
-        return RANGE.getUpperBound();
+        return RANGE.getUpperBound();        
     }
     
     public boolean didReachDesiredTemperature() {
@@ -43,7 +43,7 @@ public class Boiler {
     }
     
     public void specifyDesiredTemperatureBasedOn(OutsideTemperature outsideTemp) {
-        desiredTemperature = getUpperRange() - ((getRangeLength() / outsideTemp.getRangeLength()) * outsideTemp.temperatureDifference);
+        desiredTemperature = getUpperRange() - (outsideTemp.temperatureDifference / 2);
         desiredTemperature = NumbersFormatter.instance.roundToDecimalPlaces(desiredTemperature, 2);
         System.out.println("Pożądana temperatura bojlera: " + desiredTemperature);
     }

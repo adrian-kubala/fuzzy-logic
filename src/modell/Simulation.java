@@ -33,7 +33,7 @@ public class Simulation extends TimerTask {
     }
 
     private void initOutsideTemperature() {
-        outsideTemperature = new OutsideTemperature(new Range(-30, 5));
+        outsideTemperature = new OutsideTemperature(new Range(-30, 35));
     }
 
     private void initBoiler() {
