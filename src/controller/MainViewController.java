@@ -5,6 +5,7 @@
  */
 package controller;
 
+import interfaces.FuzzySetControllerDelegate;
 import interfaces.SimulationDelegate;
 import org.jfree.ui.RefineryUtilities;
 
@@ -12,7 +13,7 @@ import org.jfree.ui.RefineryUtilities;
  *
  * @author adrian
  */
-public class MainViewController extends javax.swing.JFrame implements SimulationDelegate {
+public class MainViewController extends javax.swing.JFrame implements SimulationDelegate, FuzzySetControllerDelegate {
 
     private FuzzySetController fuzzySetcontroller;
     private SimulationController simulationController;
@@ -38,6 +39,8 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         inferenceBlockPanel.add(fuzzySetcontroller.heatingPowerView);
         inferenceBlockPanel.add(fuzzySetcontroller.inferenceBlockView);
         inferenceBlockPanel.add(fuzzySetcontroller.aggregationBlockView);
+        
+        fuzzySetcontroller.delegate = this;
     }
     
     private void initSimulationController() {
@@ -52,6 +55,11 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         simulationController.setBoilerTemperatureView(input);
         
         return fuzzySetcontroller.runSystem(input);
+    }
+
+    @Override
+    public void systemDidFinishWithResult(String result) {
+        fuzzyOutputTextArea.setText(result);
     }
     
     /**

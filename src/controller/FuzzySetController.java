@@ -5,6 +5,7 @@
  */
 package controller;
 
+import interfaces.FuzzySetControllerDelegate;
 import modell.AggregationBlock;
 import modell.FuzzySet;
 import modell.InferenceBlock;
@@ -38,6 +39,8 @@ public class FuzzySetController {
 
     public AggregationBlock aggregationBlock;
     public FuzzySetView aggregationBlockView;
+    
+    public FuzzySetControllerDelegate delegate;
 
     public FuzzySetController() {
         setupBoilerTemperature();
@@ -117,6 +120,7 @@ public class FuzzySetController {
         aggregate();
         double crispValue = defuzzify();
         fuzzificationResult += crispValue;
+        delegate.systemDidFinishWithResult(fuzzificationResult);
 
         return crispValue;
     }
