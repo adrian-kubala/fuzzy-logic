@@ -17,9 +17,8 @@ public class SimulationController {
     private Simulation simulation;
     private SimulationView simulationView;
     
-    public SimulationController(SimulationView view, SimulationDelegate delegate) {
-        initSimulation(delegate);
-        initSimulationView(view);
+    public SimulationController(SimulationDelegate delegate) {
+        initSimulation(delegate); 
     }
         
     private void initSimulation(SimulationDelegate delegate) {
@@ -27,12 +26,16 @@ public class SimulationController {
         simulation.delegate = delegate;
     }
     
-    private void initSimulationView(SimulationView view) {
+    public void initSimulationView(SimulationView view) {
         simulationView = view;
         simulationView.setData(simulation);
     }
     
     public void setBoilerTemperatureView(double value) {
         simulationView.setBoilerTemperatureView(value);
+    }
+    
+    public boolean simulationViewIsNull() {
+        return simulationView == null;
     }
 }

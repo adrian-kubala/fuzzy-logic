@@ -6,8 +6,6 @@
 package controller;
 
 import interfaces.SimulationDelegate;
-import modell.FuzzySet;
-import modell.MembershipValue;
 import org.jfree.ui.RefineryUtilities;
 
 /**
@@ -43,44 +41,17 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
     }
     
     private void initSimulationController() {
-        simulationController = new SimulationController(simulationView, this);
+        simulationController = new SimulationController(this);
     }
 
     @Override
     public double inputValueDidChange(double input) {
-        return runController(input);
-    }
-    
-    private double runController(double boilerTemp) {
-        FuzzySet boilerTemperature = fuzzySetcontroller.boilerTemperature;
-        boilerTemperature.fuzzify(boilerTemp);
-
-        int termsCount = boilerTemperature.getSeriesCount();
-        String newText = "";
-        for (int i = 0; i < termsCount; i++) {
-            String name = (String) boilerTemperature.getSeriesKey(i);
-            double value;
-            MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
-            if (membershipValue != null) {
-                value = membershipValue.getValue();
-            } else {
-                value = 0;
-            }
-            newText += "u" + name + " (" + boilerTemperature.getVariableName() + ") = " + value + "\n";
+        if (simulationController.simulationViewIsNull()) {
+            simulationController.initSimulationView(simulationView);
         }
-
-        fuzzySetcontroller.infer();
-
-        inferenceBlockPanel.revalidate();
-
-        fuzzySetcontroller.aggregate();
-        double crispValue = fuzzySetcontroller.defuzzify();
-        newText += "\n" + "Moc ogrzewania ustawić na: " + crispValue;
-        fuzzyOutputTextArea.setText(newText);
+        simulationController.setBoilerTemperatureView(input);
         
-        simulationController.setBoilerTemperatureView(boilerTemp);
-        
-        return fuzzySetcontroller.defuzzify();
+        return fuzzySetcontroller.runSystem(input);
     }
     
     /**
