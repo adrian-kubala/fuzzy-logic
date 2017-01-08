@@ -53,10 +53,14 @@ public class SimulationView extends javax.swing.JPanel {
     
     public void setOutsideTemperatureView(double value) {
         outsideTemperatureView.setValue((int) value);
+//        outsideTemperatureViewLabel.setText("Temperatura zewnętrzna: " + value + " stopni");
     }
     
     public void setBoilerTemperatureView(double value) {
         boilerTemperatureView.setValue((int) value);
+        boilerTemperatureViewLabel.setText("Temperatura bojlera: " + value + " stopni");
+        
+        desiredBoilerTemperatureViewLabel.setText("Temperatura bojlera będzie ustawiona na: " + value + " stopni");
     }
 
     /**
@@ -75,6 +79,11 @@ public class SimulationView extends javax.swing.JPanel {
         boilerTemperatureViewUpperRangeLabel = new javax.swing.JLabel();
         outsideTemperatureViewLowerRangeLabel = new javax.swing.JLabel();
         boilerTemperatureViewLowerRangeLabel = new javax.swing.JLabel();
+        outsideTemperatureViewLabel = new javax.swing.JLabel();
+        boilerTemperatureViewLabel = new javax.swing.JLabel();
+        desiredBoilerTemperatureViewLabel = new javax.swing.JLabel();
+
+        setMaximumSize(new java.awt.Dimension(460, 210));
 
         progressName.setFont(new java.awt.Font("LiHei Pro", 0, 15)); // NOI18N
         progressName.setText("Trwa ogrzewanie...");
@@ -90,6 +99,12 @@ public class SimulationView extends javax.swing.JPanel {
         outsideTemperatureViewLowerRangeLabel.setText("0");
 
         boilerTemperatureViewLowerRangeLabel.setText("0");
+
+        outsideTemperatureViewLabel.setText("jLabel1");
+
+        boilerTemperatureViewLabel.setText("jLabel1");
+
+        desiredBoilerTemperatureViewLabel.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -113,7 +128,12 @@ public class SimulationView extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(progressName)))
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(outsideTemperatureViewLabel)
+                    .addComponent(boilerTemperatureViewLabel)
+                    .addComponent(desiredBoilerTemperatureViewLabel))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,17 +141,24 @@ public class SimulationView extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(progressName)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(outsideTemperatureViewUpperRangeLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(outsideTemperatureViewLowerRangeLabel))
+                        .addComponent(boilerTemperatureView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(outsideTemperatureView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(boilerTemperatureViewUpperRangeLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(boilerTemperatureViewLowerRangeLabel)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(outsideTemperatureViewUpperRangeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(outsideTemperatureViewLowerRangeLabel))
-                    .addComponent(boilerTemperatureView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(outsideTemperatureView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(boilerTemperatureViewUpperRangeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(boilerTemperatureViewLowerRangeLabel)))
+                        .addComponent(outsideTemperatureViewLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(boilerTemperatureViewLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(desiredBoilerTemperatureViewLabel)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -139,9 +166,12 @@ public class SimulationView extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar boilerTemperatureView;
+    private javax.swing.JLabel boilerTemperatureViewLabel;
     private javax.swing.JLabel boilerTemperatureViewLowerRangeLabel;
     private javax.swing.JLabel boilerTemperatureViewUpperRangeLabel;
+    private javax.swing.JLabel desiredBoilerTemperatureViewLabel;
     private javax.swing.JProgressBar outsideTemperatureView;
+    private javax.swing.JLabel outsideTemperatureViewLabel;
     private javax.swing.JLabel outsideTemperatureViewLowerRangeLabel;
     private javax.swing.JLabel outsideTemperatureViewUpperRangeLabel;
     private javax.swing.JLabel progressName;

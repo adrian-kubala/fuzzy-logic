@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import org.jfree.data.Range;
 import interfaces.SimulationDelegate;
+import singleton.NumbersFormatter;
 
 /**
  *
@@ -50,6 +51,7 @@ public class Simulation extends TimerTask {
         if (delegate != null) {
             double outputValue = delegate.inputValueDidChange(boiler.temperature);
             boiler.temperature += (Math.abs(outsideTemperature.getRangeLength()) + boiler.desiredTemperature) / 100 * outputValue;
+            boiler.temperature = NumbersFormatter.instance.roundToDecimalPlaces(boiler.temperature, 2);
         }
     }
 }
