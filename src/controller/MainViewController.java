@@ -43,12 +43,16 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
     }
     
     private void initSimulationController() {
-        simulationController = new SimulationController(simulationView, this);
+        simulationController = new SimulationController(this);
     }
 
     @Override
     public double inputValueDidChange(double input) {
+        if (simulationController.simulationViewIsNull()) {
+            simulationController.initSimulationView(simulationView);
+        }
         simulationController.setBoilerTemperatureView(input);
+        
         return fuzzySetcontroller.runSystem(input);
     }
     
