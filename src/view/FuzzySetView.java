@@ -82,17 +82,25 @@ public class FuzzySetView extends ChartPanel {
     }
 
     public void showSingleton(double value) {
+        plot.clearDomainMarkers();
+        
         BasicStroke stroke = new BasicStroke(2f);
         ValueMarker marker = new ValueMarker(value, Color.BLACK, stroke);
         plot.addDomainMarker(marker);
+        
+        fillView();
+    }
+    
+    private void fillView() {
+        XYAreaRenderer renderer = new XYAreaRenderer();
+        renderer.setSeriesPaint(0, Color.CYAN);
+        renderer.setSeriesOutlinePaint(0, Color.BLACK);
+        renderer.setSeriesOutlineStroke(0, new BasicStroke(2f));
+        renderer.setOutline(true);
+        plot.setRenderer(renderer);
     }
 
-    public void refresh() {
-        refreshRenderer();
-        plot.clearDomainMarkers();
-    }
-
-    private void refreshRenderer() {
+    public void refreshRenderer() {
         XYItemRenderer renderer = plot.getRenderer();
         int termCount = plot.getSeriesCount();
 
@@ -131,14 +139,5 @@ public class FuzzySetView extends ChartPanel {
         
     private FuzzySet getFuzzySet() {
         return (FuzzySet) plot.getDataset();
-    }
-    
-    public void fillView() {
-        XYAreaRenderer renderer = new XYAreaRenderer();
-        renderer.setSeriesPaint(0, Color.CYAN);
-        renderer.setSeriesOutlinePaint(0, Color.BLACK);
-        renderer.setSeriesOutlineStroke(0, new BasicStroke(2f));
-        renderer.setOutline(true);
-        plot.setRenderer(renderer);
     }
 }

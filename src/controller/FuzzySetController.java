@@ -20,22 +20,22 @@ import view.FuzzySetView;
  * @author adrian
  */
 public class FuzzySetController {
-    
+
     private static final String INPUT_SET_NAME = "Zbiór wejściowy";
     private static final String INPUT_VARIABLE_NAME = "temperatura bojlera";
-    
+
     private static final String OUTPUT_SET_NAME = "Zbiór wyjściowy";
     private static final String OUTPUT_VARIABLE_NAME = "moc ogrzewania";
-    
+
     public FuzzySet boilerTemperature;
     public FuzzySetView boilerTemperatureView;
-            
+
     public FuzzySet heatingPower;
     public FuzzySetView heatingPowerView;
-    
+
     public InferenceBlock inferenceBlock;
     public FuzzySetView inferenceBlockView;
-    
+
     public AggregationBlock aggregationBlock;
     public FuzzySetView aggregationBlockView;
 
@@ -45,11 +45,11 @@ public class FuzzySetController {
         setupInferenceBlock();
         setupAggregationBlock();
     }
-    
+
     private void setupBoilerTemperature() {
         boilerTemperature = new FuzzySet(INPUT_SET_NAME, INPUT_VARIABLE_NAME, 5);
         boilerTemperature.range = new Range(7, 75);
-        
+
         Term veryLow = new Term(Temperature.VERY_LOW);
         veryLow.setShape(3, 7, 11, 15);
         boilerTemperature.addTerm(veryLow);
@@ -69,14 +69,14 @@ public class FuzzySetController {
         Term veryHigh = new Term(Temperature.VERY_HIGH);
         veryHigh.setShape(50, 62.5, 75, 87.5);
         boilerTemperature.addTerm(veryHigh);
-        
+
         boilerTemperatureView = new FuzzySetView(boilerTemperature, 3);
     }
-    
+
     private void setupHeatingPower() {
         heatingPower = new FuzzySet(OUTPUT_SET_NAME, OUTPUT_VARIABLE_NAME, 5);
         heatingPower.range = new Range(0, 4);
-        
+
         Term none = new Term(Power.NONE);
         none.setShape(-1, 0, 0, 1);
         heatingPower.addTerm(none);
@@ -92,47 +92,47 @@ public class FuzzySetController {
         Term high = new Term(Power.HIGH);
         high.setShape(2, 3, 3, 4);
         heatingPower.addTerm(high);
-        
+
         Term veryHigh = new Term(Power.VERY_HIGH);
         veryHigh.setShape(3, 4, 4, 5);
         heatingPower.addTerm(veryHigh);
-        
-        heatingPowerView = new FuzzySetView(heatingPower, 1);        
+
+        heatingPowerView = new FuzzySetView(heatingPower, 1);
     }
-    
+
     private void setupInferenceBlock() {
         inferenceBlock = new InferenceBlock(heatingPower);
         inferenceBlockView = new FuzzySetView(inferenceBlock, 1);
     }
-    
+
     private void setupAggregationBlock() {
         aggregationBlock = new AggregationBlock(inferenceBlock);
         aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
     }
-    
-    public double runSystem(double inputValue){
+
+    public double runSystem(double inputValue) {
         String fuzzificationResult = fuzzify(inputValue);
-        
+
         infer();
         aggregate();
         double crispValue = defuzzify();
         fuzzificationResult += crispValue;
-        
+
         return crispValue;
     }
-    
+
     private String fuzzify(double inputValue) {
         boilerTemperature.fuzzify(inputValue);
         boilerTemperatureView.showFuzzyValues();
         return getResult();
     }
-    
+
     private String getResult() {
         int termsCount = boilerTemperature.getSeriesCount();
         String result = null;
         for (int i = 0; i < termsCount; i++) {
             String termName = (String) boilerTemperature.getSeriesKey(i);
-            
+
             double fuzzyValue;
             MembershipValue membershipValue = boilerTemperature.getMembershipValueAt(i);
             if (membershipValue != null) {
@@ -140,32 +140,27 @@ public class FuzzySetController {
             } else {
                 fuzzyValue = 0;
             }
-            
+
             result += "u" + termName + " (" + boilerTemperature.getVariableName() + ") = " + fuzzyValue + "\n";
         }
         result += "\n" + "Moc ogrzewania ustawić na: ";
         return result;
     }
-    
+
     private void infer() {
         inferenceBlock.infer(boilerTemperature);
-        inferenceBlockView.refresh();
-        inferenceBlockView.revalidate();
-    }   
-    
+        inferenceBlockView.refreshRenderer();
+    }
+
     private void aggregate() {
         aggregationBlock.aggregate();
-        aggregationBlockView.refresh();
     }
-    
+
     private double defuzzify() {
-       aggregationBlock.defuzzify();
+        aggregationBlock.defuzzify();
         double outputCrispValue = aggregationBlock.getCrispValue();
-        
-        aggregationBlockView.refresh();
         aggregationBlockView.showSingleton(outputCrispValue);
-        aggregationBlockView.fillView();
-        
+
         return outputCrispValue;
     }
 }
