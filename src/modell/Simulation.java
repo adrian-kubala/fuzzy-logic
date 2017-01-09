@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import org.jfree.data.Range;
 import interfaces.SimulationDelegate;
+import java.util.Random;
 import singleton.NumbersFormatter;
 
 /**
@@ -30,7 +31,7 @@ public class Simulation extends TimerTask {
     }
 
     private void initTimer() {
-        timer.schedule(this, 0, 700);
+        timer.schedule(this, 0, 300);
     }
 
     private void initOutsideTemperature() {
@@ -50,7 +51,14 @@ public class Simulation extends TimerTask {
         }
 
         if (delegate != null) {
+            boolean willRandomNewOutsideTemperature = new Random().nextBoolean();
+            System.out.println(willRandomNewOutsideTemperature);
+            if (willRandomNewOutsideTemperature) {
+                outsideTemperature.randomizeTemperatureGrowth();
+                boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
+            }
             delegate.outsideTemperatureDidChange(outsideTemperature.value);
+            
             delegate.desiredTemperatureDidChange(boiler.desiredTemperature);
             
             double outputValue = delegate.inputValueDidChange(boiler.temperature);
@@ -69,6 +77,8 @@ public class Simulation extends TimerTask {
             
             boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
             delegate.desiredTemperatureDidChange(boiler.desiredTemperature);
+
             boiler.temperature -= 0.5;
+            delegate.inputValueDidChange(boiler.temperature);
     }
 }

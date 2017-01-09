@@ -29,7 +29,6 @@ public class OutsideTemperature {
     private void randomizeTemperature() {
         value = ThreadLocalRandom.current().nextDouble(RANGE.getLowerBound(), RANGE.getUpperBound());
         value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
-        System.out.println("Temperatura zewnętrzna: " + value);
     }
 
     private void calculateDifference() {
