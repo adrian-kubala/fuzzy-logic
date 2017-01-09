@@ -45,6 +45,12 @@ public class Simulation extends TimerTask {
     @Override
     public void run() {
         if (boiler.didReachDesiredTemperature()) {
+            outsideTemperature.randomizeTemperatureGrowth();
+            delegate.outsideTemperatureDidChange(outsideTemperature.value);
+            
+            boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
+            delegate.desiredTemperatureDidChange(boiler.desiredTemperature);
+            boiler.temperature -= 0.5;
             return;
         }
 

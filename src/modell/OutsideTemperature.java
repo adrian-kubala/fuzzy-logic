@@ -47,5 +47,11 @@ public class OutsideTemperature {
     public double getUpperRange() {
         return RANGE.getUpperBound();
     }
+    
+    public void randomizeTemperatureGrowth() {
+        value = ThreadLocalRandom.current().nextDouble(value - 3, value + 3);
+        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
+        calculateDifference();
+    }
 
 }
