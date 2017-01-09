@@ -58,6 +58,15 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
     }
 
     @Override
+    public void outsideTemperatureDidChange(double temperature) {
+        if (simulationController.simulationViewIsNull()) {
+            simulationController.initSimulationView(simulationView);
+        }
+        
+        simulationController.setOutsideTemperatureView(temperature);
+    }
+
+    @Override
     public void systemDidFinishWithResult(String result) {
         fuzzyOutputTextArea.setText(result);
     }

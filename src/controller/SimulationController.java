@@ -35,6 +35,10 @@ public class SimulationController {
         simulationView.setBoilerTemperatureView(value);
     }
     
+    public void setOutsideTemperatureView(double value) {
+        simulationView.setOutsideTemperatureView(value);
+    }
+    
     public boolean simulationViewIsNull() {
         return simulationView == null;
     }

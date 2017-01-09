@@ -11,4 +11,5 @@ package interfaces;
  */
 public interface SimulationDelegate {
     double inputValueDidChange(double input);
+    void outsideTemperatureDidChange(double temperature);
 }
