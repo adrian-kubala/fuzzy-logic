@@ -70,6 +70,11 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
     public void systemDidFinishWithResult(String result) {
         fuzzyOutputTextArea.setText(result);
     }
+
+    @Override
+    public void desiredTemperatureDidChange(double temperature) {
+        simulationController.setDesiredTemperatureLabel(temperature);
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

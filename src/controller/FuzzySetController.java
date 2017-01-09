@@ -133,7 +133,7 @@ public class FuzzySetController {
 
     private String getResult() {
         int termsCount = boilerTemperature.getSeriesCount();
-        String result = null;
+        String result = "";
         for (int i = 0; i < termsCount; i++) {
             String termName = (String) boilerTemperature.getSeriesKey(i);
 

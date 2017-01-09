@@ -59,7 +59,9 @@ public class SimulationView extends javax.swing.JPanel {
     public void setBoilerTemperatureView(double value) {
         boilerTemperatureView.setValue((int) value);
         boilerTemperatureViewLabel.setText("Temperatura bojlera: " + value + " stopni");
-        
+    }
+    
+    public void setDesiredBoilerTemperature(double value) {
         desiredBoilerTemperatureViewLabel.setText("Temperatura bojlera będzie ustawiona na: " + value + " stopni");
     }
 

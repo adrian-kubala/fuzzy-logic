@@ -50,6 +50,7 @@ public class Simulation extends TimerTask {
 
         if (delegate != null) {
             delegate.outsideTemperatureDidChange(outsideTemperature.value);
+            delegate.desiredTemperatureDidChange(boiler.desiredTemperature);
             
             double outputValue = delegate.inputValueDidChange(boiler.temperature);
             boiler.temperature += (Math.abs(outsideTemperature.getRangeLength()) + boiler.desiredTemperature) / 100 * outputValue;
