@@ -23,7 +23,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="outsideTemperatureViewLowerRangeLabel" min="-2" max="-2" attributes="0"/>
@@ -31,26 +31,26 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="outsideTemperatureView" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="boilerTemperatureViewLowerRangeLabel" min="-2" max="-2" attributes="0"/>
                           <Component id="boilerTemperatureViewUpperRangeLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="boilerTemperatureView" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="boilerTemperatureViewLabel" pref="324" max="32767" attributes="0"/>
+                          <Component id="desiredBoilerTemperatureViewLabel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="outsideTemperatureViewLabel" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Component id="progressName" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="outsideTemperatureViewLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="boilerTemperatureViewLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="desiredBoilerTemperatureViewLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="244" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -133,16 +133,25 @@
     <Component class="javax.swing.JLabel" name="outsideTemperatureViewLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[324, 16]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="boilerTemperatureViewLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[324, 16]"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="desiredBoilerTemperatureViewLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[324, 16]"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>
