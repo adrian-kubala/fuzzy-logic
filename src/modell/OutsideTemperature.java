@@ -49,7 +49,13 @@ public class OutsideTemperature {
     }
     
     public void randomizeTemperatureGrowth() {
-        value = ThreadLocalRandom.current().nextDouble(value - 3, value + 3);
+        int span = 3;
+        double newTemperature = ThreadLocalRandom.current().nextDouble(value - span, value + span);
+        while(newTemperature < getLowerRange() || newTemperature > getUpperRange()) {
+            newTemperature = ThreadLocalRandom.current().nextDouble(value - span, value + span);
+        }
+        
+        value = newTemperature;
         value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         calculateDifference();
     }

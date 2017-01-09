@@ -30,7 +30,7 @@ public class Simulation extends TimerTask {
     }
 
     private void initTimer() {
-        timer.schedule(this, 0, 1000);
+        timer.schedule(this, 0, 700);
     }
 
     private void initOutsideTemperature() {
