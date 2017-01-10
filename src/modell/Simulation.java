@@ -58,7 +58,7 @@ public class Simulation extends TimerTask {
             delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
 
             double outputValue = delegate.inputValueDidChange(boiler.getTemperature());
-            double growthRate = (Math.abs(outsideTemperature.getValue()) + boiler.getDesiredTemperature()) / 700 * outputValue;
+            double growthRate = calculateGrowthRate(outputValue);
             if (growthRate == 0) {
                 randomizeTemperatures();
             }
@@ -67,14 +67,16 @@ public class Simulation extends TimerTask {
         }
     }
     
+    private double calculateGrowthRate(double factor) {
+        return (Math.abs(outsideTemperature.getValue()) + boiler.getDesiredTemperature()) / 700 * factor;
+    }
+    
     private boolean willRandomNewOutsideTemperature() {
         return new Random().nextBoolean();
     }
 
     private void randomizeTemperatures() {
         randomizeOutsideTemperature();
-
-
 
         boiler.increaseTemperature(-0.2);
         delegate.inputValueDidChange(boiler.getTemperature());
