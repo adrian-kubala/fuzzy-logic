@@ -136,7 +136,7 @@ public class FuzzySetController {
         infer();
         aggregate();
         double crispValue = defuzzify();
-        fuzzificationResult += crispValue;
+        fuzzificationResult += String.format("%.2f", crispValue);
         delegate.systemDidFinishWithResult(fuzzificationResult);
 
         return crispValue;
@@ -162,7 +162,8 @@ public class FuzzySetController {
                 fuzzyValue = 0;
             }
 
-            result += "u" + termName + " (" + boilerTemperature.getVariableName() + ") = " + fuzzyValue + "\n";
+            String formattedFuzzyValue = String.format("%.2f", fuzzyValue);
+            result += "u" + termName + " (" + boilerTemperature.getVariableName() + ") = " + formattedFuzzyValue + "\n";
         }
         result += "\n" + "Moc ogrzewania ustawić na: ";
         return result;
