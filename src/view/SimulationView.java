@@ -34,7 +34,7 @@ public class SimulationView extends javax.swing.JPanel {
         int outsideTemperatureUpperRange = (int) simulation.outsideTemperature.getUpperRange();
         outsideTemperatureView.setMinimum(outsideTemperatureLowerRange);
         outsideTemperatureView.setMaximum(outsideTemperatureUpperRange);
-        outsideTemperatureView.setValue((int) simulation.outsideTemperature.value);
+        outsideTemperatureView.setValue((int) simulation.outsideTemperature.getValue());
         
         outsideTemperatureViewLowerRangeLabel.setText("" + outsideTemperatureLowerRange);
         outsideTemperatureViewUpperRangeLabel.setText("" + outsideTemperatureUpperRange); 

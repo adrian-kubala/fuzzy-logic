@@ -16,7 +16,7 @@ import singleton.NumbersFormatter;
 public class OutsideTemperature {
 
     private final Range RANGE;
-    public double value;
+    private double value;
     public double temperatureDifference;
 
     public OutsideTemperature(Range range) {
@@ -51,6 +51,10 @@ public class OutsideTemperature {
 
     public double getUpperRange() {
         return RANGE.getUpperBound();
+    }
+    
+    public double getValue() {
+        return value;
     }
     
     public void randomizeTemperatureGrowth() {
