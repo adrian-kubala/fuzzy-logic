@@ -53,16 +53,20 @@ public class SimulationView extends javax.swing.JPanel {
     
     public void setOutsideTemperatureView(double value) {
         outsideTemperatureView.setValue((int) value);
-        outsideTemperatureViewLabel.setText("Temperatura zewnętrzna: " + value + " stopni");
+        outsideTemperatureViewLabel.setText(getFormattedText("Temperatura zewnętrzna", value));
     }
     
     public void setBoilerTemperatureView(double value) {
         boilerTemperatureView.setValue((int) value);
-        boilerTemperatureViewLabel.setText("Temperatura bojlera: " + value + " stopni");
+        boilerTemperatureViewLabel.setText(getFormattedText("Temperatura bojlera", value));
     }
     
     public void setDesiredBoilerTemperature(double value) {
-        desiredBoilerTemperatureViewLabel.setText("Temperatura bojlera będzie ustawiona na: " + value + " stopni");
+        desiredBoilerTemperatureViewLabel.setText(getFormattedText("Temperatura bojlera będzie ustawiona na", value));
+    }
+    
+    private String getFormattedText(String text, double value) {
+        return String.format(text + ": %.2f stopni", value);
     }
 
     /**
