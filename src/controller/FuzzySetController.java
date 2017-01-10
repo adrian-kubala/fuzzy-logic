@@ -55,23 +55,23 @@ public class FuzzySetController {
         boilerTemperature.range = new Range(7, 75);
 
         Term veryLow = new Term(Temperature.VERY_LOW);
-        veryLow.setShape(3, 7, 11, 15);
+        veryLow.setShape(3, 5, 9, 11);
         boilerTemperature.addTerm(veryLow);
 
         Term low = new Term(Temperature.LOW);
-        low.setShape(10, 15, 15, 20);
+        low.setShape(10, 15, 24, 32);
         boilerTemperature.addTerm(low);
 
         Term medium = new Term(Temperature.MEDIUM);
-        medium.setShape(18, 26, 26, 33);
+        medium.setShape(28, 41, 41, 53);
         boilerTemperature.addTerm(medium);
 
         Term high = new Term(Temperature.HIGH);
-        high.setShape(30, 45, 45, 60);
+        high.setShape(44, 59, 59, 72.5);
         boilerTemperature.addTerm(high);
 
         Term veryHigh = new Term(Temperature.VERY_HIGH);
-        veryHigh.setShape(50, 62.5, 75, 87.5);
+        veryHigh.setShape(70, 73.5, 76.5, 80);
         boilerTemperature.addTerm(veryHigh);
 
         boilerTemperatureView = new FuzzySetView(boilerTemperature, 3);
