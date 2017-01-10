@@ -28,6 +28,15 @@ public class Simulation extends TimerTask {
         initTimer();
     }
 
+    private void initOutsideTemperature() {
+        outsideTemperature = new OutsideTemperature(new Range(-30, 35));
+    }
+
+    private void initBoiler() {
+        boiler = new Boiler(new Range(7, 75));
+        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
+    }
+
     private void initTimer() {
         new Timer().schedule(this, 0, 60);
         new Timer().schedule(new TimerTask() {
@@ -38,31 +47,6 @@ public class Simulation extends TimerTask {
                 }
             }
         }, 0, 400);
-    }
-
-    private boolean willRandomNewOutsideTemperature() {
-        return new Random().nextBoolean();
-    }
-
-    private void randomizeOutsideTemperature() {
-        outsideTemperature.randomizeTemperatureGrowth();
-        delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
-
-        updateDesiredTemperature();
-    }
-
-    private void updateDesiredTemperature() {
-        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
-        delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
-    }
-
-    private void initOutsideTemperature() {
-        outsideTemperature = new OutsideTemperature(new Range(-30, 35));
-    }
-
-    private void initBoiler() {
-        boiler = new Boiler(new Range(7, 75));
-        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
     }
 
     @Override
@@ -82,5 +66,21 @@ public class Simulation extends TimerTask {
 
     private double calculateGrowthRate(double factor) {
         return (Math.abs(outsideTemperature.getValue()) + boiler.getDesiredTemperature()) / 700 * factor;
+    }
+
+    private boolean willRandomNewOutsideTemperature() {
+        return new Random().nextBoolean();
+    }
+
+    private void randomizeOutsideTemperature() {
+        outsideTemperature.randomizeTemperatureGrowth();
+        delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+
+        updateDesiredTemperature();
+    }
+
+    private void updateDesiredTemperature() {
+        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
+        delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
     }
 }
