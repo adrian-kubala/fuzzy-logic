@@ -19,8 +19,7 @@ public class Simulation extends TimerTask {
 
     public OutsideTemperature outsideTemperature;
     public Boiler boiler;
-
-    Timer timer = new Timer();
+    
     public SimulationDelegate delegate;
 
     public Simulation() {
@@ -30,7 +29,7 @@ public class Simulation extends TimerTask {
     }
 
     private void initTimer() {
-        timer.schedule(this, 0, 60);
+        new Timer().schedule(this, 0, 60);
     }
 
     private void initOutsideTemperature() {
