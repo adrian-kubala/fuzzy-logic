@@ -24,7 +24,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
     public MainViewController() {
         initComponents();
         centerOnScreen();
-        
+
         initFuzzySetController();
         initSimulationController();
     }
@@ -35,14 +35,14 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
 
     private void initFuzzySetController() {
         fuzzySetcontroller = new FuzzySetController();
-        inputSetPanel.add(fuzzySetcontroller.boilerTemperatureView);
-        inferenceBlockPanel.add(fuzzySetcontroller.heatingPowerView);
-        inferenceBlockPanel.add(fuzzySetcontroller.inferenceBlockView);
-        inferenceBlockPanel.add(fuzzySetcontroller.aggregationBlockView);
-        
+        inputSetPanel.add(fuzzySetcontroller.getInputSetView());
+        inferenceBlockPanel.add(fuzzySetcontroller.getOutputSetView());
+        inferenceBlockPanel.add(fuzzySetcontroller.getInferenceBlockView());
+        inferenceBlockPanel.add(fuzzySetcontroller.getAggregationBlockView());
+
         fuzzySetcontroller.delegate = this;
     }
-    
+
     private void initSimulationController() {
         simulationController = new SimulationController(this);
     }
@@ -53,7 +53,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
             simulationController.initSimulationView(simulationView);
         }
         simulationController.setBoilerTemperatureView(input);
-        
+
         return fuzzySetcontroller.runSystem(input);
     }
 
@@ -62,8 +62,13 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         if (simulationController.simulationViewIsNull()) {
             simulationController.initSimulationView(simulationView);
         }
-        
+
         simulationController.setOutsideTemperatureView(temperature);
+    }
+
+    @Override
+    public void desiredTemperatureDidChange(double temperature) {
+        simulationController.setDesiredTemperatureLabel(temperature);
     }
 
     @Override
@@ -71,11 +76,6 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         fuzzyOutputTextArea.setText(result);
     }
 
-    @Override
-    public void desiredTemperatureDidChange(double temperature) {
-        simulationController.setDesiredTemperatureLabel(temperature);
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -6,6 +6,7 @@
 package controller;
 
 import interfaces.FuzzySetControllerDelegate;
+import java.awt.Component;
 import modell.AggregationBlock;
 import modell.FuzzySet;
 import modell.InferenceBlock;
@@ -28,17 +29,17 @@ public class FuzzySetController {
     private static final String OUTPUT_SET_NAME = "Zbiór wyjściowy";
     private static final String OUTPUT_VARIABLE_NAME = "moc ogrzewania";
 
-    public FuzzySet boilerTemperature;
-    public FuzzySetView boilerTemperatureView;
+    private FuzzySet boilerTemperature;
+    private FuzzySetView boilerTemperatureView;
 
-    public FuzzySet heatingPower;
-    public FuzzySetView heatingPowerView;
+    private FuzzySet heatingPower;
+    private FuzzySetView heatingPowerView;
 
-    public InferenceBlock inferenceBlock;
-    public FuzzySetView inferenceBlockView;
+    private InferenceBlock inferenceBlock;
+    private FuzzySetView inferenceBlockView;
 
-    public AggregationBlock aggregationBlock;
-    public FuzzySetView aggregationBlockView;
+    private AggregationBlock aggregationBlock;
+    private FuzzySetView aggregationBlockView;
     
     public FuzzySetControllerDelegate delegate;
 
@@ -112,6 +113,22 @@ public class FuzzySetController {
         aggregationBlock = new AggregationBlock(inferenceBlock);
         aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
     }
+    
+    public Component getInputSetView() {
+        return boilerTemperatureView;
+    }
+    
+    public Component getOutputSetView() {
+        return heatingPowerView;
+    }
+    
+    public Component getInferenceBlockView() {
+        return inferenceBlockView;
+    }
+    
+    public Component getAggregationBlockView() {
+        return aggregationBlockView;
+    }
 
     public double runSystem(double inputValue) {
         String fuzzificationResult = fuzzify(inputValue);
@@ -124,7 +141,7 @@ public class FuzzySetController {
 
         return crispValue;
     }
-
+    
     private String fuzzify(double inputValue) {
         boilerTemperature.fuzzify(inputValue);
         boilerTemperatureView.showFuzzyValues();
