@@ -47,6 +47,14 @@ public class Simulation extends TimerTask {
                 }
             }
         }, 0, 400);
+        
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                outsideTemperature.initValue();
+                delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+            }
+        }, 0, 10000);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class OutsideTemperature {
         initValue();
     }
 
-    private void initValue() {
+    public void initValue() {
         value = randomizeValue(RANGE.getLowerBound(), RANGE.getUpperBound());
     }
 
