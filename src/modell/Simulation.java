@@ -66,19 +66,33 @@ public class Simulation extends TimerTask {
             boiler.increaseTemperature(growthRate);
         }
     }
+    
+    private boolean willRandomNewOutsideTemperature() {
+        return new Random().nextBoolean();
+    }
 
     private void randomizeTemperatures() {
-        outsideTemperature.randomizeTemperatureGrowth();
-        delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+        randomizeOutsideTemperature();
 
-        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
-        delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
+
 
         boiler.increaseTemperature(-0.2);
         delegate.inputValueDidChange(boiler.getTemperature());
     }
     
-    private boolean willRandomNewOutsideTemperature() {
-        return new Random().nextBoolean();
+    private void randomizeOutsideTemperature() {
+        outsideTemperature.randomizeTemperatureGrowth();
+        delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+        
+        updateDesiredTemperature();
     }
+    
+    private void updateDesiredTemperature() {
+        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
+        delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
+    }
+    
+
+
+
 }
