@@ -37,7 +37,6 @@ public class InferredTerm extends Term {
         } else {
             value = 0;
         }
-        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         return value;
     }
     

@@ -41,7 +41,6 @@ public class Term extends XYSeries {
         } else {
             value = 0;
         }
-        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         return value;
     }
     

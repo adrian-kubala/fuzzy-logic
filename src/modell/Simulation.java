@@ -38,7 +38,7 @@ public class Simulation extends TimerTask {
     }
 
     private void initTimer() {
-        new Timer().schedule(this, 0, 60);
+        new Timer().schedule(this, 0, 80);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {

@@ -53,8 +53,6 @@ public class AggregationBlock extends FuzzySet {
             
             double yPoint = NumbersFormatter.instance.getMax(firstY, secondY);
             aggregatedTerm.add(x, yPoint);
-            
-            x = NumbersFormatter.instance.roundToDecimalPlaces(x, 2);
         }
         
         addTerm(aggregatedTerm);
@@ -83,7 +81,6 @@ public class AggregationBlock extends FuzzySet {
         }
         
         crispValue = nominator / denominator;
-        crispValue = NumbersFormatter.instance.roundToDecimalPlaces(crispValue, 2);
     }
     
     public double getCrispValue() {

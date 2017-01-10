@@ -57,7 +57,6 @@ public class OutsideTemperature {
     
     private double randomizeValue(double lowerBound, double upperBound) {
         double temperature = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
-        temperature = NumbersFormatter.instance.roundToDecimalPlaces(temperature, 2);
         calculateDifference();
         
         return temperature;

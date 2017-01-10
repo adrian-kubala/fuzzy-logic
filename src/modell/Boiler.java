@@ -42,8 +42,7 @@ public class Boiler {
         return temperature;
     }
     
-    public void increaseTemperature(double value) {
-        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
+    public void increaseTemperature(double value) { 
         temperature += value;
     } 
     
@@ -53,7 +52,6 @@ public class Boiler {
     
     public void specifyDesiredTemperatureBasedOn(OutsideTemperature outsideTemp) {
         desiredTemperature = getUpperRange() - (outsideTemp.getDifferenceBetweenLowerBound() / 2);
-        desiredTemperature = NumbersFormatter.instance.roundToDecimalPlaces(desiredTemperature, 2);
     }
     
     public boolean didReachDesiredTemperature() {
