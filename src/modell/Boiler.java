@@ -15,7 +15,7 @@ import singleton.NumbersFormatter;
 public class Boiler {
     private final Range RANGE;
     private double temperature = 7;
-    public double desiredTemperature;
+    private double desiredTemperature;
     
     public Boiler(Range range) {
         RANGE = range;
@@ -47,12 +47,16 @@ public class Boiler {
         temperature += value;
     } 
     
-    public boolean didReachDesiredTemperature() {
-        return temperature >= desiredTemperature;
+    public double getDesiredTemperature() {
+        return desiredTemperature;
     }
     
     public void specifyDesiredTemperatureBasedOn(OutsideTemperature outsideTemp) {
         desiredTemperature = getUpperRange() - (outsideTemp.temperatureDifference / 2);
         desiredTemperature = NumbersFormatter.instance.roundToDecimalPlaces(desiredTemperature, 2);
+    }
+    
+    public boolean didReachDesiredTemperature() {
+        return temperature >= desiredTemperature;
     }
 }
