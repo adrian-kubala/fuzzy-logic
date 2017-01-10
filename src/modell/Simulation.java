@@ -60,19 +60,21 @@ public class Simulation extends TimerTask {
                 }
             }
         }, 0, 400);
-        
+
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 outsideTemperature.randomizeTemperatureGrowth(20);
-                delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+                if (hasDelegate()) {
+                    delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+                }
             }
         }, 0, 15000);
     }
 
     @Override
     public void run() {
-        if (delegate != null) {
+        if (hasDelegate()) {
 
             if (boiler.didReachDesiredTemperature()) {
                 boiler.increaseTemperature(-0.2);
@@ -95,13 +97,21 @@ public class Simulation extends TimerTask {
 
     private void randomizeOutsideTemperature() {
         outsideTemperature.randomizeTemperatureGrowth();
-        delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+        if (hasDelegate()) {
+            delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+        }
 
         updateDesiredTemperature();
     }
 
     private void updateDesiredTemperature() {
         boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
-        delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
+        if (hasDelegate()) {
+            delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
+        }
+    }
+
+    private boolean hasDelegate() {
+        return delegate != null;
     }
 }
