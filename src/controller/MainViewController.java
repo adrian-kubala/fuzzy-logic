@@ -26,7 +26,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         centerOnScreen();
 
         initFuzzySetController();
-        initSimulationController();  
+        initSimulationController();
     }
 
     private void centerOnScreen() {
@@ -104,6 +104,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         fuzzyOutputTextArea.setEditable(false);
         fuzzyOutputTextArea.setColumns(20);
         fuzzyOutputTextArea.setRows(5);
+        fuzzyOutputTextArea.setHighlighter(null);
         fuzzyOutputTextArea.setPreferredSize(new java.awt.Dimension(240, 190));
         jScrollPane2.setViewportView(fuzzyOutputTextArea);
 
