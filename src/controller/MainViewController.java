@@ -47,6 +47,11 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         simulationController = new SimulationController(this);
     }
 
+    /**
+     *
+     * @param input
+     * @return
+     */
     @Override
     public double inputValueDidChange(double input) {
         initSimulationViewIfNeeded();
@@ -55,12 +60,20 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         return fuzzySetController.runSystem(input);
     }
 
+    /**
+     *
+     * @param temperature
+     */
     @Override
     public void outsideTemperatureDidChange(double temperature) {
         initSimulationViewIfNeeded();
         simulationController.setOutsideTemperatureView(temperature);
     }
 
+    /**
+     *
+     * @param temperature
+     */
     @Override
     public void desiredTemperatureDidChange(double temperature) {
         initSimulationViewIfNeeded();
@@ -73,6 +86,10 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         }
     }
 
+    /**
+     *
+     * @param result
+     */
     @Override
     public void systemDidFinishWithResult(String result) {
         fuzzyOutputTextArea.setText(result);

@@ -17,11 +17,24 @@ import java.util.Random;
  */
 public class Simulation extends TimerTask {
 
+    /**
+     *
+     */
     public OutsideTemperature outsideTemperature;
+
+    /**
+     *
+     */
     public Boiler boiler;
 
+    /**
+     *
+     */
     public SimulationDelegate delegate;
 
+    /**
+     *
+     */
     public Simulation() {
         initOutsideTemperature();
         initBoiler();

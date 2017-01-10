@@ -19,6 +19,10 @@ public class OutsideTemperature {
     private double value;
     private double differenceBetweenLowerBound;
 
+    /**
+     *
+     * @param range
+     */
     public OutsideTemperature(Range range) {
         RANGE = range;
 
@@ -29,26 +33,49 @@ public class OutsideTemperature {
         value = randomizeValue(RANGE.getLowerBound(), RANGE.getUpperBound());
     }
 
+    /**
+     *
+     * @return
+     */
     public double getLowerRange() {
         return RANGE.getLowerBound();
     }
 
+    /**
+     *
+     * @return
+     */
     public double getRangeLength() {
         return RANGE.getLength();
     }
 
+    /**
+     *
+     * @return
+     */
     public double getUpperRange() {
         return RANGE.getUpperBound();
     }
     
+    /**
+     *
+     * @return
+     */
     public double getValue() {
         return value;
     }
     
+    /**
+     *
+     */
     public void randomizeTemperatureGrowth() {
         randomizeTemperatureGrowth(0.5);
     }
     
+    /**
+     *
+     * @param span
+     */
     public void randomizeTemperatureGrowth(double span) {
         double newTemperature = randomizeValue(value - span, value + span);
         while(newTemperature < getLowerRange() || newTemperature > getUpperRange()) {
@@ -69,6 +96,10 @@ public class OutsideTemperature {
         differenceBetweenLowerBound = new Range(RANGE.getLowerBound(), value).getLength();
     }
     
+    /**
+     *
+     * @return
+     */
     public double getDifferenceBetweenLowerBound() {
         return differenceBetweenLowerBound;
     }

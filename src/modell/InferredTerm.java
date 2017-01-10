@@ -14,6 +14,10 @@ import singleton.NumbersFormatter;
 public class InferredTerm extends Term {
     private double newX0, newX1;
     
+    /**
+     *
+     * @param outputTerm
+     */
     public InferredTerm(Term outputTerm) {
         super(outputTerm.getType());
         
@@ -25,6 +29,11 @@ public class InferredTerm extends Term {
         height = term.height;
     }
     
+    /**
+     *
+     * @param x
+     * @return
+     */
     @Override
     public double getMembershipValue(double x) {
         double value;
@@ -40,6 +49,10 @@ public class InferredTerm extends Term {
         return value;
     }
     
+    /**
+     *
+     * @param y
+     */
     public void setMinimum(double y) {
         newX0 = getNewX0(y);
         newX1 = getNewX1(y);

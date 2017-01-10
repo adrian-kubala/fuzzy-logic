@@ -10,7 +10,23 @@ package interfaces;
  * @author adrian
  */
 public interface SimulationDelegate {
+
+    /**
+     *
+     * @param input
+     * @return
+     */
     double inputValueDidChange(double input);
+
+    /**
+     *
+     * @param temperature
+     */
     void outsideTemperatureDidChange(double temperature);
+
+    /**
+     *
+     * @param temperature
+     */
     void desiredTemperatureDidChange(double temperature); 
 }

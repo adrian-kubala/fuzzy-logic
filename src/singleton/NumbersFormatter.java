@@ -10,10 +10,19 @@ package singleton;
  * @author adrian
  */
 public class NumbersFormatter {
+
+    /**
+     *
+     */
     public static final NumbersFormatter instance = new NumbersFormatter();
     
     private NumbersFormatter() { };
     
+    /**
+     *
+     * @param numbers
+     * @return
+     */
     public double getMax(double... numbers) {
         double max = numbers[0];
         int length = numbers.length;

@@ -32,8 +32,16 @@ public class FuzzySetView extends ChartPanel {
     private Color[] colors;    
     private XYPlot plot;
     
+    /**
+     *
+     */
     public static final String MICRO_SIGN = "\u03bc";
 
+    /**
+     *
+     * @param fuzzySet
+     * @param tickUnit
+     */
     public FuzzySetView(FuzzySet fuzzySet, double tickUnit) {
         super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getVariableName(), MICRO_SIGN + "(" + fuzzySet.getVariableName() + ")",
                 fuzzySet, PlotOrientation.VERTICAL, true, true, false));
@@ -83,6 +91,10 @@ public class FuzzySetView extends ChartPanel {
         yAxis.setRange(0, 1.2);
     }
 
+    /**
+     *
+     * @param value
+     */
     public void showSingleton(double value) {
         plot.clearDomainMarkers();
         
@@ -102,6 +114,9 @@ public class FuzzySetView extends ChartPanel {
         plot.setRenderer(renderer);
     }
 
+    /**
+     *
+     */
     public void refreshRenderer() {
         XYItemRenderer renderer = plot.getRenderer();
         int termCount = plot.getSeriesCount();
@@ -116,6 +131,9 @@ public class FuzzySetView extends ChartPanel {
         }
     }
 
+    /**
+     *
+     */
     public void showFuzzyValues() {
         clearMarkers();
 

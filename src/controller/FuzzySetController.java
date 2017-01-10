@@ -41,8 +41,14 @@ public class FuzzySetController {
     private AggregationBlock aggregationBlock;
     private FuzzySetView aggregationBlockView;
     
+    /**
+     *
+     */
     public FuzzySetControllerDelegate delegate;
 
+    /**
+     *
+     */
     public FuzzySetController() {
         setupBoilerTemperature();
         setupHeatingPower();
@@ -114,22 +120,43 @@ public class FuzzySetController {
         aggregationBlockView = new FuzzySetView(aggregationBlock, 1);
     }
     
+    /**
+     *
+     * @return
+     */
     public Component getInputSetView() {
         return boilerTemperatureView;
     }
     
+    /**
+     *
+     * @return
+     */
     public Component getOutputSetView() {
         return heatingPowerView;
     }
     
+    /**
+     *
+     * @return
+     */
     public Component getInferenceBlockView() {
         return inferenceBlockView;
     }
     
+    /**
+     *
+     * @return
+     */
     public Component getAggregationBlockView() {
         return aggregationBlockView;
     }
 
+    /**
+     *
+     * @param inputValue
+     * @return
+     */
     public double runSystem(double inputValue) {
         String fuzzificationResult = fuzzify(inputValue);
 

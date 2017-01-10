@@ -18,6 +18,10 @@ public class AggregationBlock extends FuzzySet {
     private final InferenceBlock inferenceBlock;
     private double crispValue;
     
+    /**
+     *
+     * @param block
+     */
     public AggregationBlock(InferenceBlock block) {
         super("Blok agregacji", block.getVariableName(), block.getSeriesCount());
         
@@ -25,6 +29,9 @@ public class AggregationBlock extends FuzzySet {
         range = inferenceBlock.range;
     }
     
+    /**
+     *
+     */
     public void aggregate() {
         removeAllTerms();
         
@@ -58,6 +65,9 @@ public class AggregationBlock extends FuzzySet {
         addTerm(aggregatedTerm);
     } 
     
+    /**
+     *
+     */
     public void defuzzify() {
         ArrayList<Double> yPoints = new ArrayList<>();
         
@@ -83,6 +93,10 @@ public class AggregationBlock extends FuzzySet {
         crispValue = nominator / denominator;
     }
     
+    /**
+     *
+     * @return
+     */
     public double getCrispValue() {
         return crispValue;
     }

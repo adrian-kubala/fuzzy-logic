@@ -9,15 +9,45 @@ import singleton.NumbersFormatter;
 public class Term extends XYSeries {
 
     private final Enum type;
-    protected double a, x0, x1, b;
+    protected double a,
+
+    /**
+     *
+     */
+    x0,
+
+    /**
+     *
+     */
+    x1,
+
+    /**
+     *
+     */
+    b;
+
+    /**
+     *
+     */
     protected double height = 1;
     
+    /**
+     *
+     * @param type
+     */
     public Term(Enum type) {
         super(type.toString());
 
         this.type = type;
     }
 
+    /**
+     *
+     * @param a
+     * @param x0
+     * @param x1
+     * @param b
+     */
     public void setShape(double a, double x0, double x1, double b) {
         this.a = a;
         this.x0 = x0;
@@ -30,6 +60,11 @@ public class Term extends XYSeries {
         add(b, 0);
     }
     
+    /**
+     *
+     * @param x
+     * @return
+     */
     public double getMembershipValue(double x) {
         double value;
         if (x >= a && x <= x0) {
@@ -44,14 +79,26 @@ public class Term extends XYSeries {
         return value;
     }
     
+    /**
+     *
+     * @return
+     */
     public Enum getType() {
         return type;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getTypeName() {
         return type.name();
     }
     
+    /**
+     *
+     * @return
+     */
     public String getTitle() {
         return type.toString();
     }

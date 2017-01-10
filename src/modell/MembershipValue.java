@@ -14,24 +14,46 @@ public class MembershipValue {
     private final Enum termType;
     private final double forCrispValue;
     
+    /**
+     *
+     * @param value
+     * @param termType
+     * @param crispValue
+     */
     public MembershipValue(double value, Enum termType, double crispValue) {
         this.value = value;
         this.termType = termType;
         forCrispValue = crispValue;
     }
     
+    /**
+     *
+     * @return
+     */
     public double getValue() {
         return value;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getTermName() {
         return termType.name();
     }
     
+    /**
+     *
+     * @return
+     */
     public Enum getTermType() {
         return termType;
     }
     
+    /**
+     *
+     * @return
+     */
     public double getCrispValue() {
         return forCrispValue;
     }

@@ -17,43 +17,84 @@ public class Boiler {
     private double temperature = 7;
     private double desiredTemperature;
     
+    /**
+     *
+     * @param range
+     */
     public Boiler(Range range) {
         RANGE = range;
     }
     
+    /**
+     *
+     * @param range
+     * @param startingTemperature
+     */
     public Boiler(Range range, double startingTemperature) {
         RANGE = range;
         temperature = startingTemperature;
     }
     
+    /**
+     *
+     * @return
+     */
     public double getLowerRange() {
         return RANGE.getLowerBound();
     }
     
+    /**
+     *
+     * @return
+     */
     public double getRangeLength() {
         return RANGE.getLength();
     }
     
+    /**
+     *
+     * @return
+     */
     public double getUpperRange() {
         return RANGE.getUpperBound();        
     }
     
+    /**
+     *
+     * @return
+     */
     public double getTemperature() {
         return temperature;
     }
     
+    /**
+     *
+     * @param value
+     */
     public void increaseTemperature(double value) { 
         temperature += value;
     } 
     
+    /**
+     *
+     * @return
+     */
     public double getDesiredTemperature() {
         return desiredTemperature;
     }
     
+    /**
+     *
+     * @param outsideTemp
+     */
     public void specifyDesiredTemperatureBasedOn(OutsideTemperature outsideTemp) {
         desiredTemperature = getUpperRange() - (outsideTemp.getDifferenceBetweenLowerBound() / 2);
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean didReachDesiredTemperature() {
         return temperature >= desiredTemperature;
     }

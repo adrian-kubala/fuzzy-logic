@@ -10,5 +10,10 @@ package interfaces;
  * @author adrian
  */
 public interface FuzzySetControllerDelegate {
+
+    /**
+     *
+     * @param result
+     */
     void systemDidFinishWithResult(String result);
 }

@@ -12,9 +12,19 @@ public class FuzzySet extends XYSeriesCollection {
 
     private final String NAME;
     private final String VARIABLE_NAME;
+
+    /**
+     *
+     */
     public Range range;
     private MembershipValue[] membershipValues;
 
+    /**
+     *
+     * @param name
+     * @param variableName
+     * @param termsCount
+     */
     public FuzzySet(String name, String variableName, int termsCount) {
         super();
         
@@ -23,6 +33,10 @@ public class FuzzySet extends XYSeriesCollection {
         membershipValues = new MembershipValue[termsCount];
     }
     
+    /**
+     *
+     * @param x
+     */
     public void fuzzify(double x) {
         membershipValues = new MembershipValue[getSeriesCount()];
         for (int i = 0; i < getSeriesCount(); i++) {
@@ -37,10 +51,20 @@ public class FuzzySet extends XYSeriesCollection {
         }
     }
     
+    /**
+     *
+     * @param i
+     * @return
+     */
     public Term getTermAt(int i) {
         return (Term) getSeries(i);
     }
     
+    /**
+     *
+     * @param type
+     * @return
+     */
     public Term copyTermOfType(Enum type) {
         Term copy = null;
         for (int i = 0; i < getSeriesCount(); i++) {
@@ -54,6 +78,11 @@ public class FuzzySet extends XYSeriesCollection {
         return copy;
     }
     
+    /**
+     *
+     * @param i
+     * @return
+     */
     public Term copyTermAt(int i) {
         Term term = getTermAt(i);
         Term copy = null;
@@ -63,6 +92,11 @@ public class FuzzySet extends XYSeriesCollection {
         return copy;
     }
     
+    /**
+     *
+     * @param type
+     * @return
+     */
     public double getMembershipValueOfType(Enum type) {
         double value = 0;
         for (MembershipValue membershipValue : membershipValues) {
@@ -77,30 +111,58 @@ public class FuzzySet extends XYSeriesCollection {
         return value;
     }
     
+    /**
+     *
+     * @param term
+     */
     public void addTerm(Term term) {
         addSeries(term);
     }
     
+    /**
+     *
+     */
     public void removeAllTerms() {
         removeAllSeries();
     }
     
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return NAME;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getVariableName() {
         return VARIABLE_NAME;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getMembershipValuesLastIndex() {
         return membershipValues.length - 1;
     }
     
+    /**
+     *
+     * @param i
+     * @return
+     */
     public MembershipValue getMembershipValueAt(int i) {
         return membershipValues[i];
     }
     
+    /**
+     *
+     * @return
+     */
     public int getMembershipValuesLength() {
         return membershipValues.length;
     }

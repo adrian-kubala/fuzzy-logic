@@ -15,6 +15,10 @@ public class InferenceBlock extends FuzzySet {
     
     private final FuzzySet outputSet;
     
+    /**
+     *
+     * @param outputSet
+     */
     public InferenceBlock(FuzzySet outputSet) {
         super("Blok wnioskowania", outputSet.getVariableName(), outputSet.getSeriesCount());
         
@@ -22,6 +26,10 @@ public class InferenceBlock extends FuzzySet {
         this.outputSet = outputSet;
     }
     
+    /**
+     *
+     * @param inputSet
+     */
     public void infer(FuzzySet inputSet) {
         removeAllTerms();
         
@@ -61,6 +69,11 @@ public class InferenceBlock extends FuzzySet {
         }
     }
     
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public InferredTerm getTermAt(int index) {
         return (InferredTerm) super.getTermAt(index);
