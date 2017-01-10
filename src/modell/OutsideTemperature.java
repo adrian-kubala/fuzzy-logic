@@ -25,7 +25,7 @@ public class OutsideTemperature {
         initValue();
     }
 
-    public void initValue() {
+    private void initValue() {
         value = randomizeValue(RANGE.getLowerBound(), RANGE.getUpperBound());
     }
 
@@ -46,7 +46,10 @@ public class OutsideTemperature {
     }
     
     public void randomizeTemperatureGrowth() {
-        double span = 0.5;
+        randomizeTemperatureGrowth(0.5);
+    }
+    
+    public void randomizeTemperatureGrowth(double span) {
         double newTemperature = randomizeValue(value - span, value + span);
         while(newTemperature < getLowerRange() || newTemperature > getUpperRange()) {
             newTemperature = randomizeValue(value - span, value + span);

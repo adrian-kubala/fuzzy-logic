@@ -25,7 +25,7 @@ public class Simulation extends TimerTask {
     public Simulation() {
         initOutsideTemperature();
         initBoiler();
-        initTimer();
+        initTimers();
     }
 
     private void initOutsideTemperature() {
@@ -37,7 +37,7 @@ public class Simulation extends TimerTask {
         boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
     }
 
-    private void initTimer() {
+    private void initTimers() {
         new Timer().schedule(this, 0, 80);
         new Timer().schedule(new TimerTask() {
             @Override
@@ -51,10 +51,10 @@ public class Simulation extends TimerTask {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                outsideTemperature.initValue();
+                outsideTemperature.randomizeTemperatureGrowth(20);
                 delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
             }
-        }, 0, 10000);
+        }, 0, 15000);
     }
 
     @Override
