@@ -163,7 +163,7 @@ public class FuzzySetController {
             }
 
             String formattedFuzzyValue = String.format("%.2f", fuzzyValue);
-            result += "u" + termName + " (" + boilerTemperature.getVariableName() + ") = " + formattedFuzzyValue + "\n";
+            result += FuzzySetView.MICRO_SIGN + termName + " (" + boilerTemperature.getVariableName() + ") = " + formattedFuzzyValue + "\n";
         }
         result += "\n" + "Moc ogrzewania ustawić na: ";
         return result;

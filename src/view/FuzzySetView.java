@@ -31,9 +31,11 @@ public class FuzzySetView extends ChartPanel {
     private final double TICK_UNIT;
     private Color[] colors;    
     private XYPlot plot;
+    
+    public static final String MICRO_SIGN = "\u03bc";
 
     public FuzzySetView(FuzzySet fuzzySet, double tickUnit) {
-        super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getVariableName(), "u(" + fuzzySet.getVariableName() + ")",
+        super(ChartFactory.createXYLineChart(fuzzySet.getName(), fuzzySet.getVariableName(), MICRO_SIGN + "(" + fuzzySet.getVariableName() + ")",
                 fuzzySet, PlotOrientation.VERTICAL, true, true, false));
         
         TICK_UNIT = tickUnit;
