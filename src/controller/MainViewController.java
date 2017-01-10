@@ -26,7 +26,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         centerOnScreen();
 
         initFuzzySetController();
-        initSimulationController();
+        initSimulationController();  
     }
 
     private void centerOnScreen() {
@@ -101,6 +101,7 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
         inferenceBlockPanel.setBackground(new java.awt.Color(255, 0, 0));
         inferenceBlockPanel.setPreferredSize(new java.awt.Dimension(450, 200));
 
+        fuzzyOutputTextArea.setEditable(false);
         fuzzyOutputTextArea.setColumns(20);
         fuzzyOutputTextArea.setRows(5);
         fuzzyOutputTextArea.setPreferredSize(new java.awt.Dimension(240, 190));
