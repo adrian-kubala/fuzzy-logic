@@ -22,13 +22,19 @@ public class OutsideTemperature {
     public OutsideTemperature(Range range) {
         RANGE = range;
 
-        randomizeTemperature();
+        initValue();
         calculateDifference();
     }
 
-    private void randomizeTemperature() {
-        value = ThreadLocalRandom.current().nextDouble(RANGE.getLowerBound(), RANGE.getUpperBound());
-        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
+    private void initValue() {
+        value = randomizeValue(RANGE.getLowerBound(), RANGE.getUpperBound());
+    }
+    
+    private double randomizeValue(double lowerBound, double upperBound) {
+        double temperature = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
+        temperature = NumbersFormatter.instance.roundToDecimalPlaces(temperature, 2);
+        
+        return temperature;
     }
 
     private void calculateDifference() {
@@ -49,13 +55,12 @@ public class OutsideTemperature {
     
     public void randomizeTemperatureGrowth() {
         double span = 0.5;
-        double newTemperature = ThreadLocalRandom.current().nextDouble(value - span, value + span);
+        double newTemperature = randomizeValue(value - span, value + span);
         while(newTemperature < getLowerRange() || newTemperature > getUpperRange()) {
-            newTemperature = ThreadLocalRandom.current().nextDouble(value - span, value + span);
+            newTemperature = randomizeValue(value - span, value + span);
         }
         
         value = newTemperature;
-        value = NumbersFormatter.instance.roundToDecimalPlaces(value, 2);
         calculateDifference();
     }
 
