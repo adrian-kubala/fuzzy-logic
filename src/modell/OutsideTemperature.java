@@ -48,7 +48,7 @@ public class OutsideTemperature {
     }
     
     public void randomizeTemperatureGrowth() {
-        int span = 3;
+        double span = 0.5;
         double newTemperature = ThreadLocalRandom.current().nextDouble(value - span, value + span);
         while(newTemperature < getLowerRange() || newTemperature > getUpperRange()) {
             newTemperature = ThreadLocalRandom.current().nextDouble(value - span, value + span);
