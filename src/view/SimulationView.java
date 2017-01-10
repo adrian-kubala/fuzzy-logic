@@ -45,7 +45,7 @@ public class SimulationView extends javax.swing.JPanel {
         int boilerTemperatureUpperRange = (int) simulation.boiler.getUpperRange();
         boilerTemperatureView.setMinimum(boilerTemperatureLowerRange);
         boilerTemperatureView.setMaximum(boilerTemperatureUpperRange);
-        boilerTemperatureView.setValue((int) simulation.boiler.temperature);
+        boilerTemperatureView.setValue((int) simulation.boiler.getTemperature());
         
         boilerTemperatureViewLowerRangeLabel.setText("" + boilerTemperatureLowerRange);
         boilerTemperatureViewUpperRangeLabel.setText("" + boilerTemperatureUpperRange); 

@@ -57,27 +57,27 @@ public class Simulation extends TimerTask {
                 boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
             }
             delegate.outsideTemperatureDidChange(outsideTemperature.value);
-            
+
             delegate.desiredTemperatureDidChange(boiler.desiredTemperature);
-            
-            double outputValue = delegate.inputValueDidChange(boiler.temperature);
+
+            double outputValue = delegate.inputValueDidChange(boiler.getTemperature());
             double growthRate = (Math.abs(outsideTemperature.value) + boiler.desiredTemperature) / 700 * outputValue;
             if (growthRate == 0) {
                 randomizeTemperatures();
             }
-            boiler.temperature += growthRate;
-            boiler.temperature = NumbersFormatter.instance.roundToDecimalPlaces(boiler.temperature, 2);
+
+            boiler.increaseTemperature(growthRate);
         }
     }
-    
-    private void randomizeTemperatures() {
-            outsideTemperature.randomizeTemperatureGrowth();
-            delegate.outsideTemperatureDidChange(outsideTemperature.value);
-            
-            boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
-            delegate.desiredTemperatureDidChange(boiler.desiredTemperature);
 
-            boiler.temperature -= 0.2;
-            delegate.inputValueDidChange(boiler.temperature);
+    private void randomizeTemperatures() {
+        outsideTemperature.randomizeTemperatureGrowth();
+        delegate.outsideTemperatureDidChange(outsideTemperature.value);
+
+        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
+        delegate.desiredTemperatureDidChange(boiler.desiredTemperature);
+
+        boiler.increaseTemperature(-0.2);
+        delegate.inputValueDidChange(boiler.getTemperature());
     }
 }
