@@ -17,28 +17,16 @@ public class OutsideTemperature {
 
     private final Range RANGE;
     private double value;
-    public double temperatureDifference;
+    private double differenceBetweenLowerBound;
 
     public OutsideTemperature(Range range) {
         RANGE = range;
 
         initValue();
-        calculateDifference();
     }
 
     private void initValue() {
         value = randomizeValue(RANGE.getLowerBound(), RANGE.getUpperBound());
-    }
-    
-    private double randomizeValue(double lowerBound, double upperBound) {
-        double temperature = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
-        temperature = NumbersFormatter.instance.roundToDecimalPlaces(temperature, 2);
-        
-        return temperature;
-    }
-
-    private void calculateDifference() {
-        temperatureDifference = new Range(RANGE.getLowerBound(), value).getLength();
     }
 
     public double getLowerRange() {
@@ -65,7 +53,22 @@ public class OutsideTemperature {
         }
         
         value = newTemperature;
+    }
+    
+    private double randomizeValue(double lowerBound, double upperBound) {
+        double temperature = ThreadLocalRandom.current().nextDouble(lowerBound, upperBound);
+        temperature = NumbersFormatter.instance.roundToDecimalPlaces(temperature, 2);
         calculateDifference();
+        
+        return temperature;
+    }
+    
+    private void calculateDifference() {
+        differenceBetweenLowerBound = new Range(RANGE.getLowerBound(), value).getLength();
+    }
+    
+    public double getDifferenceBetweenLowerBound() {
+        return differenceBetweenLowerBound;
     }
 
 }

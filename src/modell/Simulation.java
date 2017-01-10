@@ -10,7 +10,6 @@ import java.util.TimerTask;
 import org.jfree.data.Range;
 import interfaces.SimulationDelegate;
 import java.util.Random;
-import singleton.NumbersFormatter;
 
 /**
  *
