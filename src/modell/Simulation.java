@@ -19,7 +19,7 @@ public class Simulation extends TimerTask {
 
     public OutsideTemperature outsideTemperature;
     public Boiler boiler;
-    
+
     public SimulationDelegate delegate;
 
     public Simulation() {
@@ -30,6 +30,30 @@ public class Simulation extends TimerTask {
 
     private void initTimer() {
         new Timer().schedule(this, 0, 60);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (willRandomNewOutsideTemperature()) {
+                    randomizeOutsideTemperature();
+                }
+            }
+        }, 0, 400);
+    }
+
+    private boolean willRandomNewOutsideTemperature() {
+        return new Random().nextBoolean();
+    }
+
+    private void randomizeOutsideTemperature() {
+        outsideTemperature.randomizeTemperatureGrowth();
+        delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
+
+        updateDesiredTemperature();
+    }
+
+    private void updateDesiredTemperature() {
+        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
+        delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
     }
 
     private void initOutsideTemperature() {
@@ -43,58 +67,20 @@ public class Simulation extends TimerTask {
 
     @Override
     public void run() {
-        if (boiler.didReachDesiredTemperature()) {
-            randomizeTemperatures();
-            return;
-        }
-
         if (delegate != null) {
-            if (willRandomNewOutsideTemperature()) {
-                outsideTemperature.randomizeTemperatureGrowth();
-                boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
+
+            if (boiler.didReachDesiredTemperature()) {
+                boiler.increaseTemperature(-0.2);
+                delegate.inputValueDidChange(boiler.getTemperature());
+            } else {
+                double outputValue = delegate.inputValueDidChange(boiler.getTemperature());
+                double growthRate = calculateGrowthRate(outputValue);
+                boiler.increaseTemperature(growthRate);
             }
-            delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
-
-            delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
-
-            double outputValue = delegate.inputValueDidChange(boiler.getTemperature());
-            double growthRate = calculateGrowthRate(outputValue);
-            if (growthRate == 0) {
-                randomizeTemperatures();
-            }
-
-            boiler.increaseTemperature(growthRate);
         }
     }
-    
+
     private double calculateGrowthRate(double factor) {
         return (Math.abs(outsideTemperature.getValue()) + boiler.getDesiredTemperature()) / 700 * factor;
     }
-    
-    private boolean willRandomNewOutsideTemperature() {
-        return new Random().nextBoolean();
-    }
-
-    private void randomizeTemperatures() {
-        randomizeOutsideTemperature();
-
-        boiler.increaseTemperature(-0.2);
-        delegate.inputValueDidChange(boiler.getTemperature());
-    }
-    
-    private void randomizeOutsideTemperature() {
-        outsideTemperature.randomizeTemperatureGrowth();
-        delegate.outsideTemperatureDidChange(outsideTemperature.getValue());
-        
-        updateDesiredTemperature();
-    }
-    
-    private void updateDesiredTemperature() {
-        boiler.specifyDesiredTemperatureBasedOn(outsideTemperature);
-        delegate.desiredTemperatureDidChange(boiler.getDesiredTemperature());
-    }
-    
-
-
-
 }
