@@ -15,7 +15,7 @@ import org.jfree.ui.RefineryUtilities;
  */
 public class MainViewController extends javax.swing.JFrame implements SimulationDelegate, FuzzySetControllerDelegate {
 
-    private FuzzySetController fuzzySetcontroller;
+    private FuzzySetController fuzzySetController;
     private SimulationController simulationController;
 
     /**
@@ -34,13 +34,13 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
     }
 
     private void initFuzzySetController() {
-        fuzzySetcontroller = new FuzzySetController();
-        inputSetPanel.add(fuzzySetcontroller.getInputSetView());
-        inferenceBlockPanel.add(fuzzySetcontroller.getOutputSetView());
-        inferenceBlockPanel.add(fuzzySetcontroller.getInferenceBlockView());
-        inferenceBlockPanel.add(fuzzySetcontroller.getAggregationBlockView());
+        fuzzySetController = new FuzzySetController();
+        inputSetPanel.add(fuzzySetController.getInputSetView());
+        inferenceBlockPanel.add(fuzzySetController.getOutputSetView());
+        inferenceBlockPanel.add(fuzzySetController.getInferenceBlockView());
+        inferenceBlockPanel.add(fuzzySetController.getAggregationBlockView());
 
-        fuzzySetcontroller.delegate = this;
+        fuzzySetController.delegate = this;
     }
 
     private void initSimulationController() {
@@ -49,26 +49,28 @@ public class MainViewController extends javax.swing.JFrame implements Simulation
 
     @Override
     public double inputValueDidChange(double input) {
-        if (simulationController.simulationViewIsNull()) {
-            simulationController.initSimulationView(simulationView);
-        }
+        initSimulationViewIfNeeded();
         simulationController.setBoilerTemperatureView(input);
 
-        return fuzzySetcontroller.runSystem(input);
+        return fuzzySetController.runSystem(input);
     }
 
     @Override
     public void outsideTemperatureDidChange(double temperature) {
-        if (simulationController.simulationViewIsNull()) {
-            simulationController.initSimulationView(simulationView);
-        }
-
+        initSimulationViewIfNeeded();
         simulationController.setOutsideTemperatureView(temperature);
     }
 
     @Override
     public void desiredTemperatureDidChange(double temperature) {
+        initSimulationViewIfNeeded();
         simulationController.setDesiredTemperatureLabel(temperature);
+    }
+    
+    private void initSimulationViewIfNeeded() {
+        if (simulationController.simulationViewIsNull()) {
+            simulationController.initSimulationView(simulationView);
+        }
     }
 
     @Override
