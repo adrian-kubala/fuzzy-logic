@@ -1,5 +1,7 @@
 package modell;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jfree.data.Range;
@@ -58,6 +60,10 @@ public class FuzzySet extends XYSeriesCollection {
      */
     public Term getTermAt(int i) {
         return (Term) getSeries(i);
+    }
+    
+    public List<Term> getTerms() {
+        return (List<Term>) getSeries();
     }
     
     /**

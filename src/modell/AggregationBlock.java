@@ -6,6 +6,7 @@
 package modell;
 
 import java.util.ArrayList;
+import java.util.List;
 import modell.enums.Power;
 import singleton.NumbersFormatter;
 
@@ -74,8 +75,7 @@ public class AggregationBlock extends FuzzySet {
         double nominator = 0;
         double denominator = 0;
         
-        for (Object series : getSeries()) {
-            Term term = (Term) series;
+        for (Term term : getTerms()) {
             int count = term.getItemCount();
             for (int i = 0; i < count; i++) {
                 double x = term.getX(i).doubleValue();
